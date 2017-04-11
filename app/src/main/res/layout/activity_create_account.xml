@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hendriebeats.remindme.CreateAccount">
+
+    <TextView
+        android:id="@+id/nameLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Name"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/nameTxt"
+        android:layout_alignStart="@+id/nameTxt" />
+
+    <EditText
+        android:id="@+id/nameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/nameLbl"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/phoneLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nameTxt"
+        android:layout_alignStart="@+id/nameTxt"
+        android:layout_below="@+id/nameTxt"
+        android:layout_marginTop="12dp"
+        android:text="Phone Number" />
+
+    <EditText
+        android:id="@+id/phoneTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/emailTxt"
+        android:layout_alignRight="@+id/emailTxt"
+        android:layout_below="@+id/phoneLbl"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/emailLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Email"
+        android:layout_below="@+id/phoneTxt"
+        android:layout_alignRight="@+id/nameLbl"
+        android:layout_alignEnd="@+id/nameLbl" />
+
+    <EditText
+        android:id="@+id/emailTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/emailLbl"
+        android:layout_alignStart="@+id/emailLbl"
+        android:layout_below="@+id/emailLbl"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/passwordLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/emailTxt"
+        android:layout_alignStart="@+id/emailTxt"
+        android:layout_below="@+id/emailTxt"
+        android:layout_marginTop="17dp"
+        android:text="Password" />
+
+    <EditText
+        android:id="@+id/passwordTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/passwordLbl"
+        android:layout_alignStart="@+id/passwordLbl"
+        android:layout_below="@+id/passwordLbl"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/confirmPasswordTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:layout_below="@+id/confirmPasswordLbl"
+        android:layout_alignLeft="@+id/confirmPasswordLbl"
+        android:layout_alignStart="@+id/confirmPasswordLbl" />
+
+    <TextView
+        android:id="@+id/confirmPasswordLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/passwordTxt"
+        android:layout_alignStart="@+id/passwordTxt"
+        android:layout_below="@+id/passwordTxt"
+        android:layout_marginTop="10dp"
+        android:text="Confirm Password" />
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_below="@+id/confirmPasswordTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+</RelativeLayout>
