@@ -3,42 +3,58 @@ package com.example.hendriebeats.remindme;
 import java.util.Calendar;
 
 public class Task {
+    private int id;
     private String title;
     private Calendar dateTime;
     private String description;
     private String location;
 
-    public Task(int title, Calendar dateTime, String description, String location) {
-        this.name = name;
-        this.author = author;
-        this.imageResource = imageResource;
-        this.imageUrl = imageUrl;
+    public Task(int id, String title, Calendar dateTime, String description, String location) {
+        this.id = id;
+        this.title = title;
+        this.dateTime = dateTime;
+        this.description = description;
+        this.location = location;
     }
 
-    public int getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
-    public int getAuthor() {
-        return author;
+    public String getTitle() {
+        return title;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public Calendar getDateTime() {
+        return dateTime;
     }
 
-    public boolean getIsFavorite() {
-        return isFavorite;
-    }
-    public void setIsFavorite(boolean isFavorite) {
-        this.isFavorite = isFavorite;
+    public String getDescription() {
+        return description;
+
     }
 
-    public void toggleFavorite() {
-        isFavorite = !isFavorite;
+    public String getLocation() {
+        return location;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDateTime(Calendar dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
