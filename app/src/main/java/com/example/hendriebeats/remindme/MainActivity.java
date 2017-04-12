@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     public EditText passwordTxt;
     public Button submitBtn;
     public Button createAccountBtn;
+    public DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
         passwordTxt = (EditText)findViewById(R.id.passwordTxt);
         submitBtn = (Button)findViewById(R.id.submitBtn);
         createAccountBtn = (Button)findViewById(R.id.createAccountBtn);
+
+        db = new DatabaseHandler(this);
+
+        db.addUser(new User("James Hendrie","(717)778-7389","a@a.com","1234"));
 
         //SubmitBtn Action
         submitBtn.setOnClickListener(
@@ -41,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
     }
     //Test email/pass and act appropriately
     public void submit(){
-        Toast.makeText(getApplicationContext(), "Email: " + emailTxt.getText().toString() +
-                ", Password: " + passwordTxt.getText().toString(), Toast.LENGTH_LONG).show();
 
-        //Add an If statement here if the credentials pass
-        Intent i=new Intent(MainActivity.this, TaskListActivity.class);
-        startActivity(i);
+        User validate = db.getUser(emailTxt.getText().toString());
 
-        //Uncomment error message
-        //Toast.makeText(getApplicationContext(), "Error, you entered the wrong username or password", Toast.LENGTH_LONG).show();
-
+        /**if(validate.getPassword().equals(passwordTxt.getText().toString())){
+            //Add an If statement here if the credentials pass
+            Intent i=new Intent(MainActivity.this, TaskListActivity.class);
+            startActivity(i);
+        } else {
+            Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();
+        }*/
     }
 
     //Moves to the create account page

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.icu.util.Calendar;
-import android.text.method.DateTimeKeyListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +31,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String KEY_TASK_ID = "id";
     private static final String KEY_TASK_TITLE = "title";
-
-    // A date in a format like "YYYY-MM-DD HH:MM:SS.SSS".
     private static final String KEY_TASK_DATETIME = "dateTime";
     private static final String KEY_TASK_DESCRIPTION = "description";
     private static final String KEY_TASK_LOCATION = "location";
@@ -49,18 +45,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
-                + KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_USER_NAME + " TEXT,"
-                + KEY_USER_PH_NO + " TEXT"
-                + KEY_USER_EMAIL + " TEXT"
+                + KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_USER_NAME + " TEXT, "
+                + KEY_USER_PH_NO + " TEXT, "
+                + KEY_USER_EMAIL + " TEXT UNIQUE, "
                 + KEY_USER_PASS + " TEXT"
                 + ")";
 
         String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
-                + KEY_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_TASK_TITLE + " TEXT,"
-                + KEY_TASK_DATETIME + " TEXT"
-                + KEY_TASK_DESCRIPTION + " TEXT"
+                + KEY_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_TASK_TITLE + " TEXT, "
+                + KEY_TASK_DATETIME + " TEXT, "
+                + KEY_TASK_DESCRIPTION + " TEXT, "
                 + KEY_TASK_LOCATION + " TEXT"
                 + ")";
         db.execSQL(CREATE_USERS_TABLE);
@@ -87,8 +83,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_USER_NAME, user.getName()); // Contact Name
-        values.put(KEY_USER_PH_NO, user.getPhoneNumber()); // Contact Phone
+        values.put(KEY_USER_NAME, user.getName());
+        values.put(KEY_USER_PH_NO, user.getPhoneNumber());
         values.put(KEY_USER_EMAIL, user.getEmail());
         values.put(KEY_USER_PASS, user.getPassword());
 
@@ -128,6 +124,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_USER_PASS},
                 KEY_USER_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        User user = new User(cursor.getString(1),
+                cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        // return user
+        return user;
+    }
+
+    // Getting single user
+    User getUser(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_USERS,
+                new String[] {
+                        KEY_USER_ID,
+                        KEY_USER_NAME,
+                        KEY_USER_PH_NO,
+                        KEY_USER_EMAIL,
+                        KEY_USER_PASS},
+                KEY_USER_EMAIL + "=?",
+                new String[] {email},
+                null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
