@@ -3,10 +3,13 @@ package com.example.hendriebeats.remindme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class CreateAccount extends AppCompatActivity {
 
@@ -39,8 +42,24 @@ public class CreateAccount extends AppCompatActivity {
     //Test email/pass and act appropriately
     public void submit(){
 
-        //Add an If statement here if the credentials pass
-        Intent i=new Intent(CreateAccount.this, MainActivity.class);
-        startActivity(i);
+        DatabaseHandler db = new DatabaseHandler(this);
+
+        // Add user
+        Log.d("Insert: ", "Inserting ..");
+        if(passwordTxt.getText().toString().equals(confirmPasswordTxt.getText().toString())){
+            db.addUser(new User(
+                    nameTxt.getText().toString(),
+                    phoneTxt.getText().toString(),
+                    emailTxt.getText().toString(),
+                    passwordTxt.getText().toString()
+            ));
+
+            Intent i=new Intent(CreateAccount.this, MainActivity.class);
+            startActivity(i);
+        } else{
+            Toast.makeText(getApplicationContext(), "Password did not match. Please try again.", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }

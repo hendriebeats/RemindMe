@@ -32,10 +32,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_USER_PASS = "password";
 
     private static final String KEY_TASK_ID = "id";
-    private static final String KEY_TASK_TITLE = "password";
-    private static final String KEY_TASK_DATETIME = "password";
-    private static final String KEY_TASK_DESCRIPTION = "password";
-    private static final String KEY_TASK_LOCATION = "password";
+    private static final String KEY_TASK_TITLE = "title";
+
+    // A date in a format like "YYYY-MM-DD HH:MM:SS.SSS".
+    private static final String KEY_TASK_DATETIME = "dateTime";
+    private static final String KEY_TASK_DESCRIPTION = "description";
+    private static final String KEY_TASK_LOCATION = "location";
 
 
     public DatabaseHandler(Context context) {
@@ -47,7 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
-                + KEY_USER_ID + " INTEGER PRIMARY KEY,"
+                + KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_USER_NAME + " TEXT,"
                 + KEY_USER_PH_NO + " TEXT"
                 + KEY_USER_EMAIL + " TEXT"
@@ -55,7 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + ")";
 
         String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
-                + KEY_TASK_ID + " INTEGER PRIMARY KEY,"
+                + KEY_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_TASK_TITLE + " TEXT,"
                 + KEY_TASK_DATETIME + " TEXT"
                 + KEY_TASK_DESCRIPTION + " TEXT"
@@ -63,9 +65,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_TASKS_TABLE);
-
-
-
     }
 
     // Upgrading database
@@ -84,12 +83,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
 
     // Adding new contact
-    void addUser(User user) {                                   //FIX THIS
+    void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_USER_NAME, user.getName()); // Contact Name
         values.put(KEY_USER_PH_NO, user.getPhoneNumber()); // Contact Phone
+        values.put(KEY_USER_EMAIL, user.getEmail());
+        values.put(KEY_USER_PASS, user.getPassword());
 
         // Inserting Row
         db.insert(TABLE_USERS, null, values);
@@ -97,27 +98,72 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // Getting single user                                      //Fix this
-    Contact getUser(int id) {
+    // Adding new task
+    void addTask(Task task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TASK_TITLE, task.getTitle()); // Contact Name
+        values.put(KEY_TASK_DATETIME, task.getDateTime()); // idk what this will look like
+        values.put(KEY_TASK_DESCRIPTION, task.getDescription());
+        values.put(KEY_TASK_LOCATION, task.getLocation());
+
+        // Inserting Row
+        db.insert(TABLE_TASKS, null, values);
+        //2nd argument is String containing nullColumnHack
+        db.close(); // Closing database connection
+    }
+
+    // Getting single user
+    User getUser(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_USERS, new String[] {KEY_USER_ID,
-                        KEY_USER_NAME, KEY_USER_PH_NO}, KEY_USER_ID + "=?",
+        Cursor cursor = db.query(
+                TABLE_USERS,
+                new String[] {
+                        KEY_USER_ID,
+                        KEY_USER_NAME,
+                        KEY_USER_PH_NO,
+                        KEY_USER_EMAIL,
+                        KEY_USER_PASS},
+                KEY_USER_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
-        // return contact
-        return contact;
+        User user = new User(cursor.getString(1),
+                cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        // return user
+        return user;
+    }
+    // Getting single task
+    Task getTask(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_TASKS,
+                new String[] {
+                        KEY_TASK_ID,
+                        KEY_TASK_TITLE,
+                        KEY_TASK_DATETIME,
+                        KEY_TASK_DESCRIPTION,
+                        KEY_TASK_LOCATION},
+                KEY_TASK_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Task task = new Task(cursor.getString(1),
+                cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        // return task
+        return task;
     }
 
     // Getting All Users
-    public List<User> getAllContacts() {                                //fix this
-        List<User> contactList = new ArrayList<User>();
+    public List<Task> getAllTasks() {
+        List<Task> taskList = new ArrayList<Task>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_USERS;
+        String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -125,43 +171,69 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                User user = new User();
-                user.setID(Integer.parseInt(cursor.getString(0)));
-                user.setName(cursor.getString(1));
-                user.setPhoneNumber(cursor.getString(2));
-                // Adding contact to list
-                contactList.add(user);
+                Task task = new Task();
+                task.setTitle(cursor.getString(1));
+                task.setDateTime(cursor.getString(2));
+                task.setDescription(cursor.getString(3));
+                task.setLocation(cursor.getString(4));
+                // Adding task to list
+                taskList.add(task);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
-        return contactList;
+        // return task list
+        return taskList;
     }
 
-    // Updating single contact                                      //fix this
-    public int updateContact(User user) {
+    // Updating single user
+    public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_USER_NAME, user.getName());
-        values.put(KEY_USER_PH_NO, user.getPhoneNumber());
+        values.put(KEY_USER_NAME, user.getName()); // Contact Name
+        values.put(KEY_USER_PH_NO, user.getPhoneNumber()); // Contact Phone
+        values.put(KEY_USER_EMAIL, user.getEmail());
+        values.put(KEY_USER_PASS, user.getPassword());
 
         // updating row
         return db.update(TABLE_USERS, values, KEY_USER_ID + " = ?",
-                new String[] { String.valueOf(user.getID()) });
+                new String[] { String.valueOf(user.getId()) });
     }
 
-    // Deleting single contact
-    public void deleteContact(User user) {                              //fix this
+    // Updating single task
+    public int updateTask(Task task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TASK_TITLE, task.getTitle()); // Contact Name
+        values.put(KEY_TASK_DATETIME, task.getDateTime()); // idk what this will look like
+        values.put(KEY_TASK_DESCRIPTION, task.getDescription());
+        values.put(KEY_TASK_LOCATION, task.getLocation());
+
+        // updating row
+        return db.update(TABLE_TASKS, values, KEY_TASK_ID + " = ?",
+                new String[] { String.valueOf(task.getId()) });
+    }
+
+    // Deleting single user
+    public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS, KEY_USER_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(user.getId()) });
         db.close();
     }
 
-    // Getting contacts Count
-    public int getContactsCount() {                                     //fix this
-        String countQuery = "SELECT  * FROM " + TABLE_USERS;
+    // Deleting single task
+    public void deleteTask(Task task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_TASKS, KEY_TASK_ID + " = ?",
+                new String[] { String.valueOf(task.getId()) });
+        db.close();
+    }
+
+    // Getting task count
+    public int getTasksCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_TASKS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();

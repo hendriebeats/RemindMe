@@ -5,16 +5,19 @@ import java.util.Calendar;
 public class Task {
     private int id;
     private String title;
-    private Calendar dateTime;
+    private String dateTime;
     private String description;
     private String location;
 
-    public Task(int id, String title, Calendar dateTime, String description, String location) {
-        this.id = id;
+    public Task(String title, String dateTime, String description, String location) {
         this.title = title;
         this.dateTime = dateTime;
         this.description = description;
         this.location = location;
+    }
+
+    public Task() {
+
     }
 
     public int getId() {
@@ -25,13 +28,12 @@ public class Task {
         return title;
     }
 
-    public Calendar getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
     public String getDescription() {
         return description;
-
     }
 
     public String getLocation() {
@@ -46,7 +48,7 @@ public class Task {
         this.title = title;
     }
 
-    public void setDateTime(Calendar dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
