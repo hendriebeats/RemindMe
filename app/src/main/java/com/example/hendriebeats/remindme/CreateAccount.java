@@ -44,9 +44,10 @@ public class CreateAccount extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(this);
 
-        // Add user
-        Log.d("Insert: ", "Inserting ..");
+
         if(passwordTxt.getText().toString().equals(confirmPasswordTxt.getText().toString())){
+            // Add user
+            Log.d("Insert: ", "Inserting ..");
             db.addUser(new User(
                     nameTxt.getText().toString(),
                     phoneTxt.getText().toString(),

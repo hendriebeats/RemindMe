@@ -48,7 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_USER_NAME + " TEXT, "
                 + KEY_USER_PH_NO + " TEXT, "
-                + KEY_USER_EMAIL + " TEXT UNIQUE, "
+                + KEY_USER_EMAIL + " TEXT, "
                 + KEY_USER_PASS + " TEXT"
                 + ")";
 
@@ -111,7 +111,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single user
-    User getUser(int id) {
+    User getUserById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -134,7 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single user
-    User getUser(String email) {
+    User getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(

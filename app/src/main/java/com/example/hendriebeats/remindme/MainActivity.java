@@ -47,15 +47,22 @@ public class MainActivity extends AppCompatActivity {
     //Test email/pass and act appropriately
     public void submit(){
 
-        User validate = db.getUser(emailTxt.getText().toString());
+        try{
+            User validate = db.getUserByEmail(emailTxt.getText().toString());
 
-        /**if(validate.getPassword().equals(passwordTxt.getText().toString())){
-            //Add an If statement here if the credentials pass
-            Intent i=new Intent(MainActivity.this, TaskListActivity.class);
-            startActivity(i);
-        } else {
-            Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();
-        }*/
+            if(validate.getPassword().equals(passwordTxt.getText().toString())){
+                //Add an If statement here if the credentials pass
+                Intent i=new Intent(MainActivity.this, TaskListActivity.class);
+                startActivity(i);
+            } else {
+                Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "An account does not exist with that email.", Toast.LENGTH_LONG).show();
+
+        }
+
+
     }
 
     //Moves to the create account page
