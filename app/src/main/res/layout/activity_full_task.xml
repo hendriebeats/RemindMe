@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hendriebeats.remindme.FullTaskActivity">
+
+    <TextView
+        android:id="@+id/titleLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Title:"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/descriptionLbl"
+        android:layout_alignStart="@+id/descriptionLbl" />
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exampleTitle"
+        android:layout_alignBaseline="@+id/titleLbl"
+        android:layout_alignBottom="@+id/titleLbl"
+        android:layout_alignLeft="@+id/descriptionTxt"
+        android:layout_alignStart="@+id/descriptionTxt" />
+
+    <TextView
+        android:id="@+id/descriptionLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="57dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="32dp"
+        android:text="Description:"
+        android:layout_below="@+id/titleLbl"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/descriptionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exampleDescription"
+        android:layout_alignBaseline="@+id/descriptionLbl"
+        android:layout_alignBottom="@+id/descriptionLbl"
+        android:layout_toRightOf="@+id/descriptionLbl"
+        android:layout_toEndOf="@+id/descriptionLbl"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp" />
+
+    <TextView
+        android:id="@+id/locationLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:text="Location:"
+        android:layout_below="@+id/descriptionLbl"
+        android:layout_alignLeft="@+id/descriptionLbl"
+        android:layout_alignStart="@+id/descriptionLbl" />
+
+    <TextView
+        android:id="@+id/dateTimeLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/titleLbl"
+        android:layout_alignStart="@+id/titleLbl"
+        android:layout_below="@+id/locationLbl"
+        android:layout_marginTop="39dp"
+        android:text="Date Time:" />
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exampleLocation"
+        android:layout_above="@+id/dateTimeLbl"
+        android:layout_alignLeft="@+id/descriptionTxt"
+        android:layout_alignStart="@+id/descriptionTxt" />
+
+    <TextView
+        android:id="@+id/dateTimeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exampleDateTime"
+        android:layout_alignBaseline="@+id/dateTimeLbl"
+        android:layout_alignBottom="@+id/dateTimeLbl"
+        android:layout_alignLeft="@+id/locationTxt"
+        android:layout_alignStart="@+id/locationTxt" />
+
+</RelativeLayout>

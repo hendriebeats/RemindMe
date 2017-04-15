@@ -1,21 +1,27 @@
 package com.example.hendriebeats.remindme;
 
 import android.content.Intent;
+import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.example.hendriebeats.remindme.R.id.task_listview;
 
 public class TaskListActivity extends AppCompatActivity {
 
     public DatabaseHandler db;
-    ArrayList<Task> dataModels;
+    ArrayList<String> TaskTitleList;
+    ArrayList<Task> TaskList;
     ListView listView;
-    private static TaskListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,58 +34,46 @@ public class TaskListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(TaskListActivity.this, AddTask.class);
+                Intent i=new Intent(TaskListActivity.this, AddTaskActivity.class);
                 startActivity(i);
             }
         });
-
+        //Initiate database handler to interface with the database
         db = new DatabaseHandler(this);
-        dataModels= new ArrayList<>();
-        listView=(ListView)findViewById(R.id.task_listview);
 
-        db.addTask(new Task("CIT399 HW", "00:001:12-38:583", "Only helpful with Golshan", "-1,5"));
+        //Used to initially populate Tasks
+        /*db.addTask(new Task("CIT399 HW", "00:001:12-38:583", "Only helpful with Golshan", "-1,5"));
         db.addTask(new Task("CIT243 HW", "22:003:26-21:159", "Not Helpful", "2,5"));
-        db.addTask(new Task("CIT382 HW", "11:002:48-15:274", "Do it!", "7,3"));
+        db.addTask(new Task("CIT382 HW", "11:002:48-15:274", "Do it!", "7,3"));*/
 
-        dataModels = db.getAllTasks();
+        //Link Listview on the .xml document to this .java document
+        listView =(ListView)findViewById(task_listview);
 
-        dataModels.add(new Task("Apple Pie", "Android 1.0", "1","September 23, 2008"));
-        dataModels.add(new Task("Banana Bread", "Android 1.1", "2","February 9, 2009"));
+        //Populate TaskList with all the current database task titles
+        TaskTitleList = new ArrayList<>(db.getAllTaskTitles());
 
-        adapter= new CustomAdapter(dataModels,getApplicationContext());
+        //Return all Tasks
+        TaskList = new ArrayList<>(db.getAllTasks());
 
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //Make Adapter to populate listView from TaskList
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TaskTitleList);
+        listView.setAdapter(arrayAdapter);
 
-                DataModel dataModel= dataModels.get(position);
-
-                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
+        //Register onClickListener to handle click events on each item
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            // argument position gives the index of item which is clicked
+            public void onItemClick(AdapterView<?> arg0, View v,int position, long arg3) {
+                clickTask(TaskList.get(position));
+                Toast.makeText(getApplicationContext(), "Title : " + TaskTitleList.get(position),   Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void clickTask(Task currentTask){
+        //Move to the full task description
+        Intent i = new Intent(TaskListActivity.this, FullTaskActivity.class);
+        i.putExtra("currentTaskId", Integer.toString(currentTask.getId()));
+        startActivity(i);
     }
 }

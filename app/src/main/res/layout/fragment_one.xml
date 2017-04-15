@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="layout.FragmentOne">
+
+    <TextView
+        android:id="@+id/titleLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="67dp"
+        android:text="Title:" />
+
+    <EditText
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/titleLbl"
+        android:layout_alignStart="@+id/titleLbl"
+        android:layout_below="@+id/titleLbl"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/descriptionLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/titleTxt"
+        android:layout_alignStart="@+id/titleTxt"
+        android:layout_below="@+id/titleTxt"
+        android:layout_marginTop="40dp"
+        android:text="Description:" />
+
+    <EditText
+        android:id="@+id/descriptionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/descriptionLbl"
+        android:layout_alignStart="@+id/descriptionLbl"
+        android:layout_below="@+id/descriptionLbl"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

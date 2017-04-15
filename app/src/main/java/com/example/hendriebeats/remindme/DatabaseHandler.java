@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -74,12 +77,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     */
-
     // Adding new contact
-    void addUser(User user) {
+    public void addUser(User user) {
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -95,11 +95,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Adding new task
-    void addTask(Task task) {
+    public void addTask(Task task) {
+        Log.d(TAG, "adding Task...");
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_TASK_TITLE, task.getTitle()); // Contact Name
+        values.put(KEY_TASK_TITLE, task.getTitle());
         values.put(KEY_TASK_DATETIME, task.getDateTime()); // idk what this will look like
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
         values.put(KEY_TASK_LOCATION, task.getLocation());
@@ -111,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single user
-    User getUserById(int id) {
+    public User getUserById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -134,7 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single user
-    User getUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -157,7 +158,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return user;
     }
     // Getting single task
-    Task getTask(int id) {
+    public Task getTaskById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -179,9 +180,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return task;
     }
 
-    // Getting All Users
-    public List<Task> getAllTasks() {
-        List<Task> taskList = new ArrayList<Task>();
+    // Getting All Task Titles
+    public ArrayList<String> getAllTaskTitles() {
+        ArrayList<String> taskList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
 
@@ -197,10 +198,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 task.setDescription(cursor.getString(3));
                 task.setLocation(cursor.getString(4));
                 // Adding task to list
+                taskList.add(task.getTitle());
+            } while (cursor.moveToNext());
+        }
+        // return task list
+        return taskList;
+    }
+
+    // Getting All Tasks
+    public ArrayList<Task> getAllTasks() {
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(cursor.getInt(0));
+                task.setTitle(cursor.getString(1));
+                task.setDateTime(cursor.getString(2));
+                task.setDescription(cursor.getString(3));
+                task.setLocation(cursor.getString(4));
+                // Adding task to list
                 taskList.add(task);
             } while (cursor.moveToNext());
         }
-
         // return task list
         return taskList;
     }
@@ -253,10 +279,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Getting task count
     public int getTasksCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_TASKS;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
+        List<Task> taskList = new ArrayList<Task>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         // return count
         return cursor.getCount();
