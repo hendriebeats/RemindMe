@@ -8,18 +8,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import layout.FragmentOne;
 import layout.FragmentTwo;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class AddTaskActivity extends AppCompatActivity
+                            /*implements OnMapReadyCallback*/{
 
     Button basicInformationBtn, dateTimeBtn;
+
+    //private GoogleMap mMap;
+    //private static final LatLng PCT = new LatLng(41.234641, -77.021090);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-
 
         //Link buttons to this document
         basicInformationBtn = (Button) findViewById(R.id.btn1);
@@ -54,4 +67,15 @@ public class AddTaskActivity extends AppCompatActivity {
         ft.replace(R.id.fragmentContainer, frag);
         ft.commit();
     }
+
+    /*
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        Marker pct = mMap.addMarker(new MarkerOptions()
+            .position(PCT));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PCT, 15));
+    }
+    */
 }

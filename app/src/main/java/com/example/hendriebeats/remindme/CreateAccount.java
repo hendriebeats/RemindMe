@@ -49,7 +49,7 @@ public class CreateAccount extends AppCompatActivity {
     public void submit(){
 
         DatabaseHandler db = new DatabaseHandler(this);
-        SQLiteDatabase sqldb = db.getReadableDatabase();
+        //SQLiteDatabase sqldb = db.getReadableDatabase();
 
         // adding these variables because they are used in multiple locations below
         String name = nameTxt.getText().toString();
@@ -94,6 +94,7 @@ public class CreateAccount extends AppCompatActivity {
      * @param email - email to check if already exists within table
      * @return TRUE if another user already has that email. FALSE if not
      */
+    /*
     public boolean userExists(String email, SQLiteDatabase sqldb){
         String query = "SELECT * FROM TABLE_USERS WHERE KEY_USER_EMAIL = " + email;
         Cursor cursor = sqldb.rawQuery(query, null);
@@ -104,4 +105,5 @@ public class CreateAccount extends AppCompatActivity {
         cursor.close();
         return true;
     }
+    */
 }

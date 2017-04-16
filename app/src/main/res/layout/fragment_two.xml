@@ -9,5 +9,7 @@
         android:layout_height="match_parent"
         android:text="I AM FRAGMENT 2!!!!!"
         android:background="@android:color/white"/>
-
-</FrameLayout>
+    <!--
+        <include layout="@layout/fragment_map"/>
+    -->
+    </FrameLayout>
