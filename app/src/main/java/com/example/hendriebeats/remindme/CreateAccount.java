@@ -20,6 +20,9 @@ public class CreateAccount extends AppCompatActivity {
     public EditText passwordTxt;
     public EditText confirmPasswordTxt;
     public Button submitBtn;
+    public DatabaseHandler db;
+    User validate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class CreateAccount extends AppCompatActivity {
      */
     public void submit(){
 
-        DatabaseHandler db = new DatabaseHandler(this);
+        db = new DatabaseHandler(this);
         //SQLiteDatabase sqldb = db.getReadableDatabase();
 
         // adding these variables because they are used in multiple locations below
@@ -64,10 +67,10 @@ public class CreateAccount extends AppCompatActivity {
         confirmPass = confirmPass.trim();
 
 
-            // ensure email + password boxes are not empty.
+            // ensure email + password boxes are not empty. //NOTE: Change these error checkers to their own methods
             if (email.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter an email and password.", Toast.LENGTH_LONG).show();
-            } else if (pass.equals(confirmPass)) {
+            } else if (pass.equals(confirmPass) && !ifUserExists(email)) {
                 // Add user to database, then return to main activity
                 // NOTE: Might want to go back an activity instead of creating a new activity as done below
                 Log.d("Insert: ", "Inserting ..");
@@ -85,25 +88,14 @@ public class CreateAccount extends AppCompatActivity {
             }
     }
 
-    /**
-     * 4/15/17 - Michael created
-     * Used to check if a user already exists in the database
-     *
-     * DOESNT CURRENTLY WORK
-     *
-     * @param email - email to check if already exists within table
-     * @return TRUE if another user already has that email. FALSE if not
-     */
-    /*
-    public boolean userExists(String email, SQLiteDatabase sqldb){
-        String query = "SELECT * FROM TABLE_USERS WHERE KEY_USER_EMAIL = " + email;
-        Cursor cursor = sqldb.rawQuery(query, null);
-        if(cursor.getCount() <= 0){
-            cursor.close();
+
+    public boolean ifUserExists(String email){
+        try{
+            validate = db.getUserByEmail(email);
+            Toast.makeText(getApplicationContext(), "A user already exists with the same Email. Please try again.", Toast.LENGTH_LONG).show();
+            return true;
+        }catch (Exception e){
             return false;
         }
-        cursor.close();
-        return true;
     }
-    */
 }
