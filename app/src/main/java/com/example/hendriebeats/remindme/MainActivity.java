@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
 
     public EditText emailTxt;
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         db = new DatabaseHandler(this);
 
-        db.addUser(new User("James Hendrie","(717)778-7389","a@a.com","1234"));
+        Log.d(TAG, "adding user...");
+        db.addUser(new User("James Hendrie","(717)778-7389","a","a"));
 
         //SubmitBtn Action
         submitBtn.setOnClickListener(
@@ -47,15 +50,19 @@ public class MainActivity extends AppCompatActivity {
     //Test email/pass and act appropriately
     public void submit(){
 
-        User validate = db.getUser(emailTxt.getText().toString());
+        try{
+            User validate = db.getUserByEmail(emailTxt.getText().toString());
 
-        /**if(validate.getPassword().equals(passwordTxt.getText().toString())){
-            //Add an If statement here if the credentials pass
-            Intent i=new Intent(MainActivity.this, TaskListActivity.class);
-            startActivity(i);
-        } else {
-            Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();
-        }*/
+            if(validate.getPassword().equals(passwordTxt.getText().toString())){
+                //Add an If statement here if the credentials pass
+                Intent i=new Intent(MainActivity.this, TaskListActivity.class);
+                startActivity(i);
+            } else {
+                Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "An account does not exist with that email.", Toast.LENGTH_LONG).show();
+        }
     }
 
     //Moves to the create account page
