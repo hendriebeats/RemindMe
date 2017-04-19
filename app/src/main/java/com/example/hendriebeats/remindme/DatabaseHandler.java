@@ -37,6 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TASK_DATETIME = "dateTime";
     private static final String KEY_TASK_DESCRIPTION = "description";
     private static final String KEY_TASK_LOCATION = "location";
+    private static final String KEY_TASK_OWNER = "location";
 
 
     public DatabaseHandler(Context context) {
@@ -60,8 +61,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_TASK_TITLE + " TEXT, "
                 + KEY_TASK_DATETIME + " TEXT, "
                 + KEY_TASK_DESCRIPTION + " TEXT, "
-                + KEY_TASK_LOCATION + " TEXT"
-                + ")";
+                + KEY_TASK_LOCATION + " TEXT, "
+                + KEY_TASK_OWNER + " INTEGER, "
+                + "FOREIGN KEY ("+KEY_TASK_OWNER+") "
+                + "REFERENCES "+TABLE_USERS+" ("+KEY_USER_ID+")"
+        + ");";
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_TASKS_TABLE);
     }
@@ -104,6 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATETIME, task.getDateTime()); // idk what this will look like
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
         values.put(KEY_TASK_LOCATION, task.getLocation());
+        //values.put(KEY_TASK_OWNER, task.UserID()); // This gets the User ID of the current user. -Peter
 
         // Inserting Row
         db.insert(TABLE_TASKS, null, values);
@@ -157,6 +162,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return user
         return user;
     }
+
     // Getting single task
     public Task getTaskById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -168,14 +174,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_TASK_TITLE,
                         KEY_TASK_DATETIME,
                         KEY_TASK_DESCRIPTION,
-                        KEY_TASK_LOCATION},
+                        KEY_TASK_LOCATION,
+                        KEY_TASK_OWNER},
                 KEY_TASK_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Task task = new Task(cursor.getString(1),
-                cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5));
         // return task
         return task;
     }
