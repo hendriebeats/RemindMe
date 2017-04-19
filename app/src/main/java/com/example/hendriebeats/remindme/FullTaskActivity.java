@@ -29,16 +29,19 @@ public class FullTaskActivity extends AppCompatActivity {
         }
 
         //Link all the textViews that will be replaced
-        TextView title =(TextView) findViewById(titleTxt);
-        TextView description =(TextView) findViewById(descriptionTxt);
-        TextView location =(TextView) findViewById(locationTxt);
-        TextView dateTime =(TextView) findViewById(dateTimeTxt);
+        TextView title = (TextView) findViewById(R.id.titleTxt);
+        TextView description = (TextView) findViewById(R.id.descriptionTxt);
+        TextView location = (TextView) findViewById(R.id.locationTxt);
+        TextView dateTime = (TextView) findViewById(R.id.dateTimeTxt);
+        TextView ownerName = (TextView) findViewById(R.id.ownerTxt);
 
         //Set all the displayed fields equal to the current Task's values
         title.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTitle());
         description.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDescription());
         location.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getLocation());
         dateTime.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDateTime());
+        ownerName.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerName(this));
+
 
     }
 }

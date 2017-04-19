@@ -37,7 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TASK_DATETIME = "dateTime";
     private static final String KEY_TASK_DESCRIPTION = "description";
     private static final String KEY_TASK_LOCATION = "location";
-    private static final String KEY_TASK_OWNER = "location";
+    private static final String KEY_TASK_OWNER = "owner";
 
 
     public DatabaseHandler(Context context) {
@@ -108,7 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATETIME, task.getDateTime()); // idk what this will look like
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
         values.put(KEY_TASK_LOCATION, task.getLocation());
-        //values.put(KEY_TASK_OWNER, task.UserID()); // This gets the User ID of the current user. -Peter
+        values.put(KEY_TASK_OWNER, task.getOwnerId()); // This gets the User ID of the current user. -Peter
 
         // Inserting Row
         db.insert(TABLE_TASKS, null, values);
@@ -133,7 +133,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        User user = new User(cursor.getString(1),
+        User user = new User(cursor.getInt(0), cursor.getString(1),
                 cursor.getString(2), cursor.getString(3), cursor.getString(4));
         // return user
         return user;
@@ -157,7 +157,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        User user = new User(cursor.getString(1),
+        User user = new User(cursor.getInt(0), cursor.getString(1),
                 cursor.getString(2), cursor.getString(3), cursor.getString(4));
         // return user
         return user;

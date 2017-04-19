@@ -10,16 +10,16 @@ public class Task {
     private String dateTime;
     private String description;
     private String location;
-    private int owner;
+    private int ownerId;
 
     public DatabaseHandler db;
 
-    public Task(String title, String dateTime, String description, String location, int owner) {
+    public Task(String title, String dateTime, String description, String location, int ownerId) {
         this.title = title;
         this.dateTime = dateTime;
         this.description = description;
         this.location = location;
-        this.owner = owner;
+        this.ownerId = ownerId;
     }
 
     public Task() {
@@ -46,12 +46,13 @@ public class Task {
         return location;
     }
 
-    public Integer getOwner() { return owner; }
+    public int getOwnerId() { return ownerId; }
 
     // This method requires context when called blame Peter if doesnt work
     public String getOwnerName(Context context) {
         db = new DatabaseHandler(context);
-        return db.getUserById(getOwner()).getName();}
+        return db.getUserById(getOwnerId())
+                .getName();}
 
     public void setId(int id) {
         this.id = id;
@@ -73,7 +74,7 @@ public class Task {
         this.location = location;
     }
 
-    public void setOwner(int owner) {
-        this.owner = owner;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 }

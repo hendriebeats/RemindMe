@@ -89,4 +89,23 @@
         android:layout_alignLeft="@+id/locationTxt"
         android:layout_alignStart="@+id/locationTxt" />
 
+    <TextView
+        android:id="@+id/ownerLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dateTimeLbl"
+        android:layout_alignStart="@+id/dateTimeLbl"
+        android:layout_below="@+id/dateTimeLbl"
+        android:layout_marginTop="32dp"
+        android:text="Owner" />
+
+    <TextView
+        android:id="@+id/ownerTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dateTimeTxt"
+        android:layout_alignStart="@+id/dateTimeTxt"
+        android:layout_alignTop="@+id/ownerLbl"
+        android:text="exampleOwner" />
+
 </RelativeLayout>

@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         db = new DatabaseHandler(this);
 
-        Log.d(TAG, "adding user...");
-        db.addUser(new User("James Hendrie","(717)778-7389","a","a"));
+        //Hardcoded add user for testing
+        //db.addUser(new User("James Hendrie","(717)778-7389","a","a"));
 
         //SubmitBtn Action
         submitBtn.setOnClickListener(
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             if(validate.getPassword().equals(passwordTxt.getText().toString())){
                 //Add an If statement here if the credentials pass
                 Intent i=new Intent(MainActivity.this, TaskListActivity.class);
+                i.putExtra("currentUserId", Integer.toString(validate.getId()));
                 startActivity(i);
             } else {
                 Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();

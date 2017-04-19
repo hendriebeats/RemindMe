@@ -1,52 +1,72 @@
 package com.example.hendriebeats.remindme;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
-
-public class CreateAccount extends AppCompatActivity {
+public class UpdateAccount extends AppCompatActivity {
 
     public EditText nameTxt;
     public EditText phoneTxt;
     public EditText emailTxt;
     public EditText passwordTxt;
     public EditText confirmPasswordTxt;
-    public Button submitBtn;
+    public Button updateBtn;
     public DatabaseHandler db;
     User validate;
+    String currentUserId;
+    User currentUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        setContentView(R.layout.activity_update_account);
 
+        db = new DatabaseHandler(this);
+
+        //Get Current User ID from Previous Activity
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            currentUserId = extras.getString("currentUserId");
+        }
+
+        currentUser = db.getUserById(Integer.parseInt(currentUserId));
+
+        //connect fields and populate with proper user info
         nameTxt = (EditText)findViewById(R.id.nameTxt);
+        nameTxt.setText(currentUser.getName());
+
         phoneTxt = (EditText)findViewById(R.id.phoneTxt);
+        phoneTxt.setText(currentUser.getPhoneNumber());
+
         emailTxt = (EditText)findViewById(R.id.emailTxt);
+        emailTxt.setText(currentUser.getEmail());
+
+        //Connect password fields from XML document
         passwordTxt = (EditText)findViewById(R.id.passwordTxt);
         confirmPasswordTxt = (EditText)findViewById(R.id.confirmPasswordTxt);
-        submitBtn = (Button)findViewById(R.id.submitBtn);
+
+        updateBtn = (Button)findViewById(R.id.updateBtn);
+
+
 
         //SubmitBtn Action
-        submitBtn.setOnClickListener(
+        updateBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
-                    submit();
+                    update();
                 }});
     }
 
-    public void submit(){
+
+    public void update(){
 
         db = new DatabaseHandler(this);
-        //SQLiteDatabase sqldb = db.getReadableDatabase();
 
         // adding these variables because they are used in multiple locations below
         String name = nameTxt.getText().toString();
@@ -61,7 +81,7 @@ public class CreateAccount extends AppCompatActivity {
         confirmPass = confirmPass.trim();
 
 
-            // ensure email + password boxes are not empty.
+            // ensure email + password boxes are not empty. //NOTE: Change these error checkers to their own methods
             if (email.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter an email and password.", Toast.LENGTH_LONG).show();
             } else if (pass.equals(confirmPass) && !ifUserExists(email)) {
@@ -82,7 +102,7 @@ public class CreateAccount extends AppCompatActivity {
                 passwordTxt.setText("");
                 confirmPasswordTxt.setText("");
 
-                Intent i = new Intent(CreateAccount.this, MainActivity.class);
+                Intent i = new Intent(UpdateAccount.this, MainActivity.class);
                 startActivity(i);
             } else {
                 Toast.makeText(getApplicationContext(), "Password did not match. Please try again.", Toast.LENGTH_LONG).show();
