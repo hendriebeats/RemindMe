@@ -13,11 +13,17 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 public class PlacePickerActivity extends AppCompatActivity {
 
     int PLACE_PICKER_REQUEST;
+    String activityFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_picker);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            activityFrom = extras.getString("activityFrom");
+        }
 
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
         // Start the Intent by requesting a result, identified by a request code.
@@ -39,10 +45,23 @@ public class PlacePickerActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(this, data);
 
-                Intent i = new Intent(PlacePickerActivity.this, AddTaskActivity.class);
-                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra("placeName", place.getName());
-                startActivity(i);
+                Intent i;
+
+                switch (activityFrom) {
+                    case "AddTaskActivity":
+                        i = new Intent(PlacePickerActivity.this, AddTaskActivity.class);
+                        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra("placeName", place.getName());
+                        startActivity(i);
+                        break;
+
+                    case "UpdateTaskActivity":
+                        i = new Intent(PlacePickerActivity.this, UpdateTaskActivity.class);
+                        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra("placeName", place.getName());
+                        startActivity(i);
+                        break;
+                }
             }
         }
     }

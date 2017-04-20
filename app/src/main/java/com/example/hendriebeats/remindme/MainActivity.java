@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             User validate = db.getUserByEmail(emailTxt.getText().toString());
 
             if(validate.getPassword().equals(passwordTxt.getText().toString())){
-                //Add an If statement here if the credentials pass
                 Intent i=new Intent(MainActivity.this, TaskListActivity.class);
                 i.putExtra("currentUserId", Integer.toString(validate.getId()));
                 startActivity(i);

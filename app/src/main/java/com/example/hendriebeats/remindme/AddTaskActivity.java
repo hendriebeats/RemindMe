@@ -99,6 +99,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void switchToLocationActivity(){
         Intent i = new Intent(AddTaskActivity.this, PlacePickerActivity.class);
+        i.putExtra("activityFrom", "AddTaskActivity");
         startActivity(i);
     }
 

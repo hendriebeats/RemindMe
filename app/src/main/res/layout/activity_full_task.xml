@@ -10,7 +10,7 @@
         android:id="@+id/titleLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="99dp"
         android:text="Title:"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/descriptionLbl"
@@ -107,5 +107,15 @@
         android:layout_alignStart="@+id/dateTimeTxt"
         android:layout_alignTop="@+id/ownerLbl"
         android:text="exampleOwner" />
+
+    <Button
+        android:id="@+id/updateTaskBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="Update Task"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ownerTxt"
+        android:layout_toEndOf="@+id/ownerTxt" />
 
 </RelativeLayout>

@@ -1,7 +1,10 @@
 package com.example.hendriebeats.remindme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ public class FullTaskActivity extends AppCompatActivity {
 
     public DatabaseHandler db;
     String currentTaskId;
+    Button updateTaskBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,10 @@ public class FullTaskActivity extends AppCompatActivity {
             currentTaskId = extras.getString("currentTaskId");
         }
 
-        //Link all the textViews that will be replaced
+        //Link updateButton
+        Button updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
+
+        //Link all the textviews that will be replaced
         TextView title = (TextView) findViewById(R.id.titleTxt);
         TextView description = (TextView) findViewById(R.id.descriptionTxt);
         TextView location = (TextView) findViewById(R.id.locationTxt);
@@ -42,6 +49,13 @@ public class FullTaskActivity extends AppCompatActivity {
         dateTime.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDateTime());
         ownerName.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerName(this));
 
+        //On Click Listener
+        updateTaskBtn.setOnClickListener(
+                new View.OnClickListener(){public void onClick(View view) {
+                    Intent i=new Intent(FullTaskActivity.this, UpdateTaskActivity.class);
+                    i.putExtra("currentTaskId", currentTaskId);
+                    startActivity(i);
+                }});
 
     }
 }
