@@ -37,9 +37,12 @@ public class PlacePickerActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                Place place = PlacePicker.getPlace(this, data);
+
+                Intent i = new Intent(PlacePickerActivity.this, AddTaskActivity.class);
+                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra("placeName", place.getName());
+                startActivity(i);
             }
         }
     }

@@ -38,7 +38,8 @@ public class TaskListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(TaskListActivity.this, AddTaskActivity.class);
+                Intent i = new Intent(TaskListActivity.this, AddTaskActivity.class);
+                i.putExtra("currentUserId", currentUserId);
                 startActivity(i);
             }
         });
@@ -54,18 +55,18 @@ public class TaskListActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), currentUserId, Toast.LENGTH_LONG).show();
 
         //Used to initially populate Tasks
-        //db.addTask(new Task("CIT399 HW", "00:001:12-38:583", "Only helpful with Golshan", "-1,5"));
+        /*db.addTask(new Task("CIT399 HW", "00:001:12-38:583", "Only helpful with Golshan", "-1,5", Integer.parseInt(currentUserId)));
         db.addTask(new Task("CIT243 HW", "22:003:26-21:159", "Not Helpful", "2,5", Integer.parseInt(currentUserId)));
-        //db.addTask(new Task("CIT382 HW", "11:002:48-15:274", "Do it!", "7,3"));
+        db.addTask(new Task("CIT382 HW", "11:002:48-15:274", "Do it!", "7,3", Integer.parseInt(currentUserId)));*/
 
         //Link Listview on the .xml document to this .java document
         listView =(ListView)findViewById(task_listview);
 
         //Populate TaskList with all the current database task titles
-        TaskTitleList = new ArrayList<>(db.getAllTaskTitles());
+        TaskTitleList = new ArrayList<>(db.getAllTaskTitlesByUser(Integer.parseInt(currentUserId)));
 
         //Return all Tasks
-        TaskList = new ArrayList<>(db.getAllTasks());
+        TaskList = new ArrayList<>(db.getAllTasksByUser(Integer.parseInt(currentUserId)));
 
         //Make Adapter to populate listView from TaskList
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TaskTitleList);
@@ -89,18 +90,20 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.action_update_account:
 
                 //Move to the full task description
-                Intent i = new Intent(TaskListActivity.this, UpdateAccount.class);
+                i = new Intent(TaskListActivity.this, UpdateAccount.class);
                 i.putExtra("currentUserId", currentUserId);
                 startActivity(i);
                 return true;
 
             case R.id.action_logout:
-
-                startActivity(new Intent(this, MainActivity.class));
+                i = new Intent(TaskListActivity.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
                 return true;
 
             default:

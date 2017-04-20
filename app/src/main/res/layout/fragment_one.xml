@@ -46,4 +46,53 @@
         android:ems="10"
         android:inputType="textMultiLine" />
 
+    <TextView
+        android:id="@+id/locationLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/descriptionTxt"
+        android:layout_alignStart="@+id/descriptionTxt"
+        android:layout_centerVertical="true"
+        android:text="Location Name" />
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/locationLbl"
+        android:layout_alignStart="@+id/locationLbl"
+        android:layout_below="@+id/locationLbl"
+        android:layout_marginTop="18dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/chooseDateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Date"
+        android:layout_alignTop="@+id/locationTxt"
+        android:layout_alignLeft="@+id/locationTxt"
+        android:layout_alignStart="@+id/locationTxt" />
+
+    <Button
+        android:id="@+id/chooseTimeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Time"
+        android:layout_alignBaseline="@+id/chooseDateBtn"
+        android:layout_alignBottom="@+id/chooseDateBtn"
+        android:layout_toRightOf="@+id/chooseDateBtn"
+        android:layout_toEndOf="@+id/chooseDateBtn"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp" />
+
+    <TextView
+        android:id="@+id/dateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chooseDateBtn"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/locationTxt"
+        android:layout_toRightOf="@+id/locationTxt" />
+
 </RelativeLayout>

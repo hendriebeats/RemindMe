@@ -37,7 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TASK_DATETIME = "dateTime";
     private static final String KEY_TASK_DESCRIPTION = "description";
     private static final String KEY_TASK_LOCATION = "location";
-    private static final String KEY_TASK_OWNER = "owner";
+    private static final String KEY_TASK_OWNER_ID = "ownerId";
 
 
     public DatabaseHandler(Context context) {
@@ -62,8 +62,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_TASK_DATETIME + " TEXT, "
                 + KEY_TASK_DESCRIPTION + " TEXT, "
                 + KEY_TASK_LOCATION + " TEXT, "
-                + KEY_TASK_OWNER + " INTEGER, "
-                + "FOREIGN KEY ("+KEY_TASK_OWNER+") "
+                + KEY_TASK_OWNER_ID + " INTEGER, "
+                + "FOREIGN KEY ("+ KEY_TASK_OWNER_ID +") "
                 + "REFERENCES "+TABLE_USERS+" ("+KEY_USER_ID+")"
         + ");";
         db.execSQL(CREATE_USERS_TABLE);
@@ -108,7 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATETIME, task.getDateTime()); // idk what this will look like
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
         values.put(KEY_TASK_LOCATION, task.getLocation());
-        values.put(KEY_TASK_OWNER, task.getOwnerId()); // This gets the User ID of the current user. -Peter
+        values.put(KEY_TASK_OWNER_ID, task.getOwnerId()); // This gets the User ID of the current user. -Peter
 
         // Inserting Row
         db.insert(TABLE_TASKS, null, values);
@@ -175,7 +175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_TASK_DATETIME,
                         KEY_TASK_DESCRIPTION,
                         KEY_TASK_LOCATION,
-                        KEY_TASK_OWNER},
+                        KEY_TASK_OWNER_ID},
                 KEY_TASK_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -188,35 +188,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting All Task Titles
-    public ArrayList<String> getAllTaskTitles() {
-        ArrayList<String> taskList = new ArrayList<>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
+    public ArrayList<String> getAllTaskTitlesByUser(int userId) {
+        ArrayList<Task> taskList = getAllTasksByUser(userId);
+        ArrayList<String> titleList = new ArrayList<>();
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Task task = new Task();
-                task.setTitle(cursor.getString(1));
-                task.setDateTime(cursor.getString(2));
-                task.setDescription(cursor.getString(3));
-                task.setLocation(cursor.getString(4));
-                // Adding task to list
-                taskList.add(task.getTitle());
-            } while (cursor.moveToNext());
+        for(int i = 0; i < taskList.size(); i++){
+            titleList.add(taskList.get(i).getTitle());
         }
-        // return task list
-        return taskList;
+        return titleList;
     }
 
     // Getting All Tasks
-    public ArrayList<Task> getAllTasks() {
+    public ArrayList<Task> getAllTasksByUser(int userId) {
         ArrayList<Task> taskList = new ArrayList<Task>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
+        String selectQuery = "SELECT  * FROM " + TABLE_TASKS
+                + " WHERE " + KEY_TASK_OWNER_ID + " = " + userId;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
