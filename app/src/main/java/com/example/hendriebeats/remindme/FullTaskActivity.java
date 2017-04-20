@@ -33,7 +33,7 @@ public class FullTaskActivity extends AppCompatActivity {
         }
 
         //Link updateButton
-        Button updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
+        updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
 
         //Link all the textviews that will be replaced
         TextView title = (TextView) findViewById(R.id.titleTxt);

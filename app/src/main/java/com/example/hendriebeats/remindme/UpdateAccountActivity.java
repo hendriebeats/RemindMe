@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class UpdateAccount extends AppCompatActivity {
+public class UpdateAccountActivity extends AppCompatActivity {
 
     public EditText nameTxt;
     public EditText phoneTxt;
@@ -102,7 +102,7 @@ public class UpdateAccount extends AppCompatActivity {
                 passwordTxt.setText("");
                 confirmPasswordTxt.setText("");
 
-                Intent i = new Intent(UpdateAccount.this, MainActivity.class);
+                Intent i = new Intent(UpdateAccountActivity.this, MainActivity.class);
                 startActivity(i);
             } else {
                 Toast.makeText(getApplicationContext(), "Password did not match. Please try again.", Toast.LENGTH_LONG).show();

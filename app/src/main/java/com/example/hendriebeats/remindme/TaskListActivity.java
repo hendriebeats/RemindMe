@@ -1,7 +1,6 @@
 package com.example.hendriebeats.remindme;
 
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -95,7 +93,7 @@ public class TaskListActivity extends AppCompatActivity {
             case R.id.action_update_account:
 
                 //Move to the full task description
-                i = new Intent(TaskListActivity.this, UpdateAccount.class);
+                i = new Intent(TaskListActivity.this, UpdateAccountActivity.class);
                 i.putExtra("currentUserId", currentUserId);
                 startActivity(i);
                 return true;

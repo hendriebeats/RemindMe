@@ -8,13 +8,13 @@
         android:id="@+id/titleLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="43dp"
+        android:text="Title:"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="54dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="67dp"
-        android:text="Title:" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/titleTxt"
@@ -50,10 +50,11 @@
         android:id="@+id/locationLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Location Name"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/timeTxt"
         android:layout_alignLeft="@+id/descriptionTxt"
-        android:layout_alignStart="@+id/descriptionTxt"
-        android:layout_centerVertical="true"
-        android:text="Location Name" />
+        android:layout_alignStart="@+id/descriptionTxt" />
 
     <TextView
         android:id="@+id/locationTxt"
@@ -63,36 +64,46 @@
         android:layout_alignStart="@+id/locationLbl"
         android:layout_below="@+id/locationLbl"
         android:layout_marginTop="18dp"
-        android:text="" />
-
-    <Button
-        android:id="@+id/chooseDateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Date"
-        android:layout_alignTop="@+id/locationTxt"
-        android:layout_alignLeft="@+id/locationTxt"
-        android:layout_alignStart="@+id/locationTxt" />
-
-    <Button
-        android:id="@+id/chooseTimeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Time"
-        android:layout_alignBaseline="@+id/chooseDateBtn"
-        android:layout_alignBottom="@+id/chooseDateBtn"
-        android:layout_toRightOf="@+id/chooseDateBtn"
-        android:layout_toEndOf="@+id/chooseDateBtn"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp" />
+        android:text="exampleLocation" />
 
     <TextView
         android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chooseDateBtn"
-        android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/locationTxt"
-        android:layout_toRightOf="@+id/locationTxt" />
+        android:layout_marginTop="18dp"
+        android:text="exampleDate"
+        android:layout_below="@+id/dateLbl"
+        android:layout_alignLeft="@+id/dateLbl"
+        android:layout_alignStart="@+id/dateLbl" />
+
+    <TextView
+        android:id="@+id/dateLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:layout_below="@+id/descriptionTxt"
+        android:layout_alignRight="@+id/titleLbl"
+        android:layout_alignEnd="@+id/titleLbl"
+        android:layout_marginTop="43dp" />
+
+    <TextView
+        android:id="@+id/timeLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time:"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/dateTxt"
+        android:layout_alignLeft="@+id/dateTxt"
+        android:layout_alignStart="@+id/dateTxt" />
+
+    <TextView
+        android:id="@+id/timeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exampleTime"
+        android:layout_below="@+id/timeLbl"
+        android:layout_alignLeft="@+id/timeLbl"
+        android:layout_alignStart="@+id/timeLbl"
+        android:layout_marginTop="23dp" />
 
 </RelativeLayout>

@@ -47,16 +47,6 @@
         android:layout_alignLeft="@+id/textView3"
         android:layout_alignStart="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Owner"
-        android:layout_marginTop="56dp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
-
     <EditText
         android:id="@+id/titleTxt"
         android:layout_width="wrap_content"
@@ -89,16 +79,6 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/ownerTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView5"
-        android:layout_alignLeft="@+id/dateTimeTxt"
-        android:layout_alignStart="@+id/dateTimeTxt"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
     <Button
         android:id="@+id/changeLocationBtn"
         android:layout_width="wrap_content"
@@ -109,4 +89,16 @@
         android:layout_alignRight="@+id/descriptionTxt"
         android:layout_alignStart="@+id/descriptionTxt"
         android:text="Change Location" />
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dateTimeTxt"
+        android:layout_alignEnd="@+id/dateTimeTxt"
+        android:layout_alignLeft="@+id/dateTimeTxt"
+        android:layout_alignRight="@+id/dateTimeTxt"
+        android:layout_alignStart="@+id/dateTimeTxt"
+        android:text="exampleLocation" />
+
 </RelativeLayout>

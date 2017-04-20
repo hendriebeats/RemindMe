@@ -21,7 +21,7 @@ import layout.FragmentOne;
 
 public class AddTaskActivity extends AppCompatActivity {
 
-    Button basicInformationBtn, locationBtn, chooseDateBtn, chooseTimeBtn;
+    Button locationBtn, chooseDateBtn, chooseTimeBtn;
     String placeName, currentUserId;
     EditText titleTxt, descriptionTxt;
     TextView locationTxt, dateTxt;
@@ -40,7 +40,6 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         //Link XML Objects to this document
-        basicInformationBtn = (Button) findViewById(R.id.basicInformationBtn);
         locationBtn = (Button) findViewById(R.id.locationBtn);
         chooseDateBtn = (Button) findViewById(R.id.chooseDateBtn);
         chooseTimeBtn = (Button) findViewById(R.id.chooseTimeBtn);
@@ -61,24 +60,25 @@ public class AddTaskActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+                updateDate();
             }
 
         };
 
-        //Populate Location Text
-        locationTxt.setText(placeName);
+        //Update Location field when updated via Place Picker
+        try{
+            if(placeName.length()>2);
 
-        //On Click Listener
-        basicInformationBtn.setOnClickListener(
-                new View.OnClickListener(){public void onClick(View view) {
-                    switchToBasicInformationFragment();
-                }});
+            //Populate Location Text
+            locationTxt.setText(placeName);
+        } catch(Exception e) {}
 
         //On Click Listener
         locationBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
-                    switchToLocationActivity();
+                    Intent i = new Intent(AddTaskActivity.this, PlacePickerActivity.class);
+                    i.putExtra("activityFrom", "AddTaskActivity");
+                    startActivity(i);
                 }});
 
         //On Click Listener
@@ -86,21 +86,6 @@ public class AddTaskActivity extends AppCompatActivity {
                 new View.OnClickListener(){public void onClick(View view) {
                     chooseDate();
                 }});
-
-    }
-    public void switchToBasicInformationFragment(){
-        // change the fragment to fragment 1
-        Fragment frag = new FragmentOne();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragmentContainer, frag);
-        ft.commit();
-    }
-
-    public void switchToLocationActivity(){
-        Intent i = new Intent(AddTaskActivity.this, PlacePickerActivity.class);
-        i.putExtra("activityFrom", "AddTaskActivity");
-        startActivity(i);
     }
 
     public void chooseDate(){
@@ -109,7 +94,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    private void updateLabel() {
+    private void updateDate() {
 
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);

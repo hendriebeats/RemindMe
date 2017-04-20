@@ -84,6 +84,8 @@ public class CreateAccount extends AppCompatActivity {
 
                 Intent i = new Intent(CreateAccount.this, MainActivity.class);
                 startActivity(i);
+                Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
+
             } else {
                 Toast.makeText(getApplicationContext(), "Password did not match. Please try again.", Toast.LENGTH_LONG).show();
             }
