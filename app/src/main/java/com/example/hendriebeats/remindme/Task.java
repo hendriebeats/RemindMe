@@ -7,16 +7,18 @@ import java.util.Calendar;
 public class Task {
     private int id;
     private String title;
-    private String dateTime;
+    private String date;
+    private String time;
     private String description;
     private String location;
     private int ownerId;
 
     public DatabaseHandler db;
 
-    public Task(String title, String dateTime, String description, String location, int ownerId) {
+    public Task(String title, String date, String time, String description, String location, int ownerId) {
         this.title = title;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.description = description;
         this.location = location;
         this.ownerId = ownerId;
@@ -34,8 +36,12 @@ public class Task {
         return title;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public String getDescription() {
@@ -62,8 +68,12 @@ public class Task {
         this.title = title;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String dateTime) {
+        this.date = date;
+    }
+
+    public void setTime(String dateTime) {
+        this.time = time;
     }
 
     public void setDescription(String description) {

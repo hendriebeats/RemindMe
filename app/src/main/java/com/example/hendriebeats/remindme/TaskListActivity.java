@@ -53,9 +53,10 @@ public class TaskListActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), currentUserId, Toast.LENGTH_LONG).show();
 
         //Used to initially populate Tasks
-        /*db.addTask(new Task("CIT399 HW", "00:001:12-38:583", "Only helpful with Golshan", "-1,5", Integer.parseInt(currentUserId)));
-        db.addTask(new Task("CIT243 HW", "22:003:26-21:159", "Not Helpful", "2,5", Integer.parseInt(currentUserId)));
-        db.addTask(new Task("CIT382 HW", "11:002:48-15:274", "Do it!", "7,3", Integer.parseInt(currentUserId)));*/
+
+        /*db.addTask(new Task("CIT399 HW", "01/30/2018", "10:30am", "Only helpful with Golshan", "-1,5", Integer.parseInt(currentUserId)));
+        db.addTask(new Task("CIT243 HW", "05/11/2017", "11:45am", "Not Helpful", "2,5", Integer.parseInt(currentUserId)));
+        db.addTask(new Task("CIT382 HW", "06/11/2017", "1:30pm", "Do it!", "7,3", Integer.parseInt(currentUserId)));*/
 
         //Link Listview on the .xml document to this .java document
         listView =(ListView)findViewById(task_listview);
@@ -78,6 +79,13 @@ public class TaskListActivity extends AppCompatActivity {
                 clickTask(TaskList.get(position));
             }
         });
+    }
+
+    public void clickTask(Task currentTask){
+        //Move to the full task description
+        Intent i = new Intent(TaskListActivity.this, FullTaskActivity.class);
+        i.putExtra("currentTaskId", Integer.toString(currentTask.getId()));
+        startActivity(i);
     }
 
     @Override
@@ -107,12 +115,5 @@ public class TaskListActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void clickTask(Task currentTask){
-        //Move to the full task description
-        Intent i = new Intent(TaskListActivity.this, FullTaskActivity.class);
-        i.putExtra("currentTaskId", Integer.toString(currentTask.getId()));
-        startActivity(i);
     }
 }
