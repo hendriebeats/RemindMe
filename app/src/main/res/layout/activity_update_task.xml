@@ -39,13 +39,23 @@
         android:layout_alignStart="@+id/textView2" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/dateLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date Time:"
-        android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
+        android:layout_alignStart="@+id/textView3"
+        android:layout_centerVertical="true"
+        android:text="Date:" />
+
+    <TextView
+        android:id="@+id/timeLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Time:"
+        android:layout_below="@+id/dateLbl"
+        android:layout_alignLeft="@+id/dateLbl"
+        android:layout_alignStart="@+id/dateLbl" />
 
     <EditText
         android:id="@+id/titleTxt"
@@ -70,12 +80,23 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/dateTimeTxt"
+        android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignBottom="@+id/dateLbl"
         android:layout_alignLeft="@+id/descriptionTxt"
         android:layout_alignStart="@+id/descriptionTxt"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/timeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/timeLbl"
+        android:layout_alignBottom="@+id/timeLbl"
+        android:layout_alignLeft="@+id/dateTxt"
+        android:layout_alignStart="@+id/dateTxt"
         android:ems="10"
         android:inputType="textPersonName" />
 
@@ -94,11 +115,20 @@
         android:id="@+id/locationTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/dateTimeTxt"
-        android:layout_alignEnd="@+id/dateTimeTxt"
-        android:layout_alignLeft="@+id/dateTimeTxt"
-        android:layout_alignRight="@+id/dateTimeTxt"
-        android:layout_alignStart="@+id/dateTimeTxt"
+        android:layout_above="@+id/dateTxt"
+        android:layout_alignEnd="@+id/dateTxt"
+        android:layout_alignLeft="@+id/dateTxt"
+        android:layout_alignRight="@+id/dateTxt"
+        android:layout_alignStart="@+id/dateTxt"
         android:text="exampleLocation" />
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:text="Update" />
 
 </RelativeLayout>

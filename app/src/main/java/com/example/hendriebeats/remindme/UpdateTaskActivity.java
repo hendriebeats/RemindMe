@@ -7,16 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class UpdateTaskActivity extends AppCompatActivity {
 
-    EditText title, description, dateTime;
+    EditText title, description, dateTxt, timeTxt;
     TextView locationTxt;
-    Button changeLocationBtn;
+    Button changeLocationBtn, updateBtn;
     String currentTaskId, placeName;
     int currentUserId;
     public DatabaseHandler db;
@@ -40,21 +36,45 @@ public class UpdateTaskActivity extends AppCompatActivity {
 
         title = (EditText) findViewById(R.id.titleTxt);
         description = (EditText) findViewById(R.id.descriptionTxt);
-        dateTime = (EditText) findViewById(R.id.dateTimeTxt);
+        dateTxt = (EditText) findViewById(R.id.dateTxt);
+        timeTxt = (EditText) findViewById(R.id.timeTxt);
         changeLocationBtn = (Button) findViewById(R.id.changeLocationBtn);
+        updateBtn = (Button) findViewById(R.id.updateBtn);
         locationTxt = (TextView) findViewById(R.id.locationTxt);
 
         //Set all the displayed fields equal to the current Task's values
         title.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTitle());
         description.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDescription());
-        dateTime.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDateTime());
+        dateTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDate());
+        timeTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTime());
         locationTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getLocation());
 
         //On Click Listener
         changeLocationBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
-                    Intent i = new Intent(UpdateTaskActivity.this, PlacePickerActivity.class);
-                    i.putExtra("activityFrom", "UpdateTaskActivity");
+                    Intent i = new Intent(UpdateTaskActivity.this, PlacePickerUpdateTaskActivity.class);
+                    i.putExtra("currentTaskId", currentTaskId);
+                    startActivity(i);
+                }});
+
+        //On Click Listener
+        updateBtn.setOnClickListener(
+                new View.OnClickListener(){public void onClick(View view) {
+                    //create task object
+                    Task updatedTask = new Task();
+                    updatedTask.setId(Integer.parseInt(currentTaskId));
+                    updatedTask.setOwnerId(currentUserId);
+                    updatedTask.setLocation(locationTxt.getText().toString());
+                    updatedTask.setDescription(description.getText().toString());
+                    updatedTask.setDate(dateTxt.getText().toString());
+                    updatedTask.setTime(timeTxt.getText().toString());
+                    updatedTask.setTitle(title.getText().toString());
+
+                    db.updateTask(updatedTask);
+
+                    Intent i = new Intent(UpdateTaskActivity.this, FullTaskActivity.class);
+                    i.putExtra("currentTaskId", currentTaskId);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }});
 

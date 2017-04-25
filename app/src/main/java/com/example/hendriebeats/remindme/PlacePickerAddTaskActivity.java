@@ -1,28 +1,31 @@
 package com.example.hendriebeats.remindme;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-public class PlacePickerActivity extends AppCompatActivity {
+public class PlacePickerAddTaskActivity extends AppCompatActivity {
 
     int PLACE_PICKER_REQUEST;
-    String activityFrom;
+    String title, description, date, time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place_picker);
+        setContentView(R.layout.activity_add_task_place_picker);
 
+        //Get Current Task ID from Previous Activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            activityFrom = extras.getString("activityFrom");
+            title = extras.getString("title");
+            description = extras.getString("description");
+            date = extras.getString("date");
+            time = extras.getString("time");
         }
 
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
@@ -45,23 +48,14 @@ public class PlacePickerActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(this, data);
 
-                Intent i;
-
-                switch (activityFrom) {
-                    case "AddTaskActivity":
-                        i = new Intent(PlacePickerActivity.this, AddTaskActivity.class);
-                        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtra("placeName", place.getName());
-                        startActivity(i);
-                        break;
-
-                    case "UpdateTaskActivity":
-                        i = new Intent(PlacePickerActivity.this, UpdateTaskActivity.class);
-                        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtra("placeName", place.getName());
-                        startActivity(i);
-                        break;
-                }
+                Intent i = new Intent(PlacePickerAddTaskActivity.this, AddTaskActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra("placeName", place.getName());
+                i.putExtra("title", title);
+                i.putExtra("description", description);
+                i.putExtra("date", date);
+                i.putExtra("time", time);
+                startActivity(i);
             }
         }
     }

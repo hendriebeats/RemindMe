@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="11dp"
         android:text="Title:"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -30,11 +30,11 @@
         android:id="@+id/descriptionLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/titleTxt"
-        android:layout_alignStart="@+id/titleTxt"
+        android:layout_marginTop="21dp"
+        android:text="Description:"
         android:layout_below="@+id/titleTxt"
-        android:layout_marginTop="40dp"
-        android:text="Description:" />
+        android:layout_alignLeft="@+id/titleTxt"
+        android:layout_alignStart="@+id/titleTxt" />
 
     <EditText
         android:id="@+id/descriptionTxt"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="Location Name"
         android:layout_marginTop="18dp"
-        android:layout_below="@+id/timeTxt"
+        android:layout_below="@+id/dateTxt"
         android:layout_alignLeft="@+id/descriptionTxt"
         android:layout_alignStart="@+id/descriptionTxt" />
 
@@ -81,10 +81,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date:"
+        android:layout_marginTop="22dp"
         android:layout_below="@+id/descriptionTxt"
-        android:layout_alignRight="@+id/titleLbl"
-        android:layout_alignEnd="@+id/titleLbl"
-        android:layout_marginTop="43dp" />
+        android:layout_alignLeft="@+id/descriptionTxt"
+        android:layout_alignStart="@+id/descriptionTxt" />
 
     <TextView
         android:id="@+id/timeLbl"
@@ -105,5 +105,14 @@
         android:layout_alignLeft="@+id/timeLbl"
         android:layout_alignStart="@+id/timeLbl"
         android:layout_marginTop="23dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locationTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Add Task" />
 
 </RelativeLayout>

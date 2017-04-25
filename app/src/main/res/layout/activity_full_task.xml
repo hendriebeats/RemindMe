@@ -30,9 +30,9 @@
         android:id="@+id/descriptionLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="57dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="30dp"
         android:text="Description:"
         android:layout_below="@+id/titleLbl"
         android:layout_alignParentLeft="true"
@@ -54,48 +54,49 @@
         android:id="@+id/locationLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="27dp"
         android:text="Location:"
         android:layout_below="@+id/descriptionLbl"
         android:layout_alignLeft="@+id/descriptionLbl"
         android:layout_alignStart="@+id/descriptionLbl" />
 
     <TextView
-        android:id="@+id/dateTimeLbl"
+        android:id="@+id/timeLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/titleLbl"
-        android:layout_alignStart="@+id/titleLbl"
-        android:layout_below="@+id/locationLbl"
-        android:layout_marginTop="39dp"
-        android:text="Date Time:" />
+        android:layout_marginTop="24dp"
+        android:text="Time:"
+        android:layout_below="@+id/dateLbl"
+        android:layout_alignLeft="@+id/dateLbl"
+        android:layout_alignStart="@+id/dateLbl" />
 
     <TextView
         android:id="@+id/locationTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="exampleLocation"
-        android:layout_above="@+id/dateTimeLbl"
+        android:layout_alignBaseline="@+id/locationLbl"
+        android:layout_alignBottom="@+id/locationLbl"
         android:layout_alignLeft="@+id/descriptionTxt"
         android:layout_alignStart="@+id/descriptionTxt" />
 
     <TextView
-        android:id="@+id/dateTimeTxt"
+        android:id="@+id/timeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="exampleDateTime"
-        android:layout_alignBaseline="@+id/dateTimeLbl"
-        android:layout_alignBottom="@+id/dateTimeLbl"
+        android:layout_alignBaseline="@+id/timeLbl"
+        android:layout_alignBottom="@+id/timeLbl"
         android:layout_alignLeft="@+id/locationTxt"
-        android:layout_alignStart="@+id/locationTxt" />
+        android:layout_alignStart="@+id/locationTxt"
+        android:text="exampleTime" />
 
     <TextView
         android:id="@+id/ownerLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dateTimeLbl"
-        android:layout_alignStart="@+id/dateTimeLbl"
-        android:layout_below="@+id/dateTimeLbl"
+        android:layout_alignLeft="@+id/timeLbl"
+        android:layout_alignStart="@+id/timeLbl"
+        android:layout_below="@+id/timeLbl"
         android:layout_marginTop="32dp"
         android:text="Owner" />
 
@@ -103,8 +104,8 @@
         android:id="@+id/ownerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dateTimeTxt"
-        android:layout_alignStart="@+id/dateTimeTxt"
+        android:layout_alignLeft="@+id/dateTxt"
+        android:layout_alignStart="@+id/dateTxt"
         android:layout_alignTop="@+id/ownerLbl"
         android:text="exampleOwner" />
 
@@ -112,10 +113,29 @@
         android:id="@+id/updateTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
         android:text="Update Task"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ownerTxt"
-        android:layout_toEndOf="@+id/ownerTxt" />
+        android:layout_above="@+id/titleTxt"
+        android:layout_toRightOf="@+id/titleLbl"
+        android:layout_toEndOf="@+id/titleLbl"
+        android:layout_marginBottom="22dp" />
+
+    <TextView
+        android:id="@+id/dateLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:layout_below="@+id/locationLbl"
+        android:layout_alignLeft="@+id/locationLbl"
+        android:layout_alignStart="@+id/locationLbl"
+        android:layout_marginTop="23dp" />
+
+    <TextView
+        android:id="@+id/dateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dateLbl"
+        android:layout_alignLeft="@+id/locationTxt"
+        android:layout_alignStart="@+id/locationTxt"
+        android:text="exampleDate" />
 
 </RelativeLayout>

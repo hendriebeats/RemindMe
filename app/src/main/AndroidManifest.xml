@@ -32,7 +32,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".FullTaskActivity" />
         <activity android:name=".AddTaskActivity" />
-        <activity android:name=".PlacePickerActivity" />
+        <activity android:name=".PlacePickerUpdateTaskActivity" />
+        <activity android:name=".PlacePickerAddTaskActivity" />
+        <activity android:name=".UpdateAccountActivity" />
         <activity android:name=".UpdateTaskActivity"></activity>
     </application>
 
