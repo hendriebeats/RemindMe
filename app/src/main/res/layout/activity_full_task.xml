@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.example.hendriebeats.remindme.FullTaskActivity">
 
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/shareTaskBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share_task"/>
+
+        <Button
+            android:id="@+id/updateTaskBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Task"
+            android:layout_toRightOf="@+id/shareTaskBtn"
+            android:layout_marginBottom="22dp" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/titleLbl"
         android:layout_width="wrap_content"
@@ -109,15 +129,6 @@
         android:layout_alignTop="@+id/ownerLbl"
         android:text="exampleOwner" />
 
-    <Button
-        android:id="@+id/updateTaskBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Task"
-        android:layout_above="@+id/titleTxt"
-        android:layout_toRightOf="@+id/titleLbl"
-        android:layout_toEndOf="@+id/titleLbl"
-        android:layout_marginBottom="22dp" />
 
     <TextView
         android:id="@+id/dateLbl"
