@@ -63,37 +63,31 @@ public class UpdateAccountActivity extends AppCompatActivity {
                 }});
     }
 
-
+    // seems to work
     public void update(){
-
         db = new DatabaseHandler(this);
 
         // adding these variables because they are used in multiple locations below
-        String name = nameTxt.getText().toString();
-        String phone = phoneTxt.getText().toString();
-        String email = emailTxt.getText().toString();
-        String pass = passwordTxt.getText().toString();
-        String confirmPass = confirmPasswordTxt.getText().toString();
+        String name = nameTxt.getText().toString().trim();
+        String phone = phoneTxt.getText().toString().trim();
+        String email = emailTxt.getText().toString().trim();
+        String pass = passwordTxt.getText().toString().trim();
+        String confirmPass = confirmPasswordTxt.getText().toString().trim();
 
-        //trimming email and password fields to remove possible excess whitespace
-        email = email.trim();
-        pass = pass.trim();
-        confirmPass = confirmPass.trim();
+        User user = db.getUserByEmail(email);
 
-
-            // ensure email + password boxes are not empty. //NOTE: Change these error checkers to their own methods
-            if (email.isEmpty() || pass.isEmpty()) {
+            if (email.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter an email and password.", Toast.LENGTH_LONG).show();
-            } else if (pass.equals(confirmPass) && !ifUserExists(email)) {
-                // Add user to database, then return to main activity
-                // NOTE: Might want to go back an activity instead of creating a new activity as done below
-                Log.d("Insert: ", "Inserting ..");
-                db.addUser(new User(
-                        name,
-                        phone,
-                        email,
-                        pass
-                ));
+            } else if (pass.equals(confirmPass)) {
+
+                user.setName(name);
+                user.setPhoneNumber(phone);
+                user.setEmail(email);
+                if(!pass.isEmpty())
+                    user.setPassword(pass);
+
+                Log.d("Update: ", "Updating ..");
+                db.updateUser(user);
 
                 //Clear values if create account is successful
                 nameTxt.setText("");
@@ -102,8 +96,8 @@ public class UpdateAccountActivity extends AppCompatActivity {
                 passwordTxt.setText("");
                 confirmPasswordTxt.setText("");
 
-                Intent i = new Intent(UpdateAccountActivity.this, MainActivity.class);
-                startActivity(i);
+                // Calling finish on activity instead of creating new
+                finish();
             } else {
                 Toast.makeText(getApplicationContext(), "Password did not match. Please try again.", Toast.LENGTH_LONG).show();
             }
