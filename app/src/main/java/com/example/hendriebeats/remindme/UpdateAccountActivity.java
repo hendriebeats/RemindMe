@@ -59,13 +59,15 @@ public class UpdateAccountActivity extends AppCompatActivity {
         //SubmitBtn Action
         updateBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
-                    update();
+                    update(currentUser.getEmail());
                 }});
     }
 
     // seems to work
-    public void update(){
+    public void update(String userEmail){
         db = new DatabaseHandler(this);
+
+        User user = db.getUserByEmail(userEmail);
 
         // adding these variables because they are used in multiple locations below
         String name = nameTxt.getText().toString().trim();
@@ -73,8 +75,6 @@ public class UpdateAccountActivity extends AppCompatActivity {
         String email = emailTxt.getText().toString().trim();
         String pass = passwordTxt.getText().toString().trim();
         String confirmPass = confirmPasswordTxt.getText().toString().trim();
-
-        User user = db.getUserByEmail(email);
 
             if (email.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter an email and password.", Toast.LENGTH_LONG).show();
