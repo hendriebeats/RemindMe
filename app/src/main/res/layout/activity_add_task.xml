@@ -49,6 +49,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:id="@+id/addTaskBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragmentContainer"
+        android:gravity="center_horizontal"/>
+
 
 
 </RelativeLayout>

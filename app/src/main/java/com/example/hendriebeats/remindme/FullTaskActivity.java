@@ -12,6 +12,7 @@ public class FullTaskActivity extends AppCompatActivity {
     public DatabaseHandler db;
     String currentTaskId;
     Button updateTaskBtn;
+    Button shareTaskBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class FullTaskActivity extends AppCompatActivity {
 
         //Link updateButton
         updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
+        shareTaskBtn = (Button) findViewById(R.id.shareTaskBtn);
 
         //Link all the textviews that will be replaced
         TextView titleTxt = (TextView) findViewById(R.id.titleTxt);
@@ -37,13 +39,21 @@ public class FullTaskActivity extends AppCompatActivity {
         TextView timeTxt = (TextView) findViewById(R.id.timeTxt);
         TextView ownerNameTxt = (TextView) findViewById(R.id.ownerTxt);
 
+        //pulling out values
+        final String title = db.getTaskById(Integer.parseInt(currentTaskId)).getTitle();
+        String description = db.getTaskById(Integer.parseInt(currentTaskId)).getDescription();
+        final String location = db.getTaskById(Integer.parseInt(currentTaskId)).getLocation();
+        String date = db.getTaskById(Integer.parseInt(currentTaskId)).getDate();
+        String time = db.getTaskById(Integer.parseInt(currentTaskId)).getTime();
+        final String ownerName = db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerName(this);
+
         //Set all the displayed fields equal to the current Task's values
-        titleTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTitle());
-        descriptionTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDescription());
-        locationTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getLocation());
-        dateTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDate());
-        timeTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTime());
-        ownerNameTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerName(this));
+        titleTxt.setText(title);
+        descriptionTxt.setText(description);
+        locationTxt.setText(location);
+        dateTxt.setText(date);
+        timeTxt.setText(time);
+        ownerNameTxt.setText(ownerName);
 
         //On Click Listener
         updateTaskBtn.setOnClickListener(
@@ -53,5 +63,26 @@ public class FullTaskActivity extends AppCompatActivity {
                     startActivity(i);
                 }});
 
+        // Will ask to open an existing service - covers requirement g for final project
+        shareTaskBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getTaskReport(ownerName, title, location));
+                i.putExtra(Intent.EXTRA_SUBJECT,
+                        getString(R.string.task_report_subject));
+                startActivity(i);
+            }
+        });
+
     }
+
+    // Used to generate a sendable task report via chosen existing service.
+    // The exact message that is generatated should be changed, this is just showing a basic placeholder
+    private String getTaskReport(String ownerName, String title, String location){
+        String report = getString(R.string.task_report,
+                ownerName, title, location);
+        return report;
+    }
+
 }

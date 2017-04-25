@@ -5,6 +5,13 @@
     <string name="action_update_account">Update Account</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <string name="share_task">Share Task</string>
+    <string name="task_report_subject">RemindMe Task Report</string>
+    <string name="task_report">
+        %1$s sent you a task report.
+        Task Title: %2$s
+        Location: %3$s</string>
+
     <string name="title_activity_full_task_description">FullTaskDescriptionActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
