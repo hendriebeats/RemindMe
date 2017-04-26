@@ -74,7 +74,6 @@ public class FullTaskActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 
     // Used to generate a sendable task report via chosen existing service.
