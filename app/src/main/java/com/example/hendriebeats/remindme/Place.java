@@ -19,6 +19,7 @@ public class Place {
     private String longitude;
     private String address;
     private String locale;
+    private String radius;
 
     public DatabaseHandler db;
 
@@ -34,15 +35,17 @@ public class Place {
      * @param longitude (String)
      * @param address (String)
      * @param locale (String)
+     * @param radius (String)
      *
      * @since
      */
-    public Place(String title, String latitude, String longitude, String address, String locale) {
+    public Place(String title, String latitude, String longitude, String address, String locale, String radius) {
         this.title = title;
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
         this.locale= locale;
+        this.radius= radius;
     }
 
     public Place() {
@@ -141,6 +144,17 @@ public class Place {
     }
 
     /**
+     * Returns the radius of the current place object
+     * referenced in the database.
+     *
+     * @return radius
+     * @since
+     */
+    public String getRadius() {
+        return radius;
+    }
+
+    /**
      * setId()
      *
      * sets the Id of the current place object.
@@ -210,5 +224,15 @@ public class Place {
      */
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    /**
+     * sets the radius of the current place object.
+     *
+     * @param radius
+     * @since
+     */
+    public void setRadius(String radius) {
+        this.radius = radius;
     }
 }

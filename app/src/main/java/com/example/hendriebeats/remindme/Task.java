@@ -211,7 +211,7 @@ public class Task {
      * @param dateTime (String)
      * @since
      */
-    public void setDate(String dateTime) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -223,7 +223,7 @@ public class Task {
      * @param dateTime (String)
      * @since
      */
-    public void setTime(String dateTime) {
+    public void setTime(String time) {
         this.time = time;
     }
 

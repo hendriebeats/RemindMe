@@ -11,9 +11,9 @@ import android.widget.TextView;
 public class UpdateTaskActivity extends AppCompatActivity {
 
     EditText title, description, dateTxt, timeTxt;
-    TextView locationTxt;
+    TextView locationTitleTxt, locationAddressTxt;
     Button changeLocationBtn, updateBtn;
-    String currentTaskId, placeName;
+    String currentTaskId, placeName, address;
     int currentUserId;
     public DatabaseHandler db;
 
@@ -40,14 +40,25 @@ public class UpdateTaskActivity extends AppCompatActivity {
         timeTxt = (EditText) findViewById(R.id.timeTxt);
         changeLocationBtn = (Button) findViewById(R.id.changeLocationBtn);
         updateBtn = (Button) findViewById(R.id.updateBtn);
-        locationTxt = (TextView) findViewById(R.id.locationTxt);
+        locationTitleTxt = (TextView) findViewById(R.id.locationTitleTxt);
+        locationAddressTxt = (TextView) findViewById(R.id.locationAddressTxt);
+
 
         //Set all the displayed fields equal to the current Task's values
         title.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTitle());
         description.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDescription());
         dateTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDate());
         timeTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTime());
-        locationTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getLocation());
+        try{
+            locationTitleTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle());
+        }catch(Exception e){
+            locationTitleTxt.setText("null");
+        }
+        try{
+            locationAddressTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress());
+        }catch(Exception e){
+            locationTitleTxt.setText("null");
+        }
 
         //On Click Listener
         changeLocationBtn.setOnClickListener(
@@ -64,7 +75,8 @@ public class UpdateTaskActivity extends AppCompatActivity {
                     Task updatedTask = new Task();
                     updatedTask.setId(Integer.parseInt(currentTaskId));
                     updatedTask.setOwnerId(currentUserId);
-                    updatedTask.setLocation(locationTxt.getText().toString());
+                    updatedTask.setLocation(locationTitleTxt.getText().toString());
+                    updatedTask.setLocation(locationAddressTxt.getText().toString());
                     updatedTask.setDescription(description.getText().toString());
                     updatedTask.setDate(dateTxt.getText().toString());
                     updatedTask.setTime(timeTxt.getText().toString());
@@ -78,12 +90,15 @@ public class UpdateTaskActivity extends AppCompatActivity {
                     startActivity(i);
                 }});
 
+        /*
         //Update Location field when updated via Place Picker
         try{
-            if(placeName.length()>2);
+            //if(placeName.length()>2);
 
             //Populate Location Text
-            locationTxt.setText(placeName);
-        } catch(Exception e) {}
+            locationTitleTxt.setText(placeName);
+            locationAddressTxt.setText(address);
+
+        } catch(Exception e) {}//*/
     }
 }

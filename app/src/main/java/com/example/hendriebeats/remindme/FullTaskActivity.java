@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FullTaskActivity extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class FullTaskActivity extends AppCompatActivity {
         //Link all the textviews that will be replaced
         TextView titleTxt = (TextView) findViewById(R.id.titleTxt);
         TextView descriptionTxt = (TextView) findViewById(R.id.descriptionTxt);
-        TextView locationTxt = (TextView) findViewById(R.id.locationTxt);
+        TextView locationTxt = (TextView) findViewById(R.id.locationTitleTxt);
         TextView dateTxt = (TextView) findViewById(R.id.dateTxt);
         TextView timeTxt = (TextView) findViewById(R.id.timeTxt);
         TextView ownerNameTxt = (TextView) findViewById(R.id.ownerTxt);
@@ -74,8 +75,12 @@ public class FullTaskActivity extends AppCompatActivity {
                     builder.setMessage("Are you sure?");
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            db.deleteTask(db.getTaskById(Integer.parseInt(currentTaskId)));
-
+                            try{
+                                db.deleteTask(db.getTaskById(Integer.parseInt(currentTaskId)));
+                            }
+                            catch(Exception e){
+                                Toast.makeText(getApplicationContext(), "Failed to delete Task: "+e+".", Toast.LENGTH_SHORT).show();
+                            }
                             Intent i = new Intent(FullTaskActivity.this, TaskListActivity.class);
                             i.putExtra("currentUserId", String.valueOf(db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerId()));
                             startActivity(i);

@@ -55,7 +55,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         titleTxt = (EditText) findViewById(R.id.titleTxt);
         descriptionTxt = (EditText) findViewById(R.id.descriptionTxt);
-        locationTxt = (TextView) findViewById(R.id.locationTxt);
+        locationTxt = (TextView) findViewById(R.id.locationTitleTxt);
         dateTxt = (TextView) findViewById(R.id.dateTxt);
         timeTxt = (TextView) findViewById(R.id.timeTxt);
 
