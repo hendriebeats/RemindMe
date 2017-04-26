@@ -52,7 +52,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TASK_DATE = "date";
     private static final String KEY_TASK_TIME = "time";
     private static final String KEY_TASK_DESCRIPTION = "description";
-    private static final String KEY_TASK_LOCATION = "location";
     private static final String KEY_TASK_OWNER_ID = "ownerId";
     private static final String KEY_TASK_PLACE_ID = "placeId";
 
@@ -63,7 +62,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PLACE_LONGITUDE = "longitude";
     private static final String KEY_PLACE_ADDRESS = "address";
     private static final String KEY_PLACE_LOCALE = "locale";
-    private static final String KEY_PLACE_RADIUS = "locale";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -97,7 +95,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * |    KEY_TASK_DATE           TEXT                                |
      * |    KEY_TASK_TIME           TEXT                                |
      * |    KEY_TASK_DESCRIPTION    TEXT                                |
-     * |    KEY_TASK_LOCATION       TEXT                                |
      * |    KEY_TASK_OWNER_ID       INTEGER     Foreign (TABLE_USERS)   |
      * |    KEY_TASK_PLACE_ID       INTEGER     Foreign (TABLE_PLACES)  |
      * |                                                                |
@@ -135,7 +132,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_TASK_DATE + " TEXT, "
                 + KEY_TASK_TIME + " TEXT, "
                 + KEY_TASK_DESCRIPTION + " TEXT, "
-                + KEY_TASK_LOCATION + " TEXT, "
                 + KEY_TASK_OWNER_ID + " INTEGER, "
                 + KEY_TASK_PLACE_ID + " INTEGER, "
                 + "FOREIGN KEY (" + KEY_TASK_OWNER_ID + ") "
@@ -150,8 +146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_PLACE_LATITUDE + " TEXT, "
                 + KEY_PLACE_LONGITUDE + " TEXT, "
                 + KEY_PLACE_ADDRESS + " TEXT, "
-                + KEY_PLACE_LOCALE + " TEXT, "
-                + KEY_PLACE_RADIUS + " TEXT, "
+                + KEY_PLACE_LOCALE + " TEXT"
                 + ");";
 
         db.execSQL(CREATE_USERS_TABLE);
@@ -214,7 +209,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATE, task.getDate());
         values.put(KEY_TASK_TIME, task.getTime());
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
-        values.put(KEY_TASK_LOCATION, task.getLocation());
         values.put(KEY_TASK_OWNER_ID, task.getOwnerId()); // This gets the User ID of the current user.
         values.put(KEY_TASK_PLACE_ID, task.getPlaceId());
 
@@ -244,7 +238,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLACE_LONGITUDE , place.getLongitude());
         values.put(KEY_PLACE_ADDRESS , place.getAddress());
         values.put(KEY_PLACE_LOCALE , place.getLocale());
-        values.put(KEY_PLACE_RADIUS , place.getRadius());
 
         // Inserting Row
         db.insert(TABLE_PLACES, null, values);
@@ -309,7 +302,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_TASK_DATE,
                         KEY_TASK_TIME,
                         KEY_TASK_DESCRIPTION,
-                        KEY_TASK_LOCATION,
+                        KEY_PLACE_ID,
                         KEY_TASK_OWNER_ID},
                 KEY_TASK_ID + "=?",
                 new String[] { String.valueOf(id) },
@@ -318,15 +311,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Task task = new Task(
+                cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
-                cursor.getString(5),
-                cursor.getInt(6),
-                cursor.getInt(7));
+                cursor.getInt(5),
+                cursor.getInt(6)
+                );
         // return task
         return task;
+    }
+
+    public Task getMostRecentTask() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_TASKS, new String [] {"MAX(" + KEY_TASK_ID + ")"}, null, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        return getTaskById(cursor.getInt(0));
     }
 
     /**
@@ -343,22 +347,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
-                TABLE_USERS,
+                TABLE_PLACES,
                 new String[] {
                         KEY_PLACE_ID,
                         KEY_PLACE_TITLE,
                         KEY_PLACE_LATITUDE,
                         KEY_PLACE_LONGITUDE,
                         KEY_PLACE_ADDRESS,
-                        KEY_PLACE_LOCALE,
-                        KEY_PLACE_RADIUS},
+                        KEY_PLACE_LOCALE},
                 KEY_PLACE_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Place place = new Place(
-                cursor.getString(0),
+                cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
@@ -366,6 +369,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(5));
         // return place
         return place;
+    }
+
+    public Place getMostRecentPlace() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PLACES, new String [] {"MAX(" + KEY_PLACE_ID + ")"}, null, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        return getPlaceById(cursor.getInt(0));
     }
 
     /**
@@ -457,7 +470,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 task.setDate(cursor.getString(2));
                 task.setTime(cursor.getString(3));
                 task.setDescription(cursor.getString(4));
-                task.setLocation(cursor.getString(5));
+                task.setOwnerId(cursor.getInt(5));
+                task.setPlaceId(cursor.getInt(6));
                 // Adding task to list
                 taskList.add(task);
             } while (cursor.moveToNext());
@@ -512,11 +526,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATE, task.getDate());
         values.put(KEY_TASK_TIME, task.getTime());
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
-        values.put(KEY_TASK_LOCATION, task.getLocation());
 
         // updating row
         return db.update(TABLE_TASKS, values, KEY_TASK_ID + " = ?",
                 new String[] { String.valueOf(task.getId()) });
+    }
+
+    public int updatePlace(Place place) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_PLACE_TITLE, place.getTitle());
+        values.put(KEY_PLACE_LATITUDE, place.getLatitude());
+        values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
+        values.put(KEY_PLACE_ADDRESS, place.getAddress());
+        values.put(KEY_PLACE_LOCALE, place.getLocale());
+
+        // updating row
+        return db.update(TABLE_PLACES, values, KEY_PLACE_ID + " = ?",
+                new String[] { String.valueOf(place.getId()) });
     }
 
     /**
@@ -597,6 +625,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return count
         return cursor.getCount();
+    }
+
+    public void linkTaskToPlace() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Task updatedTask;
+
+        Cursor cursor = db.query(
+                TABLE_TASKS,
+                new String[] {
+                        KEY_TASK_ID,
+                        KEY_TASK_TITLE,
+                        KEY_TASK_DATE,
+                        KEY_TASK_TIME,
+                        KEY_TASK_DESCRIPTION,
+                        KEY_PLACE_ID,
+                        KEY_TASK_OWNER_ID},
+                KEY_TASK_ID + "=?",
+                new String[] { String.valueOf(getMostRecentTask().getId()) },
+                null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        updatedTask = new Task(
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getInt(5),
+                getMostRecentPlace().getId()
+        );
+        updateTask(updatedTask);
     }
 
 }

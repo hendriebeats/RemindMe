@@ -47,7 +47,11 @@ public class PlacePickerUpdateTaskActivity extends AppCompatActivity {
 
                 Intent i = new Intent(PlacePickerUpdateTaskActivity.this, UpdateTaskActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra("placeName", place.getName());
+                i.putExtra("placeTitle", place.getName());
+                i.putExtra("placeAddress", place.getAddress());
+                i.putExtra("placeLatitude", place.getLatLng().latitude);
+                i.putExtra("placeLongitude", place.getLatLng().longitude);
+                i.putExtra("placeLocale", place.getLocale());
                 i.putExtra("currentTaskId", currentTaskId);
                 startActivity(i);
             }

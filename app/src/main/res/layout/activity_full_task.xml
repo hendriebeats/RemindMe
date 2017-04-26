@@ -76,7 +76,7 @@
         android:layout_alignStart="@+id/dateLbl" />
 
     <TextView
-        android:id="@+id/locationTitleTxt"
+        android:id="@+id/placeTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/locationLbl"
@@ -91,8 +91,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/timeLbl"
         android:layout_alignBottom="@+id/timeLbl"
-        android:layout_alignLeft="@+id/locationTitleTxt"
-        android:layout_alignStart="@+id/locationTitleTxt"
+        android:layout_alignLeft="@+id/placeTitleTxt"
+        android:layout_alignStart="@+id/placeTitleTxt"
         android:text="exampleTime" />
 
     <TextView
@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:text="Date:"
         android:layout_marginTop="31dp"
-        android:layout_below="@+id/locationAddressTxt"
+        android:layout_below="@+id/placeAddressTxt"
         android:layout_alignLeft="@+id/locationLbl"
         android:layout_alignStart="@+id/locationLbl" />
 
@@ -132,8 +132,8 @@
         android:text="exampleDate"
         android:layout_alignBaseline="@+id/dateLbl"
         android:layout_alignBottom="@+id/dateLbl"
-        android:layout_alignLeft="@+id/locationAddressTxt"
-        android:layout_alignStart="@+id/locationAddressTxt" />
+        android:layout_alignLeft="@+id/placeAddressTxt"
+        android:layout_alignStart="@+id/placeAddressTxt" />
 
     <Button
         android:id="@+id/shareTaskBtn"
@@ -156,13 +156,13 @@
         android:layout_toEndOf="@+id/locationLbl" />
 
     <TextView
-        android:id="@+id/locationAddressTxt"
+        android:id="@+id/placeAddressTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="locationAddress"
         android:layout_marginTop="21dp"
-        android:layout_below="@+id/locationTitleTxt"
-        android:layout_alignLeft="@+id/locationTitleTxt"
-        android:layout_alignStart="@+id/locationTitleTxt" />
+        android:layout_below="@+id/placeTitleTxt"
+        android:layout_alignLeft="@+id/placeTitleTxt"
+        android:layout_alignStart="@+id/placeTitleTxt" />
 
 </RelativeLayout>
