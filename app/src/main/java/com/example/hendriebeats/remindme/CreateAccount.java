@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import static com.example.hendriebeats.remindme.Password.hashPassword;
+
 public class CreateAccount extends AppCompatActivity {
 
     public EditText nameTxt;
@@ -72,7 +74,7 @@ public class CreateAccount extends AppCompatActivity {
                         name,
                         phone,
                         email,
-                        pass
+                        hashPassword(pass)
                 ));
 
                 //Clear values if create account is successful

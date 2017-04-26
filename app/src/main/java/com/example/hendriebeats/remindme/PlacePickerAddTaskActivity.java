@@ -12,7 +12,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 public class PlacePickerAddTaskActivity extends AppCompatActivity {
 
     int PLACE_PICKER_REQUEST;
-    String title, description, date, time;
+    String title, description, date, time, currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class PlacePickerAddTaskActivity extends AppCompatActivity {
             description = extras.getString("description");
             date = extras.getString("date");
             time = extras.getString("time");
+            currentUserId = extras.getString("currentUserId");
         }
 
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
@@ -55,6 +56,7 @@ public class PlacePickerAddTaskActivity extends AppCompatActivity {
                 i.putExtra("description", description);
                 i.putExtra("date", date);
                 i.putExtra("time", time);
+                i.putExtra("currentUserId", currentUserId);
                 startActivity(i);
             }
         }

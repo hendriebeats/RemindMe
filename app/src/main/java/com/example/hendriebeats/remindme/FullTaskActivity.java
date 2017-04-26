@@ -1,5 +1,7 @@
 package com.example.hendriebeats.remindme;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +13,7 @@ public class FullTaskActivity extends AppCompatActivity {
 
     public DatabaseHandler db;
     String currentTaskId;
-    Button updateTaskBtn;
-    Button shareTaskBtn;
+    Button updateTaskBtn, deleteTaskBtn, shareTaskBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class FullTaskActivity extends AppCompatActivity {
         //Link updateButton
         updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
         shareTaskBtn = (Button) findViewById(R.id.shareTaskBtn);
+        deleteTaskBtn = (Button) findViewById(R.id.deleteTaskBtn);
 
         //Link all the textviews that will be replaced
         TextView titleTxt = (TextView) findViewById(R.id.titleTxt);
@@ -61,6 +63,37 @@ public class FullTaskActivity extends AppCompatActivity {
                     Intent i = new Intent(FullTaskActivity.this, UpdateTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);
                     startActivity(i);
+                }});
+
+        //On Click Listener
+        deleteTaskBtn.setOnClickListener(
+                new View.OnClickListener(){public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FullTaskActivity.this);
+
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure?");
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.deleteTask(db.getTaskById(Integer.parseInt(currentTaskId)));
+
+                            Intent i = new Intent(FullTaskActivity.this, TaskListActivity.class);
+                            i.putExtra("currentUserId", String.valueOf(db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerId()));
+                            startActivity(i);
+                        }
+                    });
+
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+
+
                 }});
 
         // Will ask to open an existing service - covers requirement g for final project
