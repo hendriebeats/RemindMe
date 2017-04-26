@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Update Task"
-        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/deleteTaskBtn"
+        android:layout_alignBottom="@+id/deleteTaskBtn"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -19,33 +20,30 @@
         android:id="@+id/titleLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="99dp"
         android:text="Title:"
+        android:layout_marginTop="38dp"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/descriptionLbl"
-        android:layout_alignStart="@+id/descriptionLbl" />
+        android:layout_alignRight="@+id/shareTaskBtn"
+        android:layout_alignEnd="@+id/shareTaskBtn" />
 
     <TextView
         android:id="@+id/titleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="exampleTitle"
-        android:layout_alignBaseline="@+id/titleLbl"
-        android:layout_alignBottom="@+id/titleLbl"
-        android:layout_alignLeft="@+id/descriptionTxt"
-        android:layout_alignStart="@+id/descriptionTxt" />
+        android:layout_above="@+id/descriptionLbl"
+        android:layout_toLeftOf="@+id/updateTaskBtn"
+        android:layout_toStartOf="@+id/updateTaskBtn" />
 
     <TextView
         android:id="@+id/descriptionLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="58dp"
-        android:layout_marginStart="58dp"
         android:layout_marginTop="30dp"
         android:text="Description:"
         android:layout_below="@+id/titleLbl"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/locationLbl"
+        android:layout_alignStart="@+id/locationLbl" />
 
     <TextView
         android:id="@+id/descriptionTxt"
@@ -54,40 +52,38 @@
         android:text="exampleDescription"
         android:layout_alignBaseline="@+id/descriptionLbl"
         android:layout_alignBottom="@+id/descriptionLbl"
-        android:layout_toRightOf="@+id/descriptionLbl"
-        android:layout_toEndOf="@+id/descriptionLbl"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp" />
+        android:layout_alignLeft="@+id/titleTxt"
+        android:layout_alignStart="@+id/titleTxt" />
 
     <TextView
         android:id="@+id/locationLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="28dp"
         android:text="Location:"
         android:layout_below="@+id/descriptionLbl"
-        android:layout_alignLeft="@+id/descriptionLbl"
-        android:layout_alignStart="@+id/descriptionLbl" />
+        android:layout_alignLeft="@+id/titleLbl"
+        android:layout_alignStart="@+id/titleLbl" />
 
     <TextView
         android:id="@+id/timeLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:text="Time:"
         android:layout_below="@+id/dateLbl"
         android:layout_alignLeft="@+id/dateLbl"
         android:layout_alignStart="@+id/dateLbl" />
 
     <TextView
-        android:id="@+id/locationTxt"
+        android:id="@+id/locationTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="exampleLocation"
         android:layout_alignBaseline="@+id/locationLbl"
         android:layout_alignBottom="@+id/locationLbl"
         android:layout_alignLeft="@+id/descriptionTxt"
-        android:layout_alignStart="@+id/descriptionTxt" />
+        android:layout_alignStart="@+id/descriptionTxt"
+        android:text="locationTitle" />
 
     <TextView
         android:id="@+id/timeTxt"
@@ -95,8 +91,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/timeLbl"
         android:layout_alignBottom="@+id/timeLbl"
-        android:layout_alignLeft="@+id/locationTxt"
-        android:layout_alignStart="@+id/locationTxt"
+        android:layout_alignLeft="@+id/locationTitleTxt"
+        android:layout_alignStart="@+id/locationTitleTxt"
         android:text="exampleTime" />
 
     <TextView
@@ -124,35 +120,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date:"
-        android:layout_below="@+id/locationLbl"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/locationAddressTxt"
         android:layout_alignLeft="@+id/locationLbl"
-        android:layout_alignStart="@+id/locationLbl"
-        android:layout_marginTop="23dp" />
+        android:layout_alignStart="@+id/locationLbl" />
 
     <TextView
         android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="exampleDate"
+        android:layout_alignBaseline="@+id/dateLbl"
         android:layout_alignBottom="@+id/dateLbl"
-        android:layout_alignLeft="@+id/locationTxt"
-        android:layout_alignStart="@+id/locationTxt"
-        android:text="exampleDate" />
+        android:layout_alignLeft="@+id/locationAddressTxt"
+        android:layout_alignStart="@+id/locationAddressTxt" />
 
     <Button
         android:id="@+id/shareTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/locationLbl"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/locationLbl"
-        android:text="@string/share_task" />
+        android:text="@string/share_task"
+        android:layout_below="@+id/ownerLbl"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="38dp" />
 
     <Button
         android:id="@+id/deleteTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Delete Task" />
+        android:text="Delete Task"
+        android:layout_alignBaseline="@+id/shareTaskBtn"
+        android:layout_alignBottom="@+id/shareTaskBtn"
+        android:layout_toRightOf="@+id/locationLbl"
+        android:layout_toEndOf="@+id/locationLbl" />
+
+    <TextView
+        android:id="@+id/locationAddressTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="locationAddress"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/locationTitleTxt"
+        android:layout_alignLeft="@+id/locationTitleTxt"
+        android:layout_alignStart="@+id/locationTitleTxt" />
 
 </RelativeLayout>

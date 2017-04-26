@@ -63,6 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PLACE_LONGITUDE = "longitude";
     private static final String KEY_PLACE_ADDRESS = "address";
     private static final String KEY_PLACE_LOCALE = "locale";
+    private static final String KEY_PLACE_RADIUS = "locale";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -150,6 +151,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_PLACE_LONGITUDE + " TEXT, "
                 + KEY_PLACE_ADDRESS + " TEXT, "
                 + KEY_PLACE_LOCALE + " TEXT, "
+                + KEY_PLACE_RADIUS + " TEXT, "
                 + ");";
 
         db.execSQL(CREATE_USERS_TABLE);
@@ -242,6 +244,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLACE_LONGITUDE , place.getLongitude());
         values.put(KEY_PLACE_ADDRESS , place.getAddress());
         values.put(KEY_PLACE_LOCALE , place.getLocale());
+        values.put(KEY_PLACE_RADIUS , place.getRadius());
 
         // Inserting Row
         db.insert(TABLE_PLACES, null, values);
@@ -347,7 +350,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_PLACE_LATITUDE,
                         KEY_PLACE_LONGITUDE,
                         KEY_PLACE_ADDRESS,
-                        KEY_PLACE_LOCALE},
+                        KEY_PLACE_LOCALE,
+                        KEY_PLACE_RADIUS},
                 KEY_PLACE_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -358,7 +362,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getString(4));
+                cursor.getString(4),
+                cursor.getString(5));
         // return place
         return place;
     }
@@ -544,7 +549,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_TASKS, KEY_TASK_ID + " = ?",
                 new String[] { String.valueOf(task.getId()) });
 
-        //db.delete(TABLE_PLACES, KEY_PLACE_ID + " = ?", new String[] { String.valueOf(task.getPlaceId()) }); // IDK if this will work.
+        try{
+            db.delete(TABLE_PLACES, KEY_PLACE_ID + " = ?", new String[]
+                    { String.valueOf(task.getPlaceId()) }); // IDK if this will work.
+        }catch(Exception e){
+
+        }
+
+
         db.close();
     }
 
