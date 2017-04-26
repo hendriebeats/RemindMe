@@ -12,6 +12,19 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * DatabaseHandler
+ *
+ * This class establishes the database for the application
+ * as well as all of the associated tables and queries that
+ * may be used to create, modify, or delete information.
+ *
+ * This class extends SQLiteOpenHelper
+ *
+ * @extends SQLiteOpenHelper
+ *
+ * @since
+ */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
@@ -56,7 +69,55 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //3rd argument to be passed is CursorFactory instance
     }
 
-    // Creating Tables
+    /**
+     * onCreate()
+     *
+     * This method instantiates the tables needed for the database
+     * and creates columns to hold the associated data.
+     *
+     * Tables are designed as follows:
+     *
+     * ------------------------------------------------------------------
+     * |    TABLE_USERS                                                 |
+     * ------------------------------------------------------------------
+     * |    KEY_USER_ID             INTEGER     Primary                 |
+     * |    KEY_USER_NAME           TEXT                                |
+     * |    KEY_USER_PH_NO          TEXT                                |
+     * |    KEY_USER_EMAIL          TEXT                                |
+     * |    KEY_USER_PASS           TEXT                                |
+     * |                                                                |
+     * ------------------------------------------------------------------
+     *
+     * ------------------------------------------------------------------
+     * |    TABLE_TASKS                                                 |
+     * ------------------------------------------------------------------
+     * |    KEY_TASK_ID             INTEGER     Primary                 |
+     * |    KEY_TASK_TITLE          TEXT                                |
+     * |    KEY_TASK_DATE           TEXT                                |
+     * |    KEY_TASK_TIME           TEXT                                |
+     * |    KEY_TASK_DESCRIPTION    TEXT                                |
+     * |    KEY_TASK_LOCATION       TEXT                                |
+     * |    KEY_TASK_OWNER_ID       INTEGER     Foreign (TABLE_USERS)   |
+     * |    KEY_TASK_PLACE_ID       INTEGER     Foreign (TABLE_PLACES)  |
+     * |                                                                |
+     * ------------------------------------------------------------------
+     *
+     * ------------------------------------------------------------------
+     * |    TABLE_USERS                                                 |
+     * ------------------------------------------------------------------
+     * |    KEY_PLACE_ID            INTEGER     Primary                 |
+     * |    KEY_PLACE_TITLE         TEXT                                |
+     * |    KEY_PLACE_LATITUDE      TEXT                                |
+     * |    KEY_PLACE_LONGITUDE     TEXT                                |
+     * |    KEY_PLACE_ADDRESS       TEXT                                |
+     * |    KEY_PLACE_LOCALE        TEXT                                |
+     * |                                                                |
+     * ------------------------------------------------------------------
+     *
+     * @param db (SQLiteDatabase)
+     *
+     * @since
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
@@ -108,7 +169,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Adding new user
+    /**
+     * addUser()
+     *
+     * This method accepts a User object containing associated information
+     * and adds the user into the database.
+     *
+     * @param user (User)
+     * @since
+     */
     public void addUser(User user) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -125,7 +194,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // Adding new task
+    /**
+     * addTask()
+     *
+     * This method accepts a Task object containing associated information
+     * and adds the task into the database.
+     *
+     * @param task (Task)
+     * @since
+     */
     public void addTask(Task task) {
         Log.d(TAG, "adding Task...");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -146,7 +223,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // Adding new place
+    /**
+     * addPlace()
+     *
+     * This method accepts a Place object containing associated information
+     * and adds the place(location) into the database.
+     *
+     * @param place (Place)
+     * @since
+     */
     public void addPlace(Place place) {
         Log.d(TAG, "adding Place...");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -164,7 +249,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // Getting single user
+    /**
+     * getUserById()
+     *
+     * This method accepts the id of a user object as an int
+     * and returns the associated User object.
+     *
+     * @param id (int)
+     * @return user (User)
+     * @since
+     */
     public User getUserById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -191,7 +285,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return user;
     }
 
-    // Getting single task
+    /**
+     * getTaskById()
+     *
+     * This method accepts the id of a Task object as an int
+     * and returns the associated Task object.
+     *
+     * @param id (int)
+     * @return task (Task)
+     * @since
+     */
     public Task getTaskById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -223,7 +326,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return task;
     }
 
-    // Getting single place
+    /**
+     * getPlaceById()
+     *
+     * This method accepts the id of a Place object as an int
+     * and returns the associated Place object.
+     *
+     * @param id (int)
+     * @return place (Place)
+     * @since
+     */
     public Place getPlaceById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -251,7 +363,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return place;
     }
 
-    // Getting single user
+    /**
+     * getUserByEmail()
+     *
+     * This method accepts the email of a user object as String
+     * and returns the associated User object.
+     *
+     * @param email (String)
+     * @return user (User)
+     * @since
+     */
     public User getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -279,7 +400,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return user;
     }
 
-    // Getting All Task Titles
+    /**
+     * getAllTaskTitlesByUser()
+     *
+     * This method accepts the id of a user object as an int
+     * and returns all of the titles of the tasks that are
+     * associated with that user and returns that list within
+     * an ArrayList<String>.
+     *
+     * @param userId (int)
+     * @return titleList (ArrayList<String>)
+     * @since
+     */
     public ArrayList<String> getAllTaskTitlesByUser(int userId) {
         ArrayList<Task> taskList = getAllTasksByUser(userId);
         ArrayList<String> titleList = new ArrayList<>();
@@ -290,7 +422,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return titleList;
     }
 
-    // Getting All Tasks
+    /**
+     * getAllTasksByUser()
+     *
+     * This method accepts the id of a user object as an int
+     * and returns all of the tasks that are associated with
+     * that user and returns that list of Task objects within
+     * an ArrayList<Task>.
+     *
+     * @param userId (int)
+     * @return taskList (ArrayList<String>)
+     * @since
+     */
     public ArrayList<Task> getAllTasksByUser(int userId) {
         ArrayList<Task> taskList = new ArrayList<Task>();
         // Select All Query
@@ -318,7 +461,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return taskList;
     }
 
-    // Updating single user
+    /**
+     * updateUser()
+     *
+     * This method accepts a User object and updates the associated
+     * information within the database.
+     *
+     * @param user (User)
+     * @return db.update(TABLE_USERS, values, KEY_USER_ID + " = ?",
+                new String[] { String.valueOf(user.getId()) })
+     *          success? (int)
+     * @since
+     */
     public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -333,7 +487,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(user.getId()) });
     }
 
-    // Updating single task
+    /**
+     * updateTask()
+     *
+     * This method accepts a Task object and updates the associated
+     * information within the database.
+     *
+     * @param task (Task)
+     * @return db.update(TABLE_TASKS, values, KEY_TASK_ID + " = ?",
+            new String[] { String.valueOf(task.getId()) })
+     *          success? (int)
+     * @since
+     */
     public int updateTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -349,7 +514,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(task.getId()) });
     }
 
-    // Deleting single user
+    /**
+     * deleteUser()
+     *
+     * This method accepts a User object and deletes the associated
+     * information within the database.
+     *
+     * @param user (User)
+     * @since
+     */
     public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS, KEY_USER_ID + " = ?",
@@ -357,7 +530,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Deleting single task
+    /**
+     * deleteTask()
+     *
+     * This method accepts a Task object and deletes the associated
+     * information within the database.
+     *
+     * @param task (Task)
+     * @since
+     */
     public void deleteTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TASKS, KEY_TASK_ID + " = ?",
@@ -367,7 +548,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Deleting single place (try not to use this, will probably crash the app)
+    /**
+     * deletePlace()
+     *
+     * This method accepts a Place object and deletes the associated
+     * information within the database.
+     *
+     * Note: Using this method may cause the application to crash
+     *
+     * @param place (Place)
+     * @since
+     */
     public void deletePlace(Place place) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PLACES, KEY_PLACE_ID + " = ?",
@@ -375,7 +566,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Getting task count
+    /**
+     * getTasksCount()
+     *
+     * This method returns the total number of tasks
+     * within the database for all users as an int.
+     *
+     * @return cursor.getCount() (int)
+     * @since
+     */
     public int getTasksCount() {
         List<Task> taskList = new ArrayList<Task>();
         // Select All Query
