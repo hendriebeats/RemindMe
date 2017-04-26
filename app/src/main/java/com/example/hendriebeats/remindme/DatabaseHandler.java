@@ -302,7 +302,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_TASK_DATE,
                         KEY_TASK_TIME,
                         KEY_TASK_DESCRIPTION,
-                        KEY_PLACE_ID,
+                        KEY_TASK_PLACE_ID,
                         KEY_TASK_OWNER_ID},
                 KEY_TASK_ID + "=?",
                 new String[] { String.valueOf(id) },

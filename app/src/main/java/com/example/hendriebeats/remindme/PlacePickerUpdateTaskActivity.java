@@ -3,6 +3,7 @@ package com.example.hendriebeats.remindme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -12,7 +13,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 public class PlacePickerUpdateTaskActivity extends AppCompatActivity {
 
     int PLACE_PICKER_REQUEST;
-    String currentTaskId;
+    String currentTaskId, title, description, date, time, currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,14 @@ public class PlacePickerUpdateTaskActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentTaskId = extras.getString("currentTaskId");
+            currentUserId = extras.getString("currentUserId");
+            title = extras.getString("title");
+            description = extras.getString("description");
+            date = extras.getString("date");
+            time = extras.getString("time");
         }
+
+        Toast.makeText(getApplicationContext(), currentUserId, Toast.LENGTH_SHORT).show();
 
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
         // Start the Intent by requesting a result, identified by a request code.
@@ -47,12 +55,24 @@ public class PlacePickerUpdateTaskActivity extends AppCompatActivity {
 
                 Intent i = new Intent(PlacePickerUpdateTaskActivity.this, UpdateTaskActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //place info
                 i.putExtra("placeTitle", place.getName());
                 i.putExtra("placeAddress", place.getAddress());
                 i.putExtra("placeLatitude", place.getLatLng().latitude);
                 i.putExtra("placeLongitude", place.getLatLng().longitude);
                 i.putExtra("placeLocale", place.getLocale());
+
+                //task info that is being updated
+                i.putExtra("title", title);
+                i.putExtra("description", description);
+                i.putExtra("date", date);
+                i.putExtra("time", time);
+
+                i.putExtra("currentUserId", currentUserId);
                 i.putExtra("currentTaskId", currentTaskId);
+
+                //to tell the next activity if the place has been updated
+                i.putExtra("isUpdated", "yes");
                 startActivity(i);
             }
         }

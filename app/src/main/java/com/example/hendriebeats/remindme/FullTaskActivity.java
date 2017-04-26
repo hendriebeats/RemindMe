@@ -13,9 +13,9 @@ import android.widget.Toast;
 public class FullTaskActivity extends AppCompatActivity {
 
     public DatabaseHandler db;
-    String currentTaskId;
+    String currentTaskId, currentUserId;
     Button updateTaskBtn, deleteTaskBtn, shareTaskBtn;
-    TextView placeTitleTxt, placeAddressTxt, titleTxt, descriptionTxt, dateTxt, timeTxt, ownerNameTxt;
+    TextView placeTitleTxt, placeAddressTxt, titleTxt, descriptionTxt, dateTxt, timeTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,16 @@ public class FullTaskActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentTaskId = extras.getString("currentTaskId");
+            currentUserId = extras.getString("currentUserId");
         }
+
+        //pulling out values
+        final String title = db.getTaskById(Integer.parseInt(currentTaskId)).getTitle();
+        final String description = db.getTaskById(Integer.parseInt(currentTaskId)).getDescription();
+        final String date = db.getTaskById(Integer.parseInt(currentTaskId)).getDate();
+        final String time = db.getTaskById(Integer.parseInt(currentTaskId)).getTime();
+        final String placeTitle = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle();
+        final String placeAddress = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress();
 
         //Link updateButton
         updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
@@ -42,16 +51,6 @@ public class FullTaskActivity extends AppCompatActivity {
         placeAddressTxt = (TextView) findViewById(R.id.placeAddressTxt);
         dateTxt = (TextView) findViewById(R.id.dateTxt);
         timeTxt = (TextView) findViewById(R.id.timeTxt);
-        ownerNameTxt = (TextView) findViewById(R.id.ownerTxt);
-
-        //pulling out values
-        final String title = db.getTaskById(Integer.parseInt(currentTaskId)).getTitle();
-        final String description = db.getTaskById(Integer.parseInt(currentTaskId)).getDescription();
-        final String date = db.getTaskById(Integer.parseInt(currentTaskId)).getDate();
-        final String time = db.getTaskById(Integer.parseInt(currentTaskId)).getTime();
-        final String ownerName = db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerName(this);
-        final String placeTitle = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle();
-        final String placeAddress = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress();
 
         //Set all the displayed fields equal to the current Task's values
         titleTxt.setText(title);
@@ -60,13 +59,19 @@ public class FullTaskActivity extends AppCompatActivity {
         placeAddressTxt.setText(placeAddress);
         dateTxt.setText(date);
         timeTxt.setText(time);
-        ownerNameTxt.setText(ownerName);
 
         //On Click Listener
         updateTaskBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     Intent i = new Intent(FullTaskActivity.this, UpdateTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);
+                    i.putExtra("currentUserId", currentUserId);
+
+                    //send textView values to locationPicker
+                    i.putExtra("title", titleTxt.getText().toString());
+                    i.putExtra("description", descriptionTxt.getText().toString());
+                    i.putExtra("date", dateTxt.getText().toString());
+                    i.putExtra("time", timeTxt.getText().toString());
                     startActivity(i);
                 }});
 
@@ -86,11 +91,10 @@ public class FullTaskActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Failed to delete Task: "+e+".", Toast.LENGTH_SHORT).show();
                             }
                             Intent i = new Intent(FullTaskActivity.this, TaskListActivity.class);
-                            i.putExtra("currentUserId", String.valueOf(db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerId()));
+                            i.putExtra("currentUserId", String.valueOf(currentUserId));
                             startActivity(i);
                         }
                     });
-
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -100,9 +104,6 @@ public class FullTaskActivity extends AppCompatActivity {
 
                     AlertDialog alert = builder.create();
                     alert.show();
-
-
-
                 }});
 
         // Will ask to open an existing service - covers requirement g for final project
@@ -110,7 +111,7 @@ public class FullTaskActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getTaskReport(ownerName, title, placeTitle));
+                i.putExtra(Intent.EXTRA_TEXT, getTaskReport(title, placeTitle));
                 i.putExtra(Intent.EXTRA_SUBJECT,
                         getString(R.string.task_report_subject));
                 startActivity(i);
@@ -120,10 +121,8 @@ public class FullTaskActivity extends AppCompatActivity {
 
     // Used to generate a sendable task report via chosen existing service.
     // The exact message that is generatated should be changed, this is just showing a basic placeholder
-    private String getTaskReport(String ownerName, String title, String location){
-        String report = getString(R.string.task_report,
-                ownerName, title, location);
-        return report;
+    private String getTaskReport(String title, String location){
+        return "I am doing " + title + " at " + location + ". Want to join me?";
     }
 
 }

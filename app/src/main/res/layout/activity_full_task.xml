@@ -21,10 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title:"
-        android:layout_marginTop="38dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/shareTaskBtn"
         android:layout_alignRight="@+id/shareTaskBtn"
-        android:layout_alignEnd="@+id/shareTaskBtn" />
+        android:layout_alignEnd="@+id/shareTaskBtn"
+        android:layout_marginRight="36dp"
+        android:layout_marginEnd="36dp" />
 
     <TextView
         android:id="@+id/titleTxt"
@@ -32,8 +34,8 @@
         android:layout_height="wrap_content"
         android:text="exampleTitle"
         android:layout_above="@+id/descriptionLbl"
-        android:layout_toLeftOf="@+id/updateTaskBtn"
-        android:layout_toStartOf="@+id/updateTaskBtn" />
+        android:layout_alignLeft="@+id/deleteTaskBtn"
+        android:layout_alignStart="@+id/deleteTaskBtn" />
 
     <TextView
         android:id="@+id/descriptionLbl"
@@ -95,25 +97,6 @@
         android:layout_alignStart="@+id/placeTitleTxt"
         android:text="exampleTime" />
 
-    <TextView
-        android:id="@+id/ownerLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/timeLbl"
-        android:layout_alignStart="@+id/timeLbl"
-        android:layout_below="@+id/timeLbl"
-        android:layout_marginTop="32dp"
-        android:text="Owner" />
-
-    <TextView
-        android:id="@+id/ownerTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dateTxt"
-        android:layout_alignStart="@+id/dateTxt"
-        android:layout_alignTop="@+id/ownerLbl"
-        android:text="exampleOwner" />
-
 
     <TextView
         android:id="@+id/dateLbl"
@@ -140,20 +123,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/share_task"
-        android:layout_below="@+id/ownerLbl"
+        android:layout_alignBaseline="@+id/deleteTaskBtn"
+        android:layout_alignBottom="@+id/deleteTaskBtn"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/deleteTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete Task"
-        android:layout_alignBaseline="@+id/shareTaskBtn"
-        android:layout_alignBottom="@+id/shareTaskBtn"
-        android:layout_toRightOf="@+id/locationLbl"
-        android:layout_toEndOf="@+id/locationLbl" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp" />
 
     <TextView
         android:id="@+id/placeAddressTxt"

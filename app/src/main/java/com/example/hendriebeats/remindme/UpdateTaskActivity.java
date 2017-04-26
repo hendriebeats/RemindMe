@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UpdateTaskActivity extends AppCompatActivity {
 
     EditText title, description, dateTxt, timeTxt;
     TextView PlaceTitleTxt, PlaceAddressTxt;
     Button changeLocationBtn, updateBtn;
-    String currentTaskId, placeTitle, placeAddress, placeLatitude, placeLongitude, placeLocale;
-    int currentUserId;
+    String currentTaskId, placeTitle, placeAddress, placeLatitude, placeLongitude, placeLocale, isUpdated, currentUserId;
     public DatabaseHandler db;
 
 
@@ -29,6 +29,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentTaskId = extras.getString("currentTaskId");
+            currentUserId = extras.getString("currentUserId");
 
             //Get Location Elements
             placeTitle = extras.getString("placeTitle");
@@ -36,9 +37,8 @@ public class UpdateTaskActivity extends AppCompatActivity {
             placeLatitude = extras.getString("placeLatitude");
             placeLongitude = extras.getString("placeLongitude");
             placeLocale = extras.getString("placeLocale");
+            isUpdated = extras.getString("isUpdated");
         }
-
-        currentUserId = db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerId();
 
         title = (EditText) findViewById(R.id.titleTxt);
         description = (EditText) findViewById(R.id.descriptionTxt);
@@ -59,16 +59,16 @@ public class UpdateTaskActivity extends AppCompatActivity {
         PlaceTitleTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle());
         PlaceAddressTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress());
 
+        Toast.makeText(getApplicationContext(), currentUserId, Toast.LENGTH_SHORT).show();
 
         //Update Location field when updated via Place Picker
         try{
-            if(placeLatitude.length()>1); //Doesn't work yet
-
-            //Populate Location Text
-            PlaceTitleTxt.setText(placeTitle);
-            PlaceAddressTxt.setText(placeAddress);
-
+            if(isUpdated.equals("yes")){
+                PlaceTitleTxt.setText(placeTitle);
+                PlaceAddressTxt.setText(placeAddress);
+            }
         } catch(Exception e) {}
+
 
 
         //On Click Listener
@@ -76,6 +76,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
                 new View.OnClickListener(){public void onClick(View view) {
                     Intent i = new Intent(UpdateTaskActivity.this, PlacePickerUpdateTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);
+                    i.putExtra("currentUserId", currentUserId);
                     startActivity(i);
                 }});
 
@@ -86,7 +87,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
                     Task updatedTask = new Task();
                     Place updatedPlace = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getId());
                     updatedTask.setId(Integer.parseInt(currentTaskId));
-                    updatedTask.setOwnerId(currentUserId);
+                    updatedTask.setOwnerId(Integer.parseInt(currentUserId));
                     updatedTask.setDescription(description.getText().toString());
                     updatedTask.setDate(dateTxt.getText().toString());
                     updatedTask.setTime(timeTxt.getText().toString());
@@ -105,6 +106,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
 
                     Intent i = new Intent(UpdateTaskActivity.this, FullTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);
+                    i.putExtra("currentUserId", currentUserId);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }});
