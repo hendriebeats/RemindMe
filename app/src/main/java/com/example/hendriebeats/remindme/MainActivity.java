@@ -1,16 +1,14 @@
 package com.example.hendriebeats.remindme;
 
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static android.content.ContentValues.TAG;
+import static com.example.hendriebeats.remindme.Password.checkPassword;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public Button submitBtn;
     public Button createAccountBtn;
     public DatabaseHandler db;
+    private static int workload = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +52,15 @@ public class MainActivity extends AppCompatActivity {
         try{
             User validate = db.getUserByEmail(emailTxt.getText().toString());
 
-            if(validate.getPassword().equals(passwordTxt.getText().toString())){
+            if(checkPassword(passwordTxt.getText().toString(), validate.getPassword())){
                 Intent i=new Intent(MainActivity.this, TaskListActivity.class);
                 i.putExtra("currentUserId", Integer.toString(validate.getId()));
                 startActivity(i);
             } else {
-                Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "An account does not exist with that email.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "An account does not exist with that email.", Toast.LENGTH_SHORT).show();
         }
     }
 

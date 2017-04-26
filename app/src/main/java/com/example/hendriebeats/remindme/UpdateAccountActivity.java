@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import static com.example.hendriebeats.remindme.Password.hashPassword;
+
 public class UpdateAccountActivity extends AppCompatActivity {
 
     public EditText nameTxt;
@@ -84,7 +86,7 @@ public class UpdateAccountActivity extends AppCompatActivity {
                 user.setPhoneNumber(phone);
                 user.setEmail(email);
                 if(!pass.isEmpty())
-                    user.setPassword(pass);
+                    user.setPassword(hashPassword(pass));
 
                 Log.d("Update: ", "Updating ..");
                 db.updateUser(user);

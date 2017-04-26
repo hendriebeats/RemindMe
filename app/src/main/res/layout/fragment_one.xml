@@ -30,7 +30,7 @@
         android:id="@+id/descriptionLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="13dp"
         android:text="Description:"
         android:layout_below="@+id/titleTxt"
         android:layout_alignLeft="@+id/titleTxt"
@@ -51,26 +51,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location Name"
-        android:layout_marginTop="18dp"
-        android:layout_below="@+id/dateTxt"
-        android:layout_alignLeft="@+id/descriptionTxt"
-        android:layout_alignStart="@+id/descriptionTxt" />
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/timeTxt"
+        android:layout_alignLeft="@+id/locationTxt"
+        android:layout_alignStart="@+id/locationTxt" />
 
     <TextView
         android:id="@+id/locationTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/locationLbl"
-        android:layout_alignStart="@+id/locationLbl"
+        android:layout_marginTop="11dp"
+        android:text="exampleLocation"
         android:layout_below="@+id/locationLbl"
-        android:layout_marginTop="18dp"
-        android:text="exampleLocation" />
+        android:layout_alignLeft="@+id/timeTxt"
+        android:layout_alignStart="@+id/timeTxt" />
 
     <TextView
         android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:text="exampleDate"
         android:layout_below="@+id/dateLbl"
         android:layout_alignLeft="@+id/dateLbl"
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time:"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/dateTxt"
         android:layout_alignLeft="@+id/dateTxt"
         android:layout_alignStart="@+id/dateTxt" />
@@ -101,18 +101,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="exampleTime"
+        android:layout_marginTop="11dp"
         android:layout_below="@+id/timeLbl"
-        android:layout_alignLeft="@+id/timeLbl"
-        android:layout_alignStart="@+id/timeLbl"
-        android:layout_marginTop="23dp" />
+        android:layout_alignRight="@+id/dateTxt"
+        android:layout_alignEnd="@+id/dateTxt" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="Add Task"
         android:layout_below="@+id/locationTxt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="Add Task" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

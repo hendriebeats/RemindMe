@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,6 +64,7 @@ public class AddTaskActivity extends AppCompatActivity {
         descriptionTxt.setText(description);
         dateTxt.setText(date);
         timeTxt.setText(time);
+        locationTxt.setText(placeName);
 
         //Set up time picker
 
@@ -99,14 +101,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
         };
 
-        //Update Location field when updated via Place Picker
-        try{
-            if(placeName.length()>2);
-
-            //Populate Location Text
-            locationTxt.setText(placeName);
-        } catch(Exception e) {}
-
         //On Click Listener
         locationBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
@@ -118,6 +112,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     i.putExtra("description", descriptionTxt.getText().toString());
                     i.putExtra("date", dateTxt.getText().toString());
                     i.putExtra("time", timeTxt.getText().toString());
+                    i.putExtra("currentUserId", currentUserId);
 
                     startActivity(i);
                 }});
@@ -140,6 +135,13 @@ public class AddTaskActivity extends AppCompatActivity {
                     newTask.setTitle(titleTxt.getText().toString());
 
                     db.addTask(newTask);
+
+                    Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_LONG).show();
+
+                    Intent i = new Intent(AddTaskActivity.this, TaskListActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra("currentUserId", currentUserId);
+                    startActivity(i);
                 }});
     }
 
@@ -157,25 +159,3 @@ public class AddTaskActivity extends AppCompatActivity {
         dateTxt.setText(sdf.format(myCalendar.getTime()));
     }
 }
-
-/*
-// perform click event listener on edit text
-        time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                time.setText(selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-
-            }
-        });
- */
