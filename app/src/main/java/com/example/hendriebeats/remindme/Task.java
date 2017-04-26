@@ -12,16 +12,18 @@ public class Task {
     private String description;
     private String location;
     private int ownerId;
+    private int placeId;
 
     public DatabaseHandler db;
 
-    public Task(String title, String date, String time, String description, String location, int ownerId) {
+    public Task(String title, String date, String time, String description, String location, int ownerId, int placeId) {
         this.title = title;
         this.date = date;
         this.time = time;
         this.description = description;
         this.location = location;
         this.ownerId = ownerId;
+        this.placeId = placeId;
     }
 
     public Task() {
@@ -59,6 +61,8 @@ public class Task {
         db = new DatabaseHandler(context);
         return db.getUserById(getOwnerId())
                 .getName();}
+
+    public int getPlaceId() { return placeId; }
 
     public void setId(int id) {
         this.id = id;
