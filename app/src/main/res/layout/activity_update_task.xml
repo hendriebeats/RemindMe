@@ -90,8 +90,8 @@
         android:inputType="textPersonName"
         android:layout_alignBaseline="@+id/dateLbl"
         android:layout_alignBottom="@+id/dateLbl"
-        android:layout_alignLeft="@+id/locationTitleTxt"
-        android:layout_alignStart="@+id/locationTitleTxt" />
+        android:layout_alignLeft="@+id/placeTitleTxt"
+        android:layout_alignStart="@+id/placeTitleTxt" />
 
     <EditText
         android:id="@+id/timeTxt"
@@ -115,7 +115,7 @@
         android:layout_alignStart="@+id/descriptionTxt" />
 
     <TextView
-        android:id="@+id/locationTitleTxt"
+        android:id="@+id/placeTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
@@ -134,7 +134,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/locationAddressTxt"
+        android:id="@+id/placeAddressTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="locationAddress"

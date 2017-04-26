@@ -20,9 +20,10 @@ import java.util.Locale;
 public class AddTaskActivity extends AppCompatActivity {
 
     Button locationBtn, chooseDateBtn, chooseTimeBtn, addTaskBtn;
-    String placeName, currentUserId, title, description, date, time;
+    String placeName, placeAddress, currentUserId, title, description, date, time,
+            placeLatitude, placeLongitude, placeLocale;
     EditText titleTxt, descriptionTxt;
-    TextView locationTxt, dateTxt, timeTxt;
+    TextView locationTitleTxt, locationAddressTxt, dateTxt, timeTxt;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener dateDialog;
     DatabaseHandler db;
@@ -37,8 +38,14 @@ public class AddTaskActivity extends AppCompatActivity {
         //Grab location from Place Picker
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            placeName = extras.getString("placeName");
             currentUserId = extras.getString("currentUserId");
+
+            //Get Location Elements
+            placeName = extras.getString("placeTitle");
+            placeAddress = extras.getString("placeAddress");
+            placeLatitude = extras.getString("placeLatitude");
+            placeLongitude = extras.getString("placeLongitude");
+            placeLocale = extras.getString("placeLocale");
 
             //pass in parameters from the place picker
             title = extras.getString("title");
@@ -55,7 +62,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
         titleTxt = (EditText) findViewById(R.id.titleTxt);
         descriptionTxt = (EditText) findViewById(R.id.descriptionTxt);
-        locationTxt = (TextView) findViewById(R.id.locationTitleTxt);
+        locationTitleTxt = (TextView) findViewById(R.id.placeTitleTxt);
+        locationAddressTxt = (TextView) findViewById(R.id.placeAddressTxt);
         dateTxt = (TextView) findViewById(R.id.dateTxt);
         timeTxt = (TextView) findViewById(R.id.timeTxt);
 
@@ -64,10 +72,10 @@ public class AddTaskActivity extends AppCompatActivity {
         descriptionTxt.setText(description);
         dateTxt.setText(date);
         timeTxt.setText(time);
-        locationTxt.setText(placeName);
+        locationTitleTxt.setText(placeName);
+        locationAddressTxt.setText(placeAddress);
 
         //Set up time picker
-
         chooseTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,16 +135,24 @@ public class AddTaskActivity extends AppCompatActivity {
         addTaskBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     Task newTask = new Task();
+                    Place newPlace = new Place();
+
                     newTask.setOwnerId(Integer.parseInt(currentUserId));
-                    newTask.setLocation(locationTxt.getText().toString());
+                    newTask.setPlaceId(newPlace.getId());
                     newTask.setDescription(descriptionTxt.getText().toString());
                     newTask.setDate(dateTxt.getText().toString());
                     newTask.setTime(timeTxt.getText().toString());
                     newTask.setTitle(titleTxt.getText().toString());
 
-                    db.addTask(newTask);
+                    newPlace.setTitle(placeName);
+                    newPlace.setAddress(placeAddress);
+                    newPlace.setLatitude(placeLatitude);
+                    newPlace.setLongitude(placeLongitude);
+                    newPlace.setLocale(placeLocale);
 
-                    Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_LONG).show();
+                    db.addPlace(newPlace); //This Woks
+                    db.addTask(newTask);  //This Works
+                    db.linkTaskToPlace(); //This almost works
 
                     Intent i = new Intent(AddTaskActivity.this, TaskListActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

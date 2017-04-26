@@ -15,6 +15,7 @@ public class FullTaskActivity extends AppCompatActivity {
     public DatabaseHandler db;
     String currentTaskId;
     Button updateTaskBtn, deleteTaskBtn, shareTaskBtn;
+    TextView placeTitleTxt, placeAddressTxt, titleTxt, descriptionTxt, dateTxt, timeTxt, ownerNameTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +36,28 @@ public class FullTaskActivity extends AppCompatActivity {
         deleteTaskBtn = (Button) findViewById(R.id.deleteTaskBtn);
 
         //Link all the textviews that will be replaced
-        TextView titleTxt = (TextView) findViewById(R.id.titleTxt);
-        TextView descriptionTxt = (TextView) findViewById(R.id.descriptionTxt);
-        TextView locationTxt = (TextView) findViewById(R.id.locationTitleTxt);
-        TextView dateTxt = (TextView) findViewById(R.id.dateTxt);
-        TextView timeTxt = (TextView) findViewById(R.id.timeTxt);
-        TextView ownerNameTxt = (TextView) findViewById(R.id.ownerTxt);
+        titleTxt = (TextView) findViewById(R.id.titleTxt);
+        descriptionTxt = (TextView) findViewById(R.id.descriptionTxt);
+        placeTitleTxt = (TextView) findViewById(R.id.placeTitleTxt);
+        placeAddressTxt = (TextView) findViewById(R.id.placeAddressTxt);
+        dateTxt = (TextView) findViewById(R.id.dateTxt);
+        timeTxt = (TextView) findViewById(R.id.timeTxt);
+        ownerNameTxt = (TextView) findViewById(R.id.ownerTxt);
 
         //pulling out values
         final String title = db.getTaskById(Integer.parseInt(currentTaskId)).getTitle();
-        String description = db.getTaskById(Integer.parseInt(currentTaskId)).getDescription();
-        final String location = db.getTaskById(Integer.parseInt(currentTaskId)).getLocation();
-        String date = db.getTaskById(Integer.parseInt(currentTaskId)).getDate();
-        String time = db.getTaskById(Integer.parseInt(currentTaskId)).getTime();
+        final String description = db.getTaskById(Integer.parseInt(currentTaskId)).getDescription();
+        final String date = db.getTaskById(Integer.parseInt(currentTaskId)).getDate();
+        final String time = db.getTaskById(Integer.parseInt(currentTaskId)).getTime();
         final String ownerName = db.getTaskById(Integer.parseInt(currentTaskId)).getOwnerName(this);
+        final String placeTitle = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle();
+        final String placeAddress = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress();
 
         //Set all the displayed fields equal to the current Task's values
         titleTxt.setText(title);
         descriptionTxt.setText(description);
-        locationTxt.setText(location);
+        placeTitleTxt.setText(placeTitle);
+        placeAddressTxt.setText(placeAddress);
         dateTxt.setText(date);
         timeTxt.setText(time);
         ownerNameTxt.setText(ownerName);
@@ -106,7 +110,7 @@ public class FullTaskActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getTaskReport(ownerName, title, location));
+                i.putExtra(Intent.EXTRA_TEXT, getTaskReport(ownerName, title, placeTitle));
                 i.putExtra(Intent.EXTRA_SUBJECT,
                         getString(R.string.task_report_subject));
                 startActivity(i);

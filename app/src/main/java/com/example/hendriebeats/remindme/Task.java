@@ -20,7 +20,6 @@ public class Task {
     private String date;
     private String time;
     private String description;
-    private String location;
     private int ownerId;
     private int placeId;
 
@@ -37,24 +36,31 @@ public class Task {
      * @param date (String)
      * @param time (String)
      * @param description (String)
-     * @param location (String)
      * @param ownerId (int)
      * @param placeId (int)
      *
      * @since
      */
-    public Task(String title, String date, String time, String description, String location, int ownerId, int placeId) {
+    public Task(String title, String date, String time, String description, int ownerId, int placeId) {
         this.title = title;
         this.date = date;
         this.time = time;
         this.description = description;
-        this.location = location;
+        this.ownerId = ownerId;
+        this.placeId = placeId;
+    }
+
+    public Task(int id, String title, String date, String time, String description, int ownerId, int placeId) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.time = time;
+        this.description = description;
         this.ownerId = ownerId;
         this.placeId = placeId;
     }
 
     public Task() {
-
     }
 
     /**
@@ -123,22 +129,6 @@ public class Task {
     }
 
     /**
-     * getLocation()
-     *
-     * Returns the location of the current task object
-     * referenced in the database.
-     *
-     * This method and associated variables may become
-     * obsolete when place object start to become used.
-     *
-     * @return location (String)
-     * @since
-     */
-    public String getLocation() {
-        return location;
-    }
-
-    /**
      * getOwnerId()
      *
      * Returns the Id of the current task object's
@@ -165,8 +155,8 @@ public class Task {
      */
     public String getOwnerName(Context context) {
         db = new DatabaseHandler(context);
-        return db.getUserById(getOwnerId())
-                .getName();}
+        return db.getUserById(getOwnerId()).getName();
+    }
 
     /**
      * getPlaceId()
@@ -208,7 +198,7 @@ public class Task {
      *
      * sets the date of the current task object.
      *
-     * @param dateTime (String)
+     * @param date (String)
      * @since
      */
     public void setDate(String date) {
@@ -220,7 +210,7 @@ public class Task {
      *
      * sets the date of the current task object.
      *
-     * @param dateTime (String)
+     * @param time (String)
      * @since
      */
     public void setTime(String time) {
@@ -240,18 +230,6 @@ public class Task {
     }
 
     /**
-     * setLocation()
-     *
-     * sets the location of the current task object.
-     *
-     * @param location (String)
-     * @since
-     */
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    /**
      * setTitle()
      *
      * sets the id of the referenced user as a foreign
@@ -263,4 +241,9 @@ public class Task {
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
+
+    public void setPlaceId(int placeId) {
+        this.placeId = placeId;
+    }
+
 }

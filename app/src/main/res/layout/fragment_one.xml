@@ -61,7 +61,7 @@
         android:text="Location:" />
 
     <TextView
-        android:id="@+id/locationTitleTxt"
+        android:id="@+id/placeTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/locationLbl"
@@ -115,18 +115,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Task"
-        android:layout_below="@+id/locationAddressTxt"
-        android:layout_alignLeft="@+id/locationAddressTxt"
-        android:layout_alignStart="@+id/locationAddressTxt"
+        android:layout_below="@+id/placeAddressTxt"
+        android:layout_alignLeft="@+id/placeAddressTxt"
+        android:layout_alignStart="@+id/placeAddressTxt"
         android:layout_marginTop="45dp" />
 
     <TextView
-        android:id="@+id/locationAddressTxt"
+        android:id="@+id/placeAddressTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/locationTitleTxt"
-        android:layout_alignStart="@+id/locationTitleTxt"
-        android:layout_below="@+id/locationTitleTxt"
+        android:layout_alignLeft="@+id/placeTitleTxt"
+        android:layout_alignStart="@+id/placeTitleTxt"
+        android:layout_below="@+id/placeTitleTxt"
         android:layout_marginTop="22dp"
         android:text="locationAddress" />
 

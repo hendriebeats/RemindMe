@@ -3,6 +3,7 @@ package com.example.hendriebeats.remindme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -51,7 +52,11 @@ public class PlacePickerAddTaskActivity extends AppCompatActivity {
 
                 Intent i = new Intent(PlacePickerAddTaskActivity.this, AddTaskActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra("placeName", place.getName());
+                i.putExtra("placeTitle", place.getName());
+                i.putExtra("placeAddress", place.getAddress());
+                i.putExtra("placeLatitude", place.getLatLng().latitude);
+                i.putExtra("placeLongitude", place.getLatLng().longitude);
+                i.putExtra("placeLocale", place.getLocale());
                 i.putExtra("title", title);
                 i.putExtra("description", description);
                 i.putExtra("date", date);
