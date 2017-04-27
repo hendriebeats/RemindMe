@@ -18,9 +18,24 @@ import java.util.Locale;
 
 public class UpdateTaskActivity extends AppCompatActivity {
 
-    EditText title, description, dateTxt, timeTxt;
-    TextView PlaceTitleTxt, PlaceAddressTxt;
-    Button changeLocationBtn, updateBtn,chooseDateBtn, chooseTimeBtn;
+    Button updateDateBtn;
+    Button updateTimeBtn;
+    Button updateLocationBtn;
+    Button updateTaskBtn;
+
+    EditText updateTitleTxt;
+    EditText updateDescriptionTxt;
+
+    TextView updateTitleLbl;
+    TextView updateDescriptionLbl;
+    TextView updateDateLbl;
+    TextView updateDateTxt;
+    TextView updateTimeLbl;
+    TextView updateTimeTxt;
+    TextView updateLocationLbl;
+    TextView updatePlaceTitleTxt;
+    TextView updatePlaceAddressTxt;
+
     String currentTaskId, placeTitle, placeAddress, placeLatitude, placeLongitude, placeLocale, isUpdated, currentUserId;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener dateDialog;
@@ -53,41 +68,48 @@ public class UpdateTaskActivity extends AppCompatActivity {
             isUpdated = extras.getString("isUpdated");
         }
 
-        title = (EditText) findViewById(R.id.titleTxt);
-        description = (EditText) findViewById(R.id.descriptionTxt);
-        dateTxt = (EditText) findViewById(R.id.dateTxt);
-        timeTxt = (EditText) findViewById(R.id.timeTxt);
-        changeLocationBtn = (Button) findViewById(R.id.locationBtn);
-        updateBtn = (Button) findViewById(R.id.updateBtn);
-        chooseDateBtn = (Button) findViewById(R.id.chooseDateBtn);
-        chooseTimeBtn = (Button) findViewById(R.id.chooseTimeBtn);
-        PlaceTitleTxt = (TextView) findViewById(R.id.placeTitleTxt);
-        PlaceAddressTxt = (TextView) findViewById(R.id.placeAddressTxt);
+        updateDateBtn = (Button) findViewById(R.id.updateDateBtn);
+        updateTimeBtn = (Button) findViewById(R.id.updateTimeBtn);
+        updateLocationBtn = (Button) findViewById(R.id.updateLocationBtn);
+        updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
+
+        updateTitleTxt = (EditText) findViewById(R.id.updateTitleTxt);
+        updateDescriptionTxt = (EditText) findViewById(R.id.updateDescriptionTxt);
+
+        updateTitleLbl = (TextView) findViewById(R.id.updateTitleLbl);
+        updateDescriptionLbl = (TextView) findViewById(R.id.updateDescriptionLbl);
+        updateDateLbl = (TextView) findViewById(R.id.updateDateLbl);
+        updateDateTxt = (TextView) findViewById(R.id.updateDateTxt);
+        updateTimeLbl = (TextView) findViewById(R.id.updateTimeLbl);
+        updateTimeTxt = (TextView) findViewById(R.id.updateTimeTxt);
+        updateLocationLbl = (TextView) findViewById(R.id.updateLocationLbl);
+        updatePlaceTitleTxt = (TextView) findViewById(R.id.updatePlaceTitleTxt);
+        updatePlaceAddressTxt = (TextView) findViewById(R.id.updatePlaceAddressTxt);
 
         /**
          * Set all the displayed fields equal to the current Task's values
          */
-        title.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTitle());
-        description.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDescription());
-        dateTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDate());
-        timeTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTime());
-        PlaceTitleTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle());
-        PlaceAddressTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress());
+        updateTitleTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTitle());
+        updateDescriptionTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDescription());
+        updateDateTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getDate());
+        updateTimeTxt.setText(db.getTaskById(Integer.parseInt(currentTaskId)).getTime());
+        updatePlaceTitleTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle());
+        updatePlaceAddressTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress());
 
         /**
          * Update Location field when updated via Place Picker
          */
         try{
             if(isUpdated.equals("yes")){
-                PlaceTitleTxt.setText(placeTitle);
-                PlaceAddressTxt.setText(placeAddress);
+                updatePlaceTitleTxt.setText(placeTitle);
+                updatePlaceAddressTxt.setText(placeAddress);
             }
         } catch(Exception e) {}
 
         /**
          * Location Onclick Listener to update the location from Place Picker
          */
-        changeLocationBtn.setOnClickListener(
+        updateLocationBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     Intent i = new Intent(UpdateTaskActivity.this, PlacePickerUpdateTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);
@@ -98,7 +120,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
         /**
          * Create Time Picker
          */
-        chooseTimeBtn.setOnClickListener(new View.OnClickListener() {
+        updateTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -108,7 +130,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(UpdateTaskActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        timeTxt.setText(selectedHour + ":" + selectedMinute);
+                        updateTimeTxt.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -136,7 +158,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
         /**
          * Date Onclick Listener to update the date form Date Picker
          */
-        chooseDateBtn.setOnClickListener(
+        updateDateBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     chooseDate();
                 }});
@@ -144,17 +166,17 @@ public class UpdateTaskActivity extends AppCompatActivity {
         /**
          * Update Onclick Listener to update the task list with the new information provided by user
          */
-        updateBtn.setOnClickListener(
+        updateTaskBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     //create task object
                     Task updatedTask = new Task();
                     Place updatedPlace = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getId());
                     updatedTask.setId(Integer.parseInt(currentTaskId));
                     updatedTask.setOwnerId(Integer.parseInt(currentUserId));
-                    updatedTask.setDescription(description.getText().toString());
-                    updatedTask.setDate(dateTxt.getText().toString());
-                    updatedTask.setTime(timeTxt.getText().toString());
-                    updatedTask.setTitle(title.getText().toString());
+                    updatedTask.setDescription(updateDescriptionTxt.getText().toString());
+                    updatedTask.setDate(updateDateTxt.getText().toString());
+                    updatedTask.setTime(updateTimeTxt.getText().toString());
+                    updatedTask.setTitle(updateTitleTxt.getText().toString());
                     updatedTask.setComplete(db.getTaskById(Integer.parseInt(currentTaskId)).isComplete());
 
                     if(placeLatitude != ""){
@@ -185,6 +207,6 @@ public class UpdateTaskActivity extends AppCompatActivity {
 
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        dateTxt.setText(sdf.format(myCalendar.getTime()));
+        updateDateTxt.setText(sdf.format(myCalendar.getTime()));
     }
 }

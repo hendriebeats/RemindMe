@@ -1,163 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.hendriebeats.remindme.UpdateTaskActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.example.hendriebeats.remindme.UpdateTaskActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/updateLayoutButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title:"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/locationBtn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:weightSum="3">
+        <Button
+            android:id="@+id/updateDateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/update_date"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description:"
-        android:layout_marginTop="44dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        <Button
+            android:id="@+id/updateTimeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/update_time"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Location:"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2" />
+        <Button
+            android:id="@+id/updateLocationBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/update_location"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/dateLbl"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/updateLayoutContent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date:"
-        android:layout_marginTop="46dp"
-        android:layout_below="@+id/placeTitleTxt"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
+        android:layout_below="@id/updateLayoutButtons"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timeLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:text="Time:"
-        android:layout_below="@+id/dateTxt"
-        android:layout_alignLeft="@+id/dateLbl"
-        android:layout_alignStart="@+id/dateLbl" />
+        <LinearLayout
+            android:id="@+id/titleLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/updateTitleLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_txt"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"/>
 
-    <EditText
-        android:id="@+id/titleTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_alignBaseline="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+            <EditText
+                android:id="@+id/updateTitleTxt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </LinearLayout>
 
-    <EditText
-        android:id="@+id/descriptionTxt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/descriptionLinearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignLeft="@+id/titleTxt"
-        android:layout_alignStart="@+id/titleTxt" />
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/updateDescriptionLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_text"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"/>
 
-    <EditText
-        android:id="@+id/dateTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_alignBaseline="@+id/dateLbl"
-        android:layout_alignBottom="@+id/dateLbl"
-        android:layout_alignLeft="@+id/placeTitleTxt"
-        android:layout_alignStart="@+id/placeTitleTxt" />
+        <EditText
+            android:id="@+id/updateDescriptionTxt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"/>
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/timeTxt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/dateLinearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_alignBaseline="@+id/timeLbl"
-        android:layout_alignBottom="@+id/timeLbl"
-        android:layout_alignLeft="@+id/dateTxt"
-        android:layout_alignStart="@+id/dateTxt" />
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/updateDateLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_txt"
+            android:layout_marginStart="27dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/updateDateTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timeLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/updateTimeLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_txt"
+            android:layout_marginStart="27dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/updateTimeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/locationLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/updateLocationLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_txt"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <LinearLayout
+                android:id="@+id/locationInfoLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/updatePlaceTitleTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/updatePlaceAddressTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/locationBtn"
+        android:id="@+id/updateTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Location" />
-
-    <TextView
-        android:id="@+id/placeTitleTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="locationTitle"
-        android:layout_below="@+id/placeAddressTxt"
-        android:layout_alignLeft="@+id/placeAddressTxt"
-        android:layout_alignStart="@+id/placeAddressTxt"
-        android:layout_marginTop="21dp" />
-
-    <Button
-        android:id="@+id/updateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Update"
-        android:layout_below="@+id/timeTxt"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/placeAddressTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="locationAddress"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignLeft="@+id/descriptionTxt"
-        android:layout_alignStart="@+id/descriptionTxt" />
-
-    <Button
-        android:id="@+id/timeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/updateBtn"
-        android:layout_alignStart="@+id/updateBtn" />
-
-    <Button
-        android:id="@+id/dateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Date" />
+        android:text="@string/update_task"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
