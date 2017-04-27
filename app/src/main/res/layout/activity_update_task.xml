@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title:"
-        android:layout_marginLeft="38dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="61dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/locationBtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -43,10 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date:"
-        android:layout_below="@+id/textView3"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/placeTitleTxt"
         android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_marginTop="119dp" />
+        android:layout_alignStart="@+id/textView3" />
 
     <TextView
         android:id="@+id/timeLbl"
@@ -105,24 +105,23 @@
         android:layout_alignStart="@+id/dateTxt" />
 
     <Button
-        android:id="@+id/changeLocationBtn"
+        android:id="@+id/locationBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Location"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignLeft="@+id/descriptionTxt"
-        android:layout_alignStart="@+id/descriptionTxt" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Location" />
 
     <TextView
         android:id="@+id/placeTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
         android:text="locationTitle"
-        android:layout_below="@+id/changeLocationBtn"
-        android:layout_alignLeft="@+id/changeLocationBtn"
-        android:layout_alignStart="@+id/changeLocationBtn" />
+        android:layout_below="@+id/placeAddressTxt"
+        android:layout_alignLeft="@+id/placeAddressTxt"
+        android:layout_alignStart="@+id/placeAddressTxt"
+        android:layout_marginTop="21dp" />
 
     <Button
         android:id="@+id/updateBtn"
@@ -138,9 +137,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="locationAddress"
-        android:layout_above="@+id/dateTxt"
-        android:layout_alignLeft="@+id/dateTxt"
-        android:layout_alignStart="@+id/dateTxt"
-        android:layout_marginBottom="14dp" />
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/descriptionTxt"
+        android:layout_alignStart="@+id/descriptionTxt" />
+
+    <Button
+        android:id="@+id/timeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/updateBtn"
+        android:layout_alignStart="@+id/updateBtn" />
+
+    <Button
+        android:id="@+id/dateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Date" />
 
 </RelativeLayout>
