@@ -2,6 +2,7 @@ package com.example.hendriebeats.remindme;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -137,22 +138,24 @@ public class AddTaskActivity extends AppCompatActivity {
                     Task newTask = new Task();
                     Place newPlace = new Place();
 
-                    newTask.setOwnerId(Integer.parseInt(currentUserId));
-                    newTask.setPlaceId(newPlace.getId());
-                    newTask.setDescription(descriptionTxt.getText().toString());
-                    newTask.setDate(dateTxt.getText().toString());
-                    newTask.setTime(timeTxt.getText().toString());
-                    newTask.setTitle(titleTxt.getText().toString());
-
                     newPlace.setTitle(placeName);
                     newPlace.setAddress(placeAddress);
                     newPlace.setLatitude(placeLatitude);
                     newPlace.setLongitude(placeLongitude);
                     newPlace.setLocale(placeLocale);
+                    db.addPlace(newPlace);
 
-                    db.addPlace(newPlace); //This Woks
-                    db.addTask(newTask);  //This Works
-                    db.linkTaskToPlace(); //This almost works
+                    //Toast.makeText(getApplicationContext(), "" + db.getMostRecentPlace().getId(), Toast.LENGTH_SHORT).show();
+
+                    newTask.setTitle(titleTxt.getText().toString());
+                    newTask.setDescription(descriptionTxt.getText().toString());
+                    newTask.setDate(dateTxt.getText().toString());
+                    newTask.setTime(timeTxt.getText().toString());
+                    newTask.setOwnerId(Integer.parseInt(currentUserId));
+                    newTask.setPlaceId(db.getMostRecentPlace().getId());
+                    db.addTask(newTask);
+
+                    Toast.makeText(getApplicationContext(), "" + db.getMostRecentTask().getTitle(), Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(AddTaskActivity.this, TaskListActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

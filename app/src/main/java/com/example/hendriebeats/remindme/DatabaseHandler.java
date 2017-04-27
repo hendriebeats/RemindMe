@@ -302,8 +302,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_TASK_DATE,
                         KEY_TASK_TIME,
                         KEY_TASK_DESCRIPTION,
-                        KEY_TASK_PLACE_ID,
-                        KEY_TASK_OWNER_ID},
+                        KEY_TASK_OWNER_ID,
+                        KEY_TASK_PLACE_ID},
                 KEY_TASK_ID + "=?",
                 new String[] { String.valueOf(id) },
                 null, null, null, null);
@@ -583,8 +583,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }catch(Exception e){
 
         }
-
-
         db.close();
     }
 
@@ -626,37 +624,4 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
-
-    public void linkTaskToPlace() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Task updatedTask;
-
-        Cursor cursor = db.query(
-                TABLE_TASKS,
-                new String[] {
-                        KEY_TASK_ID,
-                        KEY_TASK_TITLE,
-                        KEY_TASK_DATE,
-                        KEY_TASK_TIME,
-                        KEY_TASK_DESCRIPTION,
-                        KEY_PLACE_ID,
-                        KEY_TASK_OWNER_ID},
-                KEY_TASK_ID + "=?",
-                new String[] { String.valueOf(getMostRecentTask().getId()) },
-                null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        updatedTask = new Task(
-                cursor.getInt(0),
-                cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getInt(5),
-                getMostRecentPlace().getId()
-        );
-        updateTask(updatedTask);
-    }
-
 }

@@ -59,8 +59,6 @@ public class UpdateTaskActivity extends AppCompatActivity {
         PlaceTitleTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle());
         PlaceAddressTxt.setText(db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress());
 
-        Toast.makeText(getApplicationContext(), currentUserId, Toast.LENGTH_SHORT).show();
-
         //Update Location field when updated via Place Picker
         try{
             if(isUpdated.equals("yes")){
