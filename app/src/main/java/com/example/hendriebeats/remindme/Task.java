@@ -22,6 +22,7 @@ public class Task {
     private String description;
     private int ownerId;
     private int placeId;
+    private boolean isComplete;
 
     public DatabaseHandler db;
 
@@ -41,21 +42,23 @@ public class Task {
      *
      * @since
      */
-    public Task(String title, String date, String time, String description, int ownerId, int placeId) {
+    public Task(String title, String date, String time, String description, boolean isComplete, int ownerId, int placeId) {
         this.title = title;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.isComplete = isComplete;
         this.ownerId = ownerId;
         this.placeId = placeId;
     }
 
-    public Task(int id, String title, String date, String time, String description, int ownerId, int placeId) {
+    public Task(int id, String title, String date, String time, String description, boolean isComplete, int ownerId, int placeId) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.isComplete = isComplete;
         this.ownerId = ownerId;
         this.placeId = placeId;
     }
@@ -246,4 +249,11 @@ public class Task {
         this.placeId = placeId;
     }
 
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
 }

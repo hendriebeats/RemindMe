@@ -24,6 +24,7 @@ public class TaskListActivity extends AppCompatActivity {
     ArrayList<Task> TaskList;
     ListView listView;
     String currentUserId;
+    public static int [] prgmImages = {R.drawable.unchecked,R.drawable.checked};;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +51,6 @@ public class TaskListActivity extends AppCompatActivity {
             currentUserId = extras.getString("currentUserId");
         }
 
-        //Used to initially populate Tasks
-        /*
-        db.addTask(new Task("CIT399 HW", "01/30/2018", "10:30am", "Only helpful with Golshan", "-1,5", Integer.parseInt(currentUserId)));
-        db.addTask(new Task("CIT243 HW", "05/11/2017", "11:45am", "Not Helpful", "2,5", Integer.parseInt(currentUserId)));
-        db.addTask(new Task("CIT382 HW", "06/11/2017", "1:30pm", "Do it!", "7,3", Integer.parseInt(currentUserId)));
-        */
-        
         //Link Listview on the .xml document to this .java document
         listView =(ListView)findViewById(task_listview);
 
@@ -68,7 +62,10 @@ public class TaskListActivity extends AppCompatActivity {
 
         //Make Adapter to populate listView from TaskList
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TaskTitleList);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(new CustomAdapter(this, TaskList, TaskTitleList,prgmImages));
+
+        //Refreshing List View
+        listView.invalidateViews();
 
         //Register onClickListener to handle click events on each item
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()

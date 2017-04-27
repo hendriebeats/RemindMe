@@ -147,4 +147,14 @@
         android:layout_alignLeft="@+id/placeTitleTxt"
         android:layout_alignStart="@+id/placeTitleTxt" />
 
+    <Button
+        android:id="@+id/checkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="Complete!"
+        android:layout_below="@+id/timeTxt"
+        android:layout_alignLeft="@+id/timeTxt"
+        android:layout_alignStart="@+id/timeTxt" />
+
 </RelativeLayout>

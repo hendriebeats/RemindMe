@@ -14,7 +14,7 @@ public class FullTaskActivity extends AppCompatActivity {
 
     public DatabaseHandler db;
     String currentTaskId, currentUserId;
-    Button updateTaskBtn, deleteTaskBtn, shareTaskBtn;
+    Button updateTaskBtn, deleteTaskBtn, shareTaskBtn, checkBtn;
     TextView placeTitleTxt, placeAddressTxt, titleTxt, descriptionTxt, dateTxt, timeTxt;
 
     @Override
@@ -43,6 +43,7 @@ public class FullTaskActivity extends AppCompatActivity {
         updateTaskBtn = (Button) findViewById(R.id.updateTaskBtn);
         shareTaskBtn = (Button) findViewById(R.id.shareTaskBtn);
         deleteTaskBtn = (Button) findViewById(R.id.deleteTaskBtn);
+        checkBtn = (Button) findViewById(R.id.checkBtn);
 
         //Link all the textviews that will be replaced
         titleTxt = (TextView) findViewById(R.id.titleTxt);
@@ -115,6 +116,21 @@ public class FullTaskActivity extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_SUBJECT,
                         getString(R.string.task_report_subject));
                 startActivity(i);
+            }
+        });
+
+        checkBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Task updatedTask = db.getTaskById(Integer.parseInt(currentTaskId));
+                boolean completeVar = updatedTask.isComplete();
+                completeVar = !completeVar; //switch between true and false
+                updatedTask.setComplete(completeVar);
+                db.updateTask(updatedTask);
+
+                Intent i=new Intent(FullTaskActivity.this, TaskListActivity.class);
+                i.putExtra("currentUserId", currentUserId);
+                startActivity(i);
+
             }
         });
     }

@@ -52,6 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TASK_DATE = "date";
     private static final String KEY_TASK_TIME = "time";
     private static final String KEY_TASK_DESCRIPTION = "description";
+    private static final String KEY_TASK_ISCOMPLETE = "iscomplete";
     private static final String KEY_TASK_OWNER_ID = "ownerId";
     private static final String KEY_TASK_PLACE_ID = "placeId";
 
@@ -132,6 +133,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_TASK_DATE + " TEXT, "
                 + KEY_TASK_TIME + " TEXT, "
                 + KEY_TASK_DESCRIPTION + " TEXT, "
+                + KEY_TASK_ISCOMPLETE + " TEXT, "
                 + KEY_TASK_OWNER_ID + " INTEGER, "
                 + KEY_TASK_PLACE_ID + " INTEGER, "
                 + "FOREIGN KEY (" + KEY_TASK_OWNER_ID + ") "
@@ -209,6 +211,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATE, task.getDate());
         values.put(KEY_TASK_TIME, task.getTime());
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
+        values.put(KEY_TASK_ISCOMPLETE, task.isComplete()? 1 : 0);
         values.put(KEY_TASK_OWNER_ID, task.getOwnerId()); // This gets the User ID of the current user.
         values.put(KEY_TASK_PLACE_ID, task.getPlaceId());
 
@@ -302,6 +305,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_TASK_DATE,
                         KEY_TASK_TIME,
                         KEY_TASK_DESCRIPTION,
+                        KEY_TASK_ISCOMPLETE,
                         KEY_TASK_OWNER_ID,
                         KEY_TASK_PLACE_ID},
                 KEY_TASK_ID + "=?",
@@ -316,8 +320,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
-                cursor.getInt(5),
-                cursor.getInt(6)
+                cursor.getInt(5) > 0, //get boolean value
+                cursor.getInt(6),
+                cursor.getInt(7)
                 );
         // return task
         return task;
@@ -470,8 +475,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 task.setDate(cursor.getString(2));
                 task.setTime(cursor.getString(3));
                 task.setDescription(cursor.getString(4));
-                task.setOwnerId(cursor.getInt(5));
-                task.setPlaceId(cursor.getInt(6));
+                task.setComplete(cursor.getInt(5) > 0); //get boolean value
+                task.setOwnerId(cursor.getInt(6));
+                task.setPlaceId(cursor.getInt(7));
                 // Adding task to list
                 taskList.add(task);
             } while (cursor.moveToNext());
@@ -526,6 +532,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TASK_DATE, task.getDate());
         values.put(KEY_TASK_TIME, task.getTime());
         values.put(KEY_TASK_DESCRIPTION, task.getDescription());
+        values.put(KEY_TASK_ISCOMPLETE, task.isComplete()? 1 : 0); //set boolean value
 
         // updating row
         return db.update(TABLE_TASKS, values, KEY_TASK_ID + " = ?",

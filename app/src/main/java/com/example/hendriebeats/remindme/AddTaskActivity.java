@@ -153,9 +153,8 @@ public class AddTaskActivity extends AppCompatActivity {
                     newTask.setTime(timeTxt.getText().toString());
                     newTask.setOwnerId(Integer.parseInt(currentUserId));
                     newTask.setPlaceId(db.getMostRecentPlace().getId());
+                    newTask.setComplete(false);
                     db.addTask(newTask);
-
-                    Toast.makeText(getApplicationContext(), "" + db.getMostRecentTask().getTitle(), Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(AddTaskActivity.this, TaskListActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
