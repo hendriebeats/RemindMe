@@ -5,12 +5,38 @@
     <string name="action_update_account">Update Account</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <string name="share_task">Share Task</string>
+    <string name="title_txt"><b>Title:</b></string>
+    <string name="title_hint">Enter a Title</string>
+    <string name="description_text"><b>Description:</b></string>
+    <string name="description_hint">Enter a Description</string>
+    <string name="date_txt"><b>Date:</b></string>
+    <string name="date_ex">example date</string>
+    <string name="time_txt"><b>Time:</b></string>
+    <string name="time_ex">example time</string>
+    <string name="location_txt"><b>Location:</b></string>
+    <string name="location_title">Location Name</string>
+    <string name="location_address">Location Address</string>
+    <string name="add_task">Add Task</string>
+
+    <string name="choose_date">Choose\nDate</string>
+    <string name="choose_time">Choose\nTime</string>
+    <string name="choose_location">Choose\nLocation</string>
+    <string name="update_task">Update\nTask</string>
+
+    <string name="update_date">Change\nDate</string>
+    <string name="update_time">Change\nTime</string>
+    <string name="update_location">Change\nLocation</string>
+
+    <string name="share_task">Share\nTask</string>
     <string name="task_report_subject">RemindMe Task Report</string>
     <string name="task_report">
         %1$s sent you a task report.
         Task Title: %2$s
         Location: %3$s</string>
+
+    <string name="delete_task">Delete\nTask</string>
+
+    <string name="done">Mark Complete</string>
 
     <string name="title_activity_full_task_description">FullTaskDescriptionActivity</string>
     <string name="dummy_button">Dummy Button</string>
