@@ -82,6 +82,12 @@ public class FullTaskActivity extends AppCompatActivity {
         fullPlaceAddressTxt.setText(placeAddress);
 
 
+        //Set checkBtn text
+        if(db.getTaskById(Integer.parseInt(currentTaskId)).isComplete()){
+            checkBtn.setText("Not Complete...");
+        }
+
+
         //On Click Listener
         fullUpdateBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {

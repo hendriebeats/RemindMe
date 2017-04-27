@@ -20,7 +20,7 @@ import static com.example.hendriebeats.remindme.R.id.task_listview;
 public class TaskListActivity extends AppCompatActivity {
 
     public DatabaseHandler db;
-    ArrayList<String> TaskTitleList;
+    ArrayList<String> TaskTitleList, PlaceTitleList;
     ArrayList<Task> TaskList;
     ListView listView;
     String currentUserId;
@@ -54,15 +54,14 @@ public class TaskListActivity extends AppCompatActivity {
         //Link Listview on the .xml document to this .java document
         listView =(ListView)findViewById(task_listview);
 
-        //Populate TaskList with all the current database task titles
+        //Get Lasklists for the Listview
         TaskTitleList = new ArrayList<>(db.getAllTaskTitlesByUser(Integer.parseInt(currentUserId)));
-
-        //Return all Tasks
+        PlaceTitleList = new ArrayList<>(db.getAllTaskPlaceTitlesByUser(Integer.parseInt(currentUserId)));
         TaskList = new ArrayList<>(db.getAllTasksByUser(Integer.parseInt(currentUserId)));
 
         //Make Adapter to populate listView from TaskList
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TaskTitleList);
-        listView.setAdapter(new CustomAdapter(this, TaskList, TaskTitleList,prgmImages));
+        listView.setAdapter(new CustomAdapter(this, TaskList, TaskTitleList, PlaceTitleList, prgmImages));
 
         //Refreshing List View
         listView.invalidateViews();

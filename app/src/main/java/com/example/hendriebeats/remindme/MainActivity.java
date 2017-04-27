@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import static com.example.hendriebeats.remindme.Password.checkPassword;
+import static com.example.hendriebeats.remindme.Password.hashPassword;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,12 +25,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new DatabaseHandler(this);
+
+        try{
+            if(db.getUserById(1).getName().equals(""));
+        } catch(Exception e) {
+            db.addUser(new User("James Hendrie", "(123) 456-7890", "a", hashPassword("a")));
+        }
+
+
         emailTxt = (EditText)findViewById(R.id.emailTxt);
         passwordTxt = (EditText)findViewById(R.id.passwordTxt);
         submitBtn = (Button)findViewById(R.id.submitBtn);
         createAccountBtn = (Button)findViewById(R.id.createAccountBtn);
 
-        db = new DatabaseHandler(this);
+
 
         //Hardcoded add user for testing
         //db.addUser(new User("James Hendrie","(717)778-7389","a","a"));
@@ -53,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
             User validate = db.getUserByEmail(emailTxt.getText().toString());
 
             if(checkPassword(passwordTxt.getText().toString(), validate.getPassword())){
+                emailTxt.setText("");
+                passwordTxt.setText("");
+
                 Intent i=new Intent(MainActivity.this, TaskListActivity.class);
                 i.putExtra("currentUserId", Integer.toString(validate.getId()));
                 startActivity(i);

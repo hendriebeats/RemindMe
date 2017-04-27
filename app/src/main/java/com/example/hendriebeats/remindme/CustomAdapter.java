@@ -15,27 +15,28 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter{
 
-    ArrayList<String> result;
+    ArrayList<String> TaskTitleList, PlaceTitleList;
     Context context;
     int [] imageId;
     DatabaseHandler db;
     ArrayList<Task> TaskList;
 
     private static LayoutInflater inflater=null;
-    public CustomAdapter(Context context, ArrayList<Task> TaskList, ArrayList<String> prgmNameList, int[] prgmImages) {
+    public CustomAdapter(Context context, ArrayList<Task> TaskList, ArrayList<String> TaskTitleList, ArrayList<String> PlaceTitleList, int[] prgmImages) {
         // TODO Auto-generated constructor stub
         this.TaskList = TaskList;
-        result=prgmNameList;
+        this.TaskTitleList = TaskTitleList;
+        this.PlaceTitleList = PlaceTitleList;
         this.context=context;
         db = new DatabaseHandler(context);
-        imageId=prgmImages;
+        imageId = prgmImages;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return result.size();
+        return TaskTitleList.size();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class CustomAdapter extends BaseAdapter{
 
     public class Holder
     {
-        TextView tv;
+        TextView titleTxt, locationTitleTxt;
         ImageView img;
     }
     @Override
@@ -64,10 +65,12 @@ public class CustomAdapter extends BaseAdapter{
         Holder holder = new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.listview_layout, null);
-        holder.tv=(TextView) rowView.findViewById(R.id.textView1);
+        holder.titleTxt=(TextView) rowView.findViewById(R.id.titleTxt);
+        holder.locationTitleTxt=(TextView) rowView.findViewById(R.id.locationTitleTxt);
         holder.img=(ImageView) rowView.findViewById(R.id.imageView1);
 
-        holder.tv.setText(result.get(position));
+        holder.titleTxt.setText(TaskTitleList.get(position));
+        holder.locationTitleTxt.setText(PlaceTitleList.get(position));
         holder.img.setImageResource(imageId[isChecked]);
         return rowView;
     }

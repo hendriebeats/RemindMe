@@ -445,6 +445,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return titleList;
     }
 
+    public ArrayList<String> getAllTaskPlaceTitlesByUser(int userId) {
+        ArrayList<Task> placeList = getAllTasksByUser(userId);
+        ArrayList<String> titleList = new ArrayList<>();
+
+        for(int i = 0; i < placeList.size(); i++){
+            titleList.add(getPlaceById(placeList.get(i).getPlaceId()).getTitle());
+        }
+        return titleList;
+    }
+
     /**
      * getAllTasksByUser()
      *
