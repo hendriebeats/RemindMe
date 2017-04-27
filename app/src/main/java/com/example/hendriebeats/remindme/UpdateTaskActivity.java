@@ -155,6 +155,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
                     updatedTask.setDate(dateTxt.getText().toString());
                     updatedTask.setTime(timeTxt.getText().toString());
                     updatedTask.setTitle(title.getText().toString());
+                    updatedTask.setComplete(db.getTaskById(Integer.parseInt(currentTaskId)).isComplete());
 
                     if(placeLatitude != ""){
                         updatedPlace.setTitle(placeTitle);
