@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,6 +193,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, values);
         //2nd argument is String containing nullColumnHack
         db.close(); // Closing database connection
+
+        /*//INSERT INTO warehouses(name,capacity) VALUES(?,?)            <----------- POTENTIAL PREPARED STATEMENT INSERT //NOT TESTED
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteStatement sqLiteStatement = sqLiteDatabase.compileStatement(
+                "" +
+                "INSERT INTO " + TABLE_USERS +
+                " (" +
+                KEY_USER_NAME +
+                KEY_USER_PH_NO +
+                KEY_USER_EMAIL +
+                KEY_USER_PASS +
+                ")" +
+                "VALUES(?,?,?,?)"
+        );
+        sqLiteStatement.bindString(1, user.getName());
+        sqLiteStatement.bindString(2, user.getPhoneNumber());
+        sqLiteStatement.bindString(3, user.getEmail());
+        sqLiteStatement.bindString(4, user.getPassword());
+
+        // execute insert SQL stetement
+        sqLiteStatement.executeInsert();*/
     }
 
     /**

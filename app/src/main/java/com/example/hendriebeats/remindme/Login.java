@@ -11,7 +11,7 @@ import android.widget.Toast;
 import static com.example.hendriebeats.remindme.Password.checkPassword;
 import static com.example.hendriebeats.remindme.Password.hashPassword;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     public EditText emailTxt;
     public EditText passwordTxt;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 emailTxt.setText("");
                 passwordTxt.setText("");
 
-                Intent i=new Intent(MainActivity.this, TaskListActivity.class);
+                Intent i=new Intent(Login.this, TaskListActivity.class);
                 i.putExtra("currentUserId", Integer.toString(validate.getId()));
                 startActivity(i);
             } else {
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     //Moves to the create account page
     public void createAccount(){
         //Move to the create Account Page
-        Intent i=new Intent(MainActivity.this, CreateAccount.class);
+        Intent i=new Intent(Login.this, CreateAccount.class);
         startActivity(i);
     }
 }

@@ -17,22 +17,22 @@ public class FullTaskActivity extends AppCompatActivity {
     public DatabaseHandler db;
     String currentTaskId, currentUserId;
 
-    Button fullShareBtn;
-    Button fullUpdateBtn;
-    Button fullDeleteBtn;
-    Button fullDoneBtn;
+    Button ShareBtn;
+    Button UpdateBtn;
+    Button DeleteBtn;
+    Button checkBtn;
 
-    TextView fullTitleLbl;
-    TextView fullTitleTxt;
-    TextView fullDescriptionLbl;
-    TextView fullDescriptionTxt;
-    TextView fullDateLbl;
-    TextView fullDateTxt;
-    TextView fullTimeLbl;
-    TextView fullTimeTxt;
-    TextView fullLocationLbl;
-    TextView fullPlaceTitleTxt;
-    TextView fullPlaceAddressTxt;
+    TextView TitleLbl;
+    TextView TitleTxt;
+    TextView DescriptionLbl;
+    TextView DescriptionTxt;
+    TextView DateLbl;
+    TextView DateTxt;
+    TextView TimeLbl;
+    TextView TimeTxt;
+    TextView LocationLbl;
+    TextView PlaceTitleTxt;
+    TextView PlaceAddressTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,30 +56,30 @@ public class FullTaskActivity extends AppCompatActivity {
         final String placeTitle = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getTitle();
         final String placeAddress = db.getPlaceById(db.getTaskById(Integer.parseInt(currentTaskId)).getPlaceId()).getAddress();
 
-        fullShareBtn = (Button) findViewById(R.id.fullShareBtn);
-        fullUpdateBtn = (Button) findViewById(R.id.fullUpdateBtn);
-        fullDeleteBtn = (Button) findViewById(R.id.fullDeleteBtn);
-        fullDoneBtn = (Button) findViewById(R.id.fullDoneBtn);
+        ShareBtn = (Button) findViewById(R.id.ShareBtn);
+        UpdateBtn = (Button) findViewById(R.id.UpdateBtn);
+        DeleteBtn = (Button) findViewById(R.id.DeleteBtn);
+        checkBtn = (Button) findViewById(R.id.checkBtn);
 
-        fullTitleLbl = (TextView) findViewById(R.id.fullTitleLbl);
-        fullTitleTxt = (TextView) findViewById(R.id.fullTitleTxt);
-        fullDescriptionLbl = (TextView) findViewById(R.id.fullDescriptionLbl);
-        fullDescriptionTxt = (TextView) findViewById(R.id.fullDescriptionTxt);
-        fullDateLbl = (TextView) findViewById(R.id.fullDateLbl);
-        fullDateTxt = (TextView) findViewById(R.id.fullDateTxt);
-        fullTimeLbl = (TextView) findViewById(R.id.fullTimeLbl);
-        fullTimeTxt = (TextView) findViewById(R.id.fullTimeTxt);
-        fullLocationLbl = (TextView) findViewById(R.id.fullLocationLbl);
-        fullPlaceTitleTxt = (TextView) findViewById(R.id.fullPlaceTitleTxt);
-        fullPlaceAddressTxt = (TextView) findViewById(R.id.fullPlaceAddressTxt);
+        TitleLbl = (TextView) findViewById(R.id.TitleLbl);
+        TitleTxt = (TextView) findViewById(R.id.TitleTxt);
+        DescriptionLbl = (TextView) findViewById(R.id.DescriptionLbl);
+        DescriptionTxt = (TextView) findViewById(R.id.DescriptionTxt);
+        DateLbl = (TextView) findViewById(R.id.DateLbl);
+        DateTxt = (TextView) findViewById(R.id.DateTxt);
+        TimeLbl = (TextView) findViewById(R.id.TimeLbl);
+        TimeTxt = (TextView) findViewById(R.id.TimeTxt);
+        LocationLbl = (TextView) findViewById(R.id.LocationLbl);
+        PlaceTitleTxt = (TextView) findViewById(R.id.PlaceTitleTxt);
+        PlaceAddressTxt = (TextView) findViewById(R.id.PlaceAddressTxt);
 
         //Set all the displayed fields equal to the current Task's values
-        fullTitleTxt.setText(title);
-        fullDescriptionTxt.setText(description);
-        fullDateTxt.setText(date);
-        fullTimeTxt.setText(time);
-        fullPlaceTitleTxt.setText(placeTitle);
-        fullPlaceAddressTxt.setText(placeAddress);
+        TitleTxt.setText(title);
+        DescriptionTxt.setText(description);
+        DateTxt.setText(date);
+        TimeTxt.setText(time);
+        PlaceTitleTxt.setText(placeTitle);
+        PlaceAddressTxt.setText(placeAddress);
 
 
         //Set checkBtn text
@@ -89,22 +89,22 @@ public class FullTaskActivity extends AppCompatActivity {
 
 
         //On Click Listener
-        fullUpdateBtn.setOnClickListener(
+        UpdateBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     Intent i = new Intent(FullTaskActivity.this, UpdateTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);
                     i.putExtra("currentUserId", currentUserId);
 
                     //send textView values to locationPicker
-                    i.putExtra("title", fullTitleTxt.getText().toString());
-                    i.putExtra("description", fullDescriptionTxt.getText().toString());
-                    i.putExtra("date", fullDateTxt.getText().toString());
-                    i.putExtra("time", fullTimeTxt.getText().toString());
+                    i.putExtra("title", TitleTxt.getText().toString());
+                    i.putExtra("description", DescriptionTxt.getText().toString());
+                    i.putExtra("date", DateTxt.getText().toString());
+                    i.putExtra("time", TimeTxt.getText().toString());
                     startActivity(i);
                 }});
 
         //On Click Listener
-        fullDeleteBtn.setOnClickListener(
+        DeleteBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FullTaskActivity.this);
 
@@ -135,7 +135,7 @@ public class FullTaskActivity extends AppCompatActivity {
                 }});
 
         // Will ask to open an existing service - covers requirement g for final project
-        fullShareBtn.setOnClickListener(new View.OnClickListener() {
+        ShareBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
@@ -146,7 +146,7 @@ public class FullTaskActivity extends AppCompatActivity {
             }
         });
 
-        fullDoneBtn.setOnClickListener(new View.OnClickListener() {
+        checkBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Task updatedTask = db.getTaskById(Integer.parseInt(currentTaskId));
                 boolean completeVar = updatedTask.isComplete();

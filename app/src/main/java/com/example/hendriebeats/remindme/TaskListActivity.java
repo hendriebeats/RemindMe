@@ -103,7 +103,7 @@ public class TaskListActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_logout:
-                i = new Intent(TaskListActivity.this, MainActivity.class);
+                i = new Intent(TaskListActivity.this, Login.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 return true;

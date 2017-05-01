@@ -1,16 +1,13 @@
 package com.example.hendriebeats.remindme;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,7 +68,7 @@ public class CreateAccount extends AppCompatActivity {
             // The input is validated!
             db.addUser(new User(name, formatPhone(phone), email, hashPassword(pass)));
 
-            Intent i = new Intent(CreateAccount.this, MainActivity.class);
+            Intent i = new Intent(CreateAccount.this, Login.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
@@ -123,7 +120,7 @@ public class CreateAccount extends AppCompatActivity {
 
         //complicated regular expression that validates emails
         Pattern emailValidation =
-                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Pattern.compile("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = emailValidation .matcher(email);
         if(!matcher.matches()) {
             Toast.makeText(getApplicationContext(), "Please enter a valid Email.", Toast.LENGTH_LONG).show();
