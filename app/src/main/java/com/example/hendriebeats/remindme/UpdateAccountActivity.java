@@ -1,11 +1,16 @@
 package com.example.hendriebeats.remindme;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -26,6 +31,8 @@ public class UpdateAccountActivity extends AppCompatActivity {
     String currentUserId;
     User currentUser;
 
+    //Used to hide keyboard when pressed outside of an EditText field
+    public FrameLayout touchInterceptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +64,20 @@ public class UpdateAccountActivity extends AppCompatActivity {
         confirmPasswordTxt = (EditText)findViewById(R.id.confirmPasswordTxt);
 
         updateBtn = (Button)findViewById(R.id.updateBtn);
-
-
-
         //SubmitBtn Action
         updateBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
                     update(currentUser.getEmail());
                 }});
+
+        touchInterceptor = (FrameLayout) findViewById(R.id.touchInterceptorUpdateAccount);
+        touchInterceptor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v, event);
+                return false;
+            }
+        });
     }
 
     // seems to work
@@ -99,6 +112,68 @@ public class UpdateAccountActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void hideKeyboard(View v, MotionEvent event){
+        //Check through all EditText fields to see if one is selected
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            //NAME TEXT
+            if (nameTxt.isFocused()) {
+                Rect outRect = new Rect();
+                nameTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    nameTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            //PHONE TEXT
+            else if (phoneTxt.isFocused()) {
+                Rect outRect = new Rect();
+                phoneTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    phoneTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            //EMAIL TEXT
+            else if (emailTxt.isFocused()) {
+                Rect outRect = new Rect();
+                emailTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    emailTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            //PASSWORD TEXT
+            else if (passwordTxt.isFocused()) {
+                Rect outRect = new Rect();
+                passwordTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    passwordTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            //CONFIRM PASSWORD TEXT
+            else if (confirmPasswordTxt.isFocused()) {
+                Rect outRect = new Rect();
+                confirmPasswordTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    confirmPasswordTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+    }
+
 
     public boolean validateName(String name){
         if(name.isEmpty()) {

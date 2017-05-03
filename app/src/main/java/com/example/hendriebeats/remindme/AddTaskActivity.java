@@ -4,12 +4,16 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,6 +32,9 @@ public class AddTaskActivity extends AppCompatActivity {
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener dateDialog;
     DatabaseHandler db;
+
+    //Used to hide keyboard when pressed outside of an EditText field
+    public FrameLayout touchInterceptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,15 @@ public class AddTaskActivity extends AppCompatActivity {
         timeTxt.setText(time);
         locationTitleTxt.setText(placeName);
         locationAddressTxt.setText(placeAddress);
+
+        touchInterceptor = (FrameLayout) findViewById(R.id.touchInterceptorAddTask);
+        touchInterceptor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v, event);
+                return false;
+            }
+        });
 
         //Set up time picker
         chooseTimeBtn.setOnClickListener(new View.OnClickListener() {
@@ -176,4 +192,33 @@ public class AddTaskActivity extends AppCompatActivity {
 
         dateTxt.setText(sdf.format(myCalendar.getTime()));
     }
+
+    public void hideKeyboard(View v, MotionEvent event){
+        //Check through all EditText fields to see if one is selected
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            //NAME TEXT
+            if (titleTxt.isFocused()) {
+                Rect outRect = new Rect();
+                titleTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    titleTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            //PHONE TEXT
+            else if (descriptionTxt.isFocused()) {
+                Rect outRect = new Rect();
+                descriptionTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    descriptionTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+    }
+
 }

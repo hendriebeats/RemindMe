@@ -5,6 +5,9 @@
     <string name="action_update_account">Update Account</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <string name="login">Login</string>
+    <string name="no_account">No account yet? Create one.</string>
+
     <string name="title_txt"><b>Title:</b></string>
     <string name="title_hint">Enter a Title</string>
     <string name="description_text"><b>Description:</b></string>

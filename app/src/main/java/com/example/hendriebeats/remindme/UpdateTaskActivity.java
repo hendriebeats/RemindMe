@@ -2,13 +2,18 @@ package com.example.hendriebeats.remindme;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -35,6 +40,9 @@ public class UpdateTaskActivity extends AppCompatActivity {
     TextView updateLocationLbl;
     TextView updatePlaceTitleTxt;
     TextView updatePlaceAddressTxt;
+
+    //Used to hide keyboard when pressed outside of an EditText field
+    public FrameLayout touchInterceptor;
 
     String currentTaskId, placeTitle, placeAddress, placeLatitude, placeLongitude, placeLocale, isUpdated, currentUserId;
     Calendar myCalendar;
@@ -85,6 +93,15 @@ public class UpdateTaskActivity extends AppCompatActivity {
         updateLocationLbl = (TextView) findViewById(R.id.updateLocationLbl);
         updatePlaceTitleTxt = (TextView) findViewById(R.id.updatePlaceTitleTxt);
         updatePlaceAddressTxt = (TextView) findViewById(R.id.updatePlaceAddressTxt);
+
+        touchInterceptor = (FrameLayout) findViewById(R.id.touchInterceptorUpdateTask);
+        touchInterceptor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v, event);
+                return false;
+            }
+        });
 
         /**
          * Set all the displayed fields equal to the current Task's values
@@ -208,5 +225,33 @@ public class UpdateTaskActivity extends AppCompatActivity {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         updateDateTxt.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public void hideKeyboard(View v, MotionEvent event){
+        //Check through all EditText fields to see if one is selected
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            //NAME TEXT
+            if (updateTitleTxt.isFocused()) {
+                Rect outRect = new Rect();
+                updateTitleTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    updateTitleTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            //PHONE TEXT
+            else if (updateDescriptionTxt.isFocused()) {
+                Rect outRect = new Rect();
+                updateDescriptionTxt.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    updateDescriptionTxt.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
     }
 }

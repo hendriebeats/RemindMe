@@ -86,6 +86,7 @@
                 android:id="@+id/updateDescriptionTxt"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="5"
                 android:inputType="textMultiLine"/>
         </LinearLayout>
 
@@ -181,5 +182,10 @@
         android:text="@string/update_task"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
+
+    <FrameLayout
+        android:id="@+id/touchInterceptorUpdateTask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 
 </RelativeLayout>
