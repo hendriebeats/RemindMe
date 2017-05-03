@@ -181,28 +181,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public void addUser(User user) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_USER_NAME, user.getName());
-        values.put(KEY_USER_PH_NO, user.getPhoneNumber());
-        values.put(KEY_USER_EMAIL, user.getEmail());
-        values.put(KEY_USER_PASS, user.getPassword());
-
-        // Inserting Row
-        db.insert(TABLE_USERS, null, values);
-        //2nd argument is String containing nullColumnHack
-        db.close(); // Closing database connection
-
-        /*//INSERT INTO warehouses(name,capacity) VALUES(?,?)            <----------- POTENTIAL PREPARED STATEMENT INSERT //NOT TESTED
+        //INSERT INTO
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         SQLiteStatement sqLiteStatement = sqLiteDatabase.compileStatement(
-                "" +
                 "INSERT INTO " + TABLE_USERS +
                 " (" +
-                KEY_USER_NAME +
-                KEY_USER_PH_NO +
-                KEY_USER_EMAIL +
+                KEY_USER_NAME + ", " +
+                KEY_USER_PH_NO + ", " +
+                KEY_USER_EMAIL + ", " +
                 KEY_USER_PASS +
                 ")" +
                 "VALUES(?,?,?,?)"
@@ -212,8 +198,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         sqLiteStatement.bindString(3, user.getEmail());
         sqLiteStatement.bindString(4, user.getPassword());
 
-        // execute insert SQL stetement
-        sqLiteStatement.executeInsert();*/
+        // execute insert SQL statement
+        sqLiteStatement.executeInsert();
     }
 
     /**
@@ -226,23 +212,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @since
      */
     public void addTask(Task task) {
-        Log.d(TAG, "adding Task...");
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_TASK_TITLE, task.getTitle());
-        values.put(KEY_TASK_DATE, task.getDate());
-        values.put(KEY_TASK_TIME, task.getTime());
-        values.put(KEY_TASK_DESCRIPTION, task.getDescription());
-        values.put(KEY_TASK_ISCOMPLETE, task.isComplete()? 1 : 0);
-        values.put(KEY_TASK_OWNER_ID, task.getOwnerId()); // This gets the User ID of the current user.
-        values.put(KEY_TASK_PLACE_ID, task.getPlaceId());
+        //INSERT INTO
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteStatement sqLiteStatement = sqLiteDatabase.compileStatement(
+            "INSERT INTO " + TABLE_TASKS +
+                " (" +
+                KEY_TASK_TITLE + ", " +
+                KEY_TASK_DATE + ", " +
+                KEY_TASK_TIME + ", " +
+                KEY_TASK_DESCRIPTION + ", " +
+                KEY_TASK_ISCOMPLETE + ", " +
+                KEY_TASK_OWNER_ID + ", " +
+                KEY_TASK_PLACE_ID +
+                ")" +
+                "VALUES(?,?,?,?,?,?,?)"
+        );
 
-        // Inserting Row
-        db.insert(TABLE_TASKS, null, values);
+        sqLiteStatement.bindString(1, task.getTitle());
+        sqLiteStatement.bindString(2, task.getDate());
+        sqLiteStatement.bindString(3, task.getTime());
+        sqLiteStatement.bindString(4, task.getDescription());
+        sqLiteStatement.bindString(5, String.valueOf(task.isComplete()? 1 : 0));
+        sqLiteStatement.bindString(6, String.valueOf(task.getOwnerId()));
+        sqLiteStatement.bindString(7, String.valueOf(task.getPlaceId()));
 
-        //2nd argument is String containing nullColumnHack
-        db.close(); // Closing database connection
+        // execute insert SQL statement
+        sqLiteStatement.executeInsert();
     }
 
     /**
@@ -531,18 +527,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      *          success? (int)
      * @since
      */
-    public int updateUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void updateUser(User user) {
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_USER_NAME, user.getName()); // Contact Name
-        values.put(KEY_USER_PH_NO, user.getPhoneNumber()); // Contact Phone
-        values.put(KEY_USER_EMAIL, user.getEmail());
-        values.put(KEY_USER_PASS, user.getPassword());
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteStatement sqLiteStatement = sqLiteDatabase.compileStatement(
+                "UPDATE " + TABLE_USERS +
+                " SET " +
+                KEY_USER_NAME + " = ?, " +
+                KEY_USER_PH_NO + " = ?, " +
+                KEY_USER_EMAIL + " = ?, " +
+                KEY_USER_PASS + " = ? " +
+                "WHERE " + KEY_USER_ID + " = ?"
+        );
+        sqLiteStatement.bindString(1, user.getName());
+        sqLiteStatement.bindString(2, user.getPhoneNumber());
+        sqLiteStatement.bindString(3, user.getEmail());
+        sqLiteStatement.bindString(4, user.getPassword());
+        sqLiteStatement.bindString(5, String.valueOf(user.getId()));
 
-        // updating row
-        return db.update(TABLE_USERS, values, KEY_USER_ID + " = ?",
-                new String[] { String.valueOf(user.getId()) });
+        // execute insert SQL statement
+        sqLiteStatement.executeInsert();
     }
 
     /**
