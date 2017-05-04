@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -82,10 +83,15 @@ public class TaskListActivity extends AppCompatActivity {
             }
         });
 
-        //SubmitBtn Action
+        //SearchBtn Action
         searchBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
-                    searchLocation(Integer.parseInt(currentUserId), searchTxt.getText().toString(), getApplicationContext());
+                    try{
+                        searchLocation(Integer.parseInt(currentUserId), searchTxt.getText().toString(), getApplicationContext());
+                    }catch(Exception e){
+                        Toast.makeText(getApplicationContext(), "Error, invalid location.", Toast.LENGTH_SHORT).show();
+                    }
+
                 }});
     }
 
