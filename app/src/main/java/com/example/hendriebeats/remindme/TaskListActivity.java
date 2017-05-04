@@ -1,5 +1,6 @@
 package com.example.hendriebeats.remindme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,10 +26,12 @@ public class TaskListActivity extends AppCompatActivity {
     ArrayList<String> TaskTitleList, PlaceTitleList;
     ArrayList<Task> TaskList;
     ListView listView;
+    Button searchBtn;
+    EditText searchTxt;
     String currentUserId;
     public static int [] prgmImages = {R.drawable.unchecked,R.drawable.checked};;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list_floating_button);
@@ -52,7 +57,9 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
         //Link Listview on the .xml document to this .java document
-        listView =(ListView)findViewById(task_listview);
+        listView = (ListView)findViewById(R.id.task_listview);
+        searchBtn = (Button) findViewById(R.id.searchBtn);
+        searchTxt = (EditText) findViewById(R.id.searchTxt);
 
         //Get Lasklists for the Listview
         TaskTitleList = new ArrayList<>(db.getAllTaskTitlesByUser(Integer.parseInt(currentUserId)));
@@ -74,6 +81,12 @@ public class TaskListActivity extends AppCompatActivity {
                 clickTask(TaskList.get(position));
             }
         });
+
+        //SubmitBtn Action
+        searchBtn.setOnClickListener(
+                new View.OnClickListener(){public void onClick(View view) {
+                    searchLocation(Integer.parseInt(currentUserId), searchTxt.getText().toString(), getApplicationContext());
+                }});
     }
 
     public void clickTask(Task currentTask){
@@ -82,6 +95,22 @@ public class TaskListActivity extends AppCompatActivity {
         i.putExtra("currentTaskId", Integer.toString(currentTask.getId()));
         i.putExtra("currentUserId", currentUserId);
         startActivity(i);
+
+    }
+
+    public void searchLocation(int userID, String locationTxt, Context context) {
+
+        int latestTaskId = db.getTasksByLocation(userID, locationTxt, context);
+
+        if(latestTaskId != -1){
+            //Move to the full task description
+            Intent i = new Intent(TaskListActivity.this, FullTaskActivity.class);
+            i.putExtra("currentTaskId", Integer.toString(latestTaskId));
+            i.putExtra("currentUserId", currentUserId);
+            startActivity(i);
+        }
+
+
     }
 
     @Override

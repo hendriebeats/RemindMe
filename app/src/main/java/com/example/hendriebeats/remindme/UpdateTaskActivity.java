@@ -196,16 +196,21 @@ public class UpdateTaskActivity extends AppCompatActivity {
                     updatedTask.setTitle(updateTitleTxt.getText().toString());
                     updatedTask.setComplete(db.getTaskById(Integer.parseInt(currentTaskId)).isComplete());
 
-                    if(placeLatitude != ""){
-                        updatedPlace.setTitle(placeTitle);
-                        updatedPlace.setLatitude(placeLatitude);
-                        updatedPlace.setLongitude(placeLongitude);
-                        updatedPlace.setAddress(placeAddress);
-                        updatedPlace.setLocale(placeLocale);
-                    }
+                    /**
+                     * Update Location field when updated via Place Picker
+                     */
+                    try{
+                        if(isUpdated.equals("yes")){
+                            updatedPlace.setTitle(placeTitle);
+                            updatedPlace.setLatitude(placeLatitude);
+                            updatedPlace.setLongitude(placeLongitude);
+                            updatedPlace.setAddress(placeAddress);
+                            updatedPlace.setLocale(placeLocale);
+                            db.updatePlace(updatedPlace);
+                        }
+                    } catch(Exception e) {}
 
                     db.updateTask(updatedTask);
-                    db.updatePlace(updatedPlace);
 
                     Intent i = new Intent(UpdateTaskActivity.this, FullTaskActivity.class);
                     i.putExtra("currentTaskId", currentTaskId);

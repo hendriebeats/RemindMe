@@ -151,31 +151,41 @@ public class AddTaskActivity extends AppCompatActivity {
         //On Click Listener
         addTaskBtn.setOnClickListener(
                 new View.OnClickListener(){public void onClick(View view) {
-                    Task newTask = new Task();
-                    Place newPlace = new Place();
+                    if(titleTxt.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Please Enter a Title", Toast.LENGTH_LONG).show();
+                    } else if(descriptionTxt.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Please Enter a Description", Toast.LENGTH_LONG).show();
+                    } else if(dateTxt.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Please Enter a Date", Toast.LENGTH_LONG).show();
+                    } else if(timeTxt.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Please Enter a Time", Toast.LENGTH_LONG).show();
+                    } else if(locationTitleTxt.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Please Select a Location", Toast.LENGTH_LONG).show();
+                    } else{
+                        Task newTask = new Task();
+                        Place newPlace = new Place();
 
-                    newPlace.setTitle(placeName);
-                    newPlace.setAddress(placeAddress);
-                    newPlace.setLatitude(placeLatitude);
-                    newPlace.setLongitude(placeLongitude);
-                    newPlace.setLocale(placeLocale);
-                    db.addPlace(newPlace);
+                        newPlace.setTitle(placeName);
+                        newPlace.setAddress(placeAddress);
+                        newPlace.setLatitude(placeLatitude);
+                        newPlace.setLongitude(placeLongitude);
+                        newPlace.setLocale(placeLocale);
+                        db.addPlace(newPlace);
 
-                    //Toast.makeText(getApplicationContext(), "" + db.getMostRecentPlace().getId(), Toast.LENGTH_SHORT).show();
+                        newTask.setTitle(titleTxt.getText().toString());
+                        newTask.setDescription(descriptionTxt.getText().toString());
+                        newTask.setDate(dateTxt.getText().toString());
+                        newTask.setTime(timeTxt.getText().toString());
+                        newTask.setOwnerId(Integer.parseInt(currentUserId));
+                        newTask.setPlaceId(db.getMostRecentPlace().getId());
+                        newTask.setComplete(false);
+                        db.addTask(newTask);
 
-                    newTask.setTitle(titleTxt.getText().toString());
-                    newTask.setDescription(descriptionTxt.getText().toString());
-                    newTask.setDate(dateTxt.getText().toString());
-                    newTask.setTime(timeTxt.getText().toString());
-                    newTask.setOwnerId(Integer.parseInt(currentUserId));
-                    newTask.setPlaceId(db.getMostRecentPlace().getId());
-                    newTask.setComplete(false);
-                    db.addTask(newTask);
-
-                    Intent i = new Intent(AddTaskActivity.this, TaskListActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra("currentUserId", currentUserId);
-                    startActivity(i);
+                        Intent i = new Intent(AddTaskActivity.this, TaskListActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra("currentUserId", currentUserId);
+                        startActivity(i);
+                    }
                 }});
     }
 

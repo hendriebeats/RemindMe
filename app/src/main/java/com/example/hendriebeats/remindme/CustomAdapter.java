@@ -23,7 +23,6 @@ public class CustomAdapter extends BaseAdapter{
 
     private static LayoutInflater inflater=null;
     public CustomAdapter(Context context, ArrayList<Task> TaskList, ArrayList<String> TaskTitleList, ArrayList<String> PlaceTitleList, int[] prgmImages) {
-        // TODO Auto-generated constructor stub
         this.TaskList = TaskList;
         this.TaskTitleList = TaskTitleList;
         this.PlaceTitleList = PlaceTitleList;
@@ -35,19 +34,16 @@ public class CustomAdapter extends BaseAdapter{
     }
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return TaskTitleList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -58,7 +54,6 @@ public class CustomAdapter extends BaseAdapter{
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
 
         int isChecked = (TaskList.get(position).isComplete()) ? 1 : 0;
 

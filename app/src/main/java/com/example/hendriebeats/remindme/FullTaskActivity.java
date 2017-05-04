@@ -168,4 +168,11 @@ public class FullTaskActivity extends AppCompatActivity {
         return "I am doing " + title + " at " + location + ". Want to join me?";
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i=new Intent(FullTaskActivity.this, TaskListActivity.class);
+        i.putExtra("currentUserId", currentUserId);
+        startActivity(i);
+    }
+
 }

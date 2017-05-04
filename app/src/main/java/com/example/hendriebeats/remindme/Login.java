@@ -37,10 +37,29 @@ public class Login extends AppCompatActivity {
 
         db = new DatabaseHandler(this);
 
+        //Populate tasks once the first time the app is run
         try{
             if(db.getUserById(1).getName().equals(""));
         } catch(Exception e) {
             db.addUser(new User("James Hendrie", "(123) 456-7890", "a", hashPassword("a")));
+
+            db.addPlace(new Place("Bowling Alley", "0.1", "0.2", "123 Way st.", "fun time"));
+            db.addTask(new Task("Ham and Cheese Day", "02/19/2018", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
+
+            db.addPlace(new Place("Bowling Alley", "0.1", "0.2", "123 Way st.", "fun time"));
+            db.addTask(new Task("Luncheon with Friends", "01/30/2018", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
+
+            db.addPlace(new Place("My Backyard", "0.1", "0.2", "123 Way st.", "fun time"));
+            db.addTask(new Task("Smack yo lips good", "11/25/2017", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
+
+            db.addPlace(new Place("Your House", "0.1", "0.2", "123 Way st.", "fun time"));
+            db.addTask(new Task("Party at Your Place!", "11/13/2019", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
+
+            db.addPlace(new Place("Your House", "0.1", "0.2", "123 Way st.", "fun time"));
+            db.addTask(new Task("Netflix and Chill", "11/23/2017", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
+
+            db.addPlace(new Place("Bowling Alley", "0.1", "0.2", "123 Way st.", "fun time"));
+            db.addTask(new Task("Bowling with Friends", "11/24/2017", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
         }
 
         emailTxt = (EditText)findViewById(R.id.emailTxt);

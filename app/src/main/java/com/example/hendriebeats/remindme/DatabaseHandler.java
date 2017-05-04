@@ -2,14 +2,19 @@ package com.example.hendriebeats.remindme;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -513,6 +518,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         // return task list
         return taskList;
+    }
+
+    public int getTasksByLocation(int userId, String locationTxt, Context context) {
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        ArrayList<Integer> placeIds = new ArrayList<Integer>();
+        int count = 1;
+        // Select All Query
+        String selectQuery1 = "SELECT  * FROM " + TABLE_PLACES
+                + " WHERE " + KEY_PLACE_TITLE + " = '" + locationTxt + "'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor1 = db.rawQuery(selectQuery1, null);
+
+        // looping through all rows and adding to list
+        if (cursor1.moveToFirst()) {
+            do {
+                placeIds.add(cursor1.getInt(0));
+            } while (cursor1.moveToNext());
+        }
+
+        // Select All Query
+        for(Integer placeId:placeIds){
+            String selectQuery2 = "SELECT  * FROM " + TABLE_TASKS
+                    + " WHERE " + KEY_TASK_OWNER_ID + " = " + userId
+                    + " AND " + KEY_TASK_PLACE_ID + " = '" + placeId + "'";
+
+            Cursor cursor2 = db.rawQuery(selectQuery2, null);
+
+            // looping through all rows and adding to list
+            if (cursor2.moveToFirst()) {
+                do {
+                    Task task = new Task();
+                    task.setId(cursor2.getInt(0));
+                    task.setTitle(cursor2.getString(1));
+                    task.setDate(cursor2.getString(2));
+                    task.setTime(cursor2.getString(3));
+                    task.setDescription(cursor2.getString(4));
+                    task.setComplete(cursor2.getInt(5) > 0); //get boolean value
+                    task.setOwnerId(cursor2.getInt(6));
+                    task.setPlaceId(cursor2.getInt(7));
+                    // Adding task to list
+
+                    if(!task.isComplete()){
+                        taskList.add(task);
+                        Toast.makeText(context, "Task " + count + ": " + task.getTitle(), Toast.LENGTH_SHORT).show();
+                        count++;
+                    }
+
+                } while (cursor2.moveToNext());
+            }
+        }
+
+        // return task list
+        return taskList.get(0).getId();
     }
 
     /**

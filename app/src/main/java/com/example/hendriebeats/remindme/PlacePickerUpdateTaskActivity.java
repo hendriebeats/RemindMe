@@ -31,8 +31,6 @@ public class PlacePickerUpdateTaskActivity extends AppCompatActivity {
             time = extras.getString("time");
         }
 
-        Toast.makeText(getApplicationContext(), currentUserId, Toast.LENGTH_SHORT).show();
-
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
         // Start the Intent by requesting a result, identified by a request code.
 
