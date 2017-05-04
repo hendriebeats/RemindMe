@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static com.example.hendriebeats.remindme.Password.getNextSalt;
 import static com.example.hendriebeats.remindme.R.id.task_listview;
 
 public class TaskListActivity extends AppCompatActivity {
@@ -56,6 +57,9 @@ public class TaskListActivity extends AppCompatActivity {
         if (extras != null) {
             currentUserId = extras.getString("currentUserId");
         }
+
+        //test salt
+        //Toast.makeText(getApplicationContext(), db.getUserById(Integer.parseInt(currentUserId)).getSalt(), Toast.LENGTH_SHORT).show();
 
         //Link Listview on the .xml document to this .java document
         listView = (ListView)findViewById(R.id.task_listview);

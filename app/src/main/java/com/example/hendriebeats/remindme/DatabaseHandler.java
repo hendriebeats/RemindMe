@@ -52,6 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_USER_PH_NO = "phone_number";
     private static final String KEY_USER_EMAIL = "email";
     private static final String KEY_USER_PASS = "password";
+    private static final String KEY_USER_SALT = "salt";
 
     // Tasks Table Columns names
     private static final String KEY_TASK_ID = "id";
@@ -92,6 +93,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * |    KEY_USER_PH_NO          TEXT                                |
      * |    KEY_USER_EMAIL          TEXT                                |
      * |    KEY_USER_PASS           TEXT                                |
+     * |    KEY_USER_SALT           TEXT                                |
      * |                                                                |
      * ------------------------------------------------------------------
      *
@@ -131,7 +133,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_USER_NAME + " TEXT, "
                 + KEY_USER_PH_NO + " TEXT, "
                 + KEY_USER_EMAIL + " TEXT, "
-                + KEY_USER_PASS + " TEXT"
+                + KEY_USER_PASS + " TEXT, "
+                + KEY_USER_SALT + " TEXT"
                 + ")";
 
         String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
@@ -194,14 +197,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_USER_NAME + ", " +
                 KEY_USER_PH_NO + ", " +
                 KEY_USER_EMAIL + ", " +
-                KEY_USER_PASS +
+                KEY_USER_PASS + ", " +
+                KEY_USER_SALT +
                 ")" +
-                "VALUES(?,?,?,?)"
+                "VALUES(?,?,?,?,?)"
         );
         sqLiteStatement.bindString(1, user.getName());
         sqLiteStatement.bindString(2, user.getPhoneNumber());
         sqLiteStatement.bindString(3, user.getEmail());
         sqLiteStatement.bindString(4, user.getPassword());
+        sqLiteStatement.bindString(5, user.getSalt());
 
         // execute insert SQL statement
         sqLiteStatement.executeInsert();
@@ -292,7 +297,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_USER_NAME,
                         KEY_USER_PH_NO,
                         KEY_USER_EMAIL,
-                        KEY_USER_PASS},
+                        KEY_USER_PASS,
+                        KEY_USER_SALT},
                 KEY_USER_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -303,7 +309,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getString(4));
+                cursor.getString(4),
+                cursor.getString(5));
         // return user
         return user;
     }
@@ -430,7 +437,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_USER_NAME,
                         KEY_USER_PH_NO,
                         KEY_USER_EMAIL,
-                        KEY_USER_PASS},
+                        KEY_USER_PASS,
+                        KEY_USER_SALT},
                 KEY_USER_EMAIL + "=?",
                 new String[] {email},
                 null, null, null, null);
@@ -442,7 +450,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getString(4));
+                cursor.getString(4),
+                cursor.getString(5));
         // return user
         return user;
     }
@@ -595,14 +604,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_USER_NAME + " = ?, " +
                 KEY_USER_PH_NO + " = ?, " +
                 KEY_USER_EMAIL + " = ?, " +
-                KEY_USER_PASS + " = ? " +
+                KEY_USER_PASS + " = ?, " +
+                KEY_USER_SALT + " = ? " +
                 "WHERE " + KEY_USER_ID + " = ?"
         );
         sqLiteStatement.bindString(1, user.getName());
         sqLiteStatement.bindString(2, user.getPhoneNumber());
         sqLiteStatement.bindString(3, user.getEmail());
         sqLiteStatement.bindString(4, user.getPassword());
-        sqLiteStatement.bindString(5, String.valueOf(user.getId()));
+        sqLiteStatement.bindString(5, user.getSalt());
+        sqLiteStatement.bindString(6, String.valueOf(user.getId()));
 
         // execute insert SQL statement
         sqLiteStatement.executeInsert();

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.hendriebeats.remindme.Password.getNextSalt;
 import static com.example.hendriebeats.remindme.Password.hashPassword;
 
 public class CreateAccount extends AppCompatActivity {
@@ -80,8 +81,9 @@ public class CreateAccount extends AppCompatActivity {
         } else if(!validatePassword(pass)) {
             //Break
         } else {
+            String salt = getNextSalt();
             // The input is validated!
-            db.addUser(new User(name, formatPhone(phone), email, hashPassword(pass)));
+            db.addUser(new User(name, formatPhone(phone), email, hashPassword(pass + salt), salt));
 
             Intent i = new Intent(CreateAccount.this, Login.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

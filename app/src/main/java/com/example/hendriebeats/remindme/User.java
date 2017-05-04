@@ -19,6 +19,7 @@ public class User {
     private String phoneNumber;
     private String email;
     private String password;
+    private String salt;
 
     /**
      * User()
@@ -36,11 +37,12 @@ public class User {
      *
      * @since
      */
-    public User(String name, String phoneNumber, String email, String password) {
+    public User(String name, String phoneNumber, String email, String password, String salt) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.salt = salt;
     }
 
     /**
@@ -58,12 +60,14 @@ public class User {
      *
      * @since
      */
-    public User(int id, String name, String phoneNumber, String email, String password) {
+    public User(int id, String name, String phoneNumber, String email, String password, String salt) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.salt = salt;
+
     }
 
     /**
@@ -191,6 +195,14 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
 

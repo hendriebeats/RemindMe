@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.hendriebeats.remindme.Password.checkPassword;
+import static com.example.hendriebeats.remindme.Password.getNextSalt;
 import static com.example.hendriebeats.remindme.Password.hashPassword;
 
 public class Login extends AppCompatActivity {
@@ -41,7 +42,8 @@ public class Login extends AppCompatActivity {
         try{
             if(db.getUserById(1).getName().equals(""));
         } catch(Exception e) {
-            db.addUser(new User("James Hendrie", "(123) 456-7890", "a", hashPassword("a")));
+            String salt = getNextSalt();
+            db.addUser(new User("James Hendrie", "(123) 456-7890", "a", hashPassword("a" + salt), salt));
 
             db.addPlace(new Place("Bowling Alley", "0.1", "0.2", "123 Way st.", "fun time"));
             db.addTask(new Task("Ham and Cheese Day", "02/19/2018", "time", "Have fun", false, 1, db.getMostRecentPlace().getId()));
@@ -94,14 +96,22 @@ public class Login extends AppCompatActivity {
     public void submit(){
 
         try{
-            User validate = db.getUserByEmail(emailTxt.getText().toString());
+            User userToChange = db.getUserByEmail(emailTxt.getText().toString());
+            String oldSalt = userToChange.getSalt();
 
-            if(checkPassword(passwordTxt.getText().toString(), validate.getPassword())){
+            if(checkPassword(passwordTxt.getText().toString() + oldSalt, userToChange.getPassword())){
+
+                //Set new Salt
+                String salt = getNextSalt();
+                userToChange.setSalt(salt);
+                userToChange.setPassword(hashPassword(passwordTxt.getText().toString()+salt));
+                db.updateUser(userToChange);
+
                 emailTxt.setText("");
                 passwordTxt.setText("");
 
-                Intent i=new Intent(Login.this, TaskListActivity.class);
-                i.putExtra("currentUserId", Integer.toString(validate.getId()));
+                Intent i = new Intent(Login.this, TaskListActivity.class);
+                i.putExtra("currentUserId", Integer.toString(userToChange.getId()));
                 startActivity(i);
             } else {
                 Toast.makeText(getApplicationContext(), "Error, you entered the wrong email or password", Toast.LENGTH_SHORT).show();
